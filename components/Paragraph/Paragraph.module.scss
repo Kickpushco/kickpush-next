@@ -1,0 +1,16 @@
+@import "../../sass/global";
+
+.Paragraph {
+  white-space: pre-wrap;
+}
+
+.Paragraph {
+  &-huge {
+    font-size: rem(24);
+    line-height: rem(34);
+  }
+  &-big {
+    font-size: rem(16);
+    line-height: rem(22);
+  }
+}

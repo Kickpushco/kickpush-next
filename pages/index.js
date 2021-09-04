@@ -1,79 +1,75 @@
-import Head from 'next/head'
+import Head from "next/head";
+import clsx from "clsx";
 
-import { fetchEntries } from '@utils/contentfulPosts'
+import { fetchPage } from "@utils/contentful";
 
-import Header from '@components/Header'
-import Footer from '@components/Footer'
-import Post from '@components/Post'
+import Nav from "@components/Nav/Nav";
+import Footer from "@components/Footer/Footer";
+import Hero, { HeroCopy } from "@components/Hero/Hero";
+import Heading from "@components/Heading/Heading";
+import Manifesto from "@components/Manifesto/Manifesto";
 
-export default function Home({ posts }) {
+import styles from "../sass/pages/index.module.scss";
+
+export default function Home({ page }) {
+  if (!page?.fields) return null;
+
+  const { heroTitle, projectsTitle, manifestoItems, heroCopy } = page.fields;
+
   return (
-    <div className="container">
+    <>
       <Head>
-        <title>Next + Contentful Starter</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Kickpush</title>
       </Head>
 
+      <Nav />
+
       <main>
-        <Header />
-        <div className="posts">
-          {posts.map((p) => {
-            return <Post key={p.date} date={p.date} image={p.image.fields} title={p.title} />
-          })}
-        </div>
+        <Hero>
+          <Heading level="h1">{heroTitle}</Heading>
+          {heroCopy && <HeroCopy>{heroCopy}</HeroCopy>}
+        </Hero>
+
+        <section className={clsx("container", styles.Projects)}>
+          {projectsTitle && (
+            <Heading className={styles.ProjectsHeading} level="h0" tag="h2">
+              {projectsTitle}
+            </Heading>
+          )}
+        </section>
+
+        <section className={clsx("container", styles.Manifesto)}>
+          {manifestoItems.map((item) => (
+            <Manifesto
+              className={styles.ManifestoItem}
+              key={item.sys.id}
+              short={item.fields.shortText}
+              long={item.fields.longText}
+            />
+          ))}
+        </section>
       </main>
 
       <Footer />
 
-      <style jsx>{`
-        .container {
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .posts {
-          display: flex;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-            Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
-  )
+      <details className="container" open>
+        <summary>Test Data</summary>
+        <pre>{JSON.stringify(page, null, 2)}</pre>
+      </details>
+      <br />
+    </>
+  );
 }
 
 export async function getStaticProps() {
-  const res = await fetchEntries()
-  const posts = await res.map((p) => {
-    return p.fields
-  })
+  const page = await fetchPage({
+    slug: "home",
+    contentType: "customPageHome",
+  });
 
   return {
     props: {
-      posts,
+      page,
     },
-  }
+  };
 }

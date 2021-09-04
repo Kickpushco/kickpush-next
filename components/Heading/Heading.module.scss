@@ -1,0 +1,38 @@
+@import "../../sass/global";
+
+.Heading {
+  font-family: $font-family-heading;
+  font-weight: 600;
+  white-space: pre-wrap;
+  text-align: left;
+  font-weight: bold;
+  letter-spacing: -0.025em;
+
+  @media (min-width: 30em) {
+    text-align: center;
+  }
+}
+
+.Heading {
+  &-h0 {
+    font-size: rem(104);
+    line-height: rem(108);
+    color: $color-kickpush-dark-red;
+  }
+  &-h1 {
+    font-size: rem(72);
+    line-height: rem(85);
+  }
+  &-h2 {
+    font-size: rem(56);
+    line-height: rem(70);
+  }
+  &-h3 {
+    font-size: rem(40);
+    line-height: rem(48);
+  }
+  &-h4 {
+    font-size: rem(32);
+    line-height: rem(42);
+  }
+}

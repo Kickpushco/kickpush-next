@@ -1,0 +1,58 @@
+@import "../global";
+
+@import "//hello.myfonts.net/count/30371b";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+@font-face {
+  font-family: avantgardegothicitcw01bd;
+  src: url(../../assets/fonts/30371B_0_0.woff2);
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: $font-family-body;
+  src: url(../../assets/fonts/lineto-circular-book.woff2);
+  font-weight: $font-weight-book;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: $font-family-body;
+  src: url(../../assets/fonts/lineto-circular-medium.woff2);
+  font-weight: $font-weight-medium;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: $font-family-body;
+  src: url(../../assets/fonts/lineto-circular-bold.woff2);
+  font-weight: $font-weight-bold;
+  font-style: normal;
+}
+
+html {
+  --gutter: #{rem(20)};
+
+  background: $color-kickpush-red;
+  color: $color-kickpush-white;
+  font-family: $font-stack-body;
+
+  @media (min-width: 30em) {
+    --gutter: #{rem(32)};
+  }
+}
+
+a {
+  color: currentColor;
+}
+
+.container {
+  margin: 0 auto;
+  width: calc(100% - (var(--gutter) * 2));
+  max-width: rem(940);
+}

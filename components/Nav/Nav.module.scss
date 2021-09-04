@@ -1,0 +1,43 @@
+@import "../../sass/global";
+
+.Nav {
+  background: $color-kickpush-red;
+  padding: rem(12) 0;
+  position: sticky;
+  top: 0;
+  margin-top: rem(40);
+
+  :global(.container) {
+    display: flex;
+    align-items: center;
+    max-width: rem(1170);
+  }
+}
+
+.Logo {
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    display: block;
+  }
+}
+
+.Links {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  gap: rem(56);
+
+  a {
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+}

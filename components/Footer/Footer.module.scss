@@ -1,0 +1,24 @@
+@import "../../sass/global";
+
+.Footer {
+  padding: rem(120) 0 rem(240);
+}
+
+.Heading {
+  max-width: 11em;
+  text-align: left;
+}
+
+.Email {
+  text-align: left;
+  margin-top: rem(48);
+
+  a {
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+}
