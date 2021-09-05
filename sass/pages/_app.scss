@@ -1,15 +1,13 @@
 @import "../global";
 
-@import "//hello.myfonts.net/count/30371b";
-
 * {
   box-sizing: border-box;
   margin: 0;
 }
 
 @font-face {
-  font-family: avantgardegothicitcw01bd;
-  src: url(../../assets/fonts/30371B_0_0.woff2);
+  font-family: $font-family-heading;
+  src: url(../../assets/fonts/kickpush-headings.woff2);
   font-weight: 600;
   font-style: normal;
 }
@@ -37,6 +35,9 @@
 
 html {
   --gutter: #{rem(20)};
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   background: $color-kickpush-red;
   color: $color-kickpush-white;

@@ -12,14 +12,12 @@ import Manifesto from "@components/Manifesto/Manifesto";
 import styles from "../sass/pages/index.module.scss";
 
 export default function Home({ page }) {
-  if (!page?.fields) return null;
-
   const { heroTitle, projectsTitle, manifestoItems, heroCopy } = page.fields;
 
   return (
     <>
       <Head>
-        <title>Kickpush</title>
+        <title>Kickpush | Product design studio</title>
       </Head>
 
       <Nav />
@@ -38,16 +36,18 @@ export default function Home({ page }) {
           )}
         </section>
 
-        <section className={clsx("container", styles.Manifesto)}>
-          {manifestoItems.map((item) => (
-            <Manifesto
-              className={styles.ManifestoItem}
-              key={item.sys.id}
-              short={item.fields.shortText}
-              long={item.fields.longText}
-            />
-          ))}
-        </section>
+        {manifestoItems.length && (
+          <section className={clsx("container", styles.Manifesto)}>
+            {manifestoItems.map((item) => (
+              <Manifesto
+                className={styles.ManifestoItem}
+                key={item.sys.id}
+                short={item.fields.shortText}
+                long={item.fields.longText}
+              />
+            ))}
+          </section>
+        )}
       </main>
 
       <Footer />
