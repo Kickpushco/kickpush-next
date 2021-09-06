@@ -12,20 +12,35 @@ export async function fetchEntries() {
 
   if (entries.items) return entries.items;
 
-  throw new Error(`Error getting Entries.`);
+  throw new Error(`Error fetching all entries`);
 }
 
-export async function fetchPage({ slug, contentType }) {
+export async function fetchCustomPage(contentType) {
   const query = {
     limit: 1,
     include: 10,
     locale,
     content_type: contentType,
-    "fields.slug": slug,
   };
 
   const entries = await client.getEntries(query);
   if (entries.items) return entries.items[0];
 
-  throw new Error(`Error getting Entry for ${slug} (${contentType})`);
+  throw new Error(`Error fetching Entry for ${slug} (${contentType})`);
+}
+
+export async function fetchContact() {
+  return await fetchCustomPage("customPageContact");
+}
+
+export async function fetchProjects() {
+  const query = {
+    content_type: "project",
+  };
+
+  const entries = await client.getEntries(query);
+
+  if (entries.items) return entries.items;
+
+  throw new Error(`Error fetching projects`);
 }

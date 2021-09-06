@@ -1,15 +1,11 @@
 @import "../../sass/global";
 
 .Heading {
+  display: block;
   font-family: $font-family-heading;
   font-weight: 600;
   white-space: pre-wrap;
-  text-align: left;
   font-weight: bold;
-
-  @media (min-width: 30em) {
-    text-align: center;
-  }
 }
 
 .Heading {
@@ -33,5 +29,9 @@
   &-h4 {
     font-size: rem(32);
     line-height: rem(42);
+  }
+  &-h5 {
+    font-size: rem(24);
+    line-height: rem(30);
   }
 }

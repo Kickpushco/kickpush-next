@@ -1,0 +1,32 @@
+@import "../../sass/global";
+
+.Wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: rem(60);
+}
+
+.Card {
+  border-radius: rem(10);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: rem(32);
+  text-decoration: none;
+  aspect-ratio: 440/496;
+
+  &-light {
+    color: $color-kickpush-white;
+  }
+  &-dark {
+    color: $color-kickpush-black;
+  }
+}
+// .ClientName {
+
+// }
+.Year {
+  margin-top: rem(8);
+}
+.Title {
+  align-self: flex-end;
+}

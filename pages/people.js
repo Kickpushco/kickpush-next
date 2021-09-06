@@ -14,10 +14,13 @@ import Heading from "@components/Heading/Heading";
 import Manifesto from "@components/Manifesto/Manifesto";
 import ProjectCards from "@components/ProjectCards/ProjectCards";
 
-import styles from "../sass/pages/index.module.scss";
+import styles from "../sass/pages/people.module.scss";
 
-export default function Home({ page, projects, contact }) {
-  const { heroTitle, projectsTitle, manifestoItems, heroCopy } = page.fields;
+export default function People({ page, contact }) {
+  const { heroTitle, heroCopy, photosTitle, photosOutro, manifestoItems } =
+    page.fields;
+
+  const showPhotosSection = photosTitle || photosOutro;
 
   return (
     <>
@@ -33,14 +36,20 @@ export default function Home({ page, projects, contact }) {
           {heroCopy && <HeroCopy>{heroCopy}</HeroCopy>}
         </Hero>
 
-        <section className={clsx("container", styles.Projects)}>
-          {projectsTitle && (
-            <Heading className={styles.ProjectsHeading} level="h0" tag="h2">
-              {projectsTitle}
-            </Heading>
-          )}
-          <ProjectCards projects={projects} />
-        </section>
+        {showPhotosSection && (
+          <section className={clsx("container", styles.Photos)}>
+            {photosTitle && (
+              <Heading className={styles.PhotosHeading} level="h0" tag="h2">
+                {photosTitle}
+              </Heading>
+            )}
+            {photosOutro && (
+              <Heading className={styles.PhotosOutro} level="h1" tag="p">
+                {photosOutro}
+              </Heading>
+            )}
+          </section>
+        )}
 
         {manifestoItems.length && (
           <section className={clsx("container", styles.Manifesto)}>
@@ -68,14 +77,12 @@ export default function Home({ page, projects, contact }) {
 }
 
 export async function getStaticProps() {
-  const page = await fetchCustomPage("customPageHome");
-  const projects = await fetchProjects();
+  const page = await fetchCustomPage("customPagePeople");
   const contact = await fetchContact();
 
   return {
     props: {
       page,
-      projects,
       contact,
     },
   };

@@ -6,11 +6,13 @@ import { CONTACT_EMAIL } from "@utils/constants";
 
 import styles from "./Footer.module.scss";
 
-function Footer() {
+function Footer({ contact }) {
+  if (!contact) return null;
+
   return (
     <footer className={clsx("container", styles.Footer)}>
       <Heading className={styles.Heading} level="h1" tag="p">
-        We get back to everyone right away. See for yourself.
+        {contact.fields.heroTitle}
       </Heading>
       <Heading className={styles.Email} level="h4" tag="p">
         <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>

@@ -1,6 +1,7 @@
 @import "../../sass/global";
 
 .Paragraph {
+  display: block;
   white-space: pre-wrap;
 }
 
@@ -12,5 +13,10 @@
   &-big {
     font-size: rem(16);
     line-height: rem(22);
+  }
+  &-label {
+    font-weight: $font-weight-bold;
+    font-size: rem(14);
+    line-height: rem(14);
   }
 }

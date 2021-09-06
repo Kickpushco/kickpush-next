@@ -2,10 +2,12 @@
 
 .Hero {
   margin: rem(120) 0 rem(240);
+
+  @media (min-width: 30em) {
+    text-align: center;
+  }
 }
 
 .HeroCopy {
-  display: block;
-  text-align: center;
   margin-top: rem(20);
 }

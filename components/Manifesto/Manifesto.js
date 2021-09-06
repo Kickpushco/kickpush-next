@@ -1,10 +1,12 @@
+import clsx from "clsx";
+
 import Heading from "@components/Heading/Heading";
 
 import styles from "./Manifesto.module.scss";
 
-function Manifesto({ short, long, ...props }) {
+function Manifesto({ className, short, long }) {
   return (
-    <div {...props}>
+    <div className={clsx(className, styles.Wrapper)}>
       {/* TODO: Add shortAs */}
       <Heading className={styles.Short} level="h4" tag="h3">
         {short}
