@@ -5,26 +5,30 @@ import Nav from "@components/Nav/Nav";
 import Footer from "@components/Footer/Footer";
 import Title from "@components/Meta/Title";
 import LabelData from "@components/Meta/LabelData";
+import Description from "@components/Meta/Description";
 
-export default function Contact({ contact }) {
+export default function Contact({ page }) {
+  const { metaDescription, shortName } = page;
+
   return (
     <>
-      <Title shortTitle="Contact" longTitle={contact.fields.heroTitle} />
+      <Title shortTitle={shortName} longTitle={page.fields.heroTitle} />
+      <Description description={metaDescription} />
       <LabelData number="1" label="Email" data={CONTACT_EMAIL} />
 
       <Nav />
 
-      <Footer contact={contact} />
+      <Footer contact={page} />
     </>
   );
 }
 
 export async function getStaticProps() {
-  const contact = await fetchContact();
+  const page = await fetchContact();
 
   return {
     props: {
-      contact,
+      page,
     },
   };
 }

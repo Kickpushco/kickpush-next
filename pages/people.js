@@ -8,18 +8,27 @@ import Hero, { HeroCopy } from "@components/Hero/Hero";
 import Heading from "@components/Heading/Heading";
 import Manifesto from "@components/Manifesto/Manifesto";
 import Title from "@components/Meta/Title";
+import Description from "@components/Meta/Description";
 
 import styles from "../sass/pages/people.module.scss";
 
 export default function People({ page, contact }) {
-  const { heroTitle, heroCopy, photosTitle, photosOutro, manifestoItems } =
-    page.fields;
+  const {
+    shortName,
+    metaDescription,
+    heroTitle,
+    heroCopy,
+    photosTitle,
+    photosOutro,
+    manifestoItems,
+  } = page.fields;
 
   const showPhotosSection = photosTitle || photosOutro;
 
   return (
     <>
-      <Title shortTitle="People" longTitle={heroTitle} />
+      <Title shortTitle={shortName} longTitle={heroTitle} />
+      <Description description={metaDescription} />
 
       <Nav />
 

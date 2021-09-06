@@ -15,13 +15,15 @@ import ProjectCards from "@components/ProjectCards/ProjectCards";
 
 import styles from "../sass/pages/index.module.scss";
 import Title from "@components/Meta/Title";
+import Description from "@components/Meta/Description";
 
 export default function Home({ page, contact }) {
-  const { heroTitle, heroCopy, projectsList } = page.fields;
+  const { metaDescription, heroTitle, heroCopy, projectsList } = page.fields;
 
   return (
     <>
       <Title shortTitle="What we do" longTitle={heroTitle} />
+      <Description description={metaDescription} />
 
       <Nav />
 
