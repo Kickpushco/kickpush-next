@@ -1,4 +1,3 @@
-import Head from "next/head";
 import clsx from "clsx";
 
 import {
@@ -15,15 +14,14 @@ import Manifesto from "@components/Manifesto/Manifesto";
 import ProjectCards from "@components/ProjectCards/ProjectCards";
 
 import styles from "../sass/pages/index.module.scss";
+import Title from "@components/Meta/Title";
 
 export default function Home({ page, projects, contact }) {
   const { heroTitle, projectsTitle, manifestoItems, heroCopy } = page.fields;
 
   return (
     <>
-      <Head>
-        <title>Kickpush | Product design studio</title>
-      </Head>
+      <Title shortTitle="Product design studio" longTitle={heroTitle} />
 
       <Nav />
 

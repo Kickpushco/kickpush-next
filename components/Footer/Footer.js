@@ -1,8 +1,8 @@
 import clsx from "clsx";
 
-import Heading from "@components/Heading/Heading";
-
 import { CONTACT_EMAIL } from "@utils/constants";
+
+import Heading from "@components/Heading/Heading";
 
 import styles from "./Footer.module.scss";
 

@@ -1,18 +1,13 @@
-import Head from "next/head";
 import clsx from "clsx";
 
-import {
-  fetchContact,
-  fetchCustomPage,
-  fetchProjects,
-} from "@utils/contentful";
+import { fetchContact, fetchCustomPage } from "@utils/contentful";
 
 import Nav from "@components/Nav/Nav";
 import Footer from "@components/Footer/Footer";
 import Hero, { HeroCopy } from "@components/Hero/Hero";
 import Heading from "@components/Heading/Heading";
 import Manifesto from "@components/Manifesto/Manifesto";
-import ProjectCards from "@components/ProjectCards/ProjectCards";
+import Title from "@components/Meta/Title";
 
 import styles from "../sass/pages/people.module.scss";
 
@@ -24,9 +19,7 @@ export default function People({ page, contact }) {
 
   return (
     <>
-      <Head>
-        <title>Kickpush | Product design studio</title>
-      </Head>
+      <Title shortTitle="People" longTitle={heroTitle} />
 
       <Nav />
 
@@ -66,12 +59,6 @@ export default function People({ page, contact }) {
       </main>
 
       <Footer contact={contact} />
-
-      <details className="container" open>
-        <summary>Test Data</summary>
-        <pre>{JSON.stringify(page, null, 2)}</pre>
-      </details>
-      <br />
     </>
   );
 }

@@ -1,0 +1,34 @@
+@import "../global";
+
+.Slide {
+  height: 100vh;
+  min-height: stretch;
+}
+
+.Hero {
+  display: flex;
+  flex-direction: column;
+  padding: rem(56) 0;
+}
+.HeroContent {
+  margin-top: auto;
+  margin-bottom: auto;
+  width: rem(820);
+  padding-bottom: rem(56);
+}
+.HeroCopy {
+  margin-top: rem(24);
+}
+.HeroFooter {
+  display: flex;
+  gap: rem(16);
+  justify-content: space-between;
+  width: rem(1160);
+  font-size: rem(16);
+  line-height: rem(20);
+
+  dt {
+    font-weight: $font-weight-bold;
+    margin-bottom: rem(5);
+  }
+}

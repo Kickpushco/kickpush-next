@@ -1,6 +1,5 @@
 const space = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
 const accessToken = process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN;
-const locale = "en-US";
 
 const client = require("contentful").createClient({
   space,
@@ -18,8 +17,7 @@ export async function fetchEntries() {
 export async function fetchCustomPage(contentType) {
   const query = {
     limit: 1,
-    include: 10,
-    locale,
+    include: 1,
     content_type: contentType,
   };
 
@@ -36,6 +34,7 @@ export async function fetchContact() {
 export async function fetchProjects() {
   const query = {
     content_type: "project",
+    include: 0,
   };
 
   const entries = await client.getEntries(query);
@@ -43,4 +42,18 @@ export async function fetchProjects() {
   if (entries.items) return entries.items;
 
   throw new Error(`Error fetching projects`);
+}
+
+export async function fetchProject(slug) {
+  const query = {
+    limit: 1,
+    include: 2,
+    content_type: "project",
+    "fields.slug": slug,
+  };
+
+  const entries = await client.getEntries(query);
+  if (entries.items) return entries.items[0];
+
+  throw new Error(`Error fetching Project for ${slug}`);
 }

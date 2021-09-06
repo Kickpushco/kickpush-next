@@ -1,6 +1,7 @@
 @import "../../sass/global";
 
 .Wrapper {
+  align-items: stretch;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: rem(60);
