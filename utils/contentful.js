@@ -14,10 +14,12 @@ export async function fetchEntries() {
   throw new Error(`Error fetching all entries`);
 }
 
-export async function fetchCustomPage(contentType) {
+export async function fetchCustomPage(contentType, args = {}) {
+  const { include = 1 } = args;
+
   const query = {
     limit: 1,
-    include: 1,
+    include,
     content_type: contentType,
   };
 

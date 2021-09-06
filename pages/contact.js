@@ -7,7 +7,6 @@ import Title from "@components/Meta/Title";
 import LabelData from "@components/Meta/LabelData";
 
 export default function Contact({ contact }) {
-  console.log(contact.fields.heroTitle);
   return (
     <>
       <Title shortTitle="Contact" longTitle={contact.fields.heroTitle} />

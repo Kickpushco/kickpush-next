@@ -5,6 +5,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: rem(60);
+
+  .Card {
+    box-shadow: 0 rem(40) rem(60) rem(1) $color-kickpush-dark-red;
+  }
 }
 
 .Card {
@@ -13,13 +17,19 @@
   grid-template-rows: auto 1fr;
   padding: rem(32);
   text-decoration: none;
-  aspect-ratio: 440/496;
 
   &-light {
     color: $color-kickpush-white;
   }
   &-dark {
     color: $color-kickpush-black;
+  }
+
+  &-small {
+    aspect-ratio: 440/496;
+  }
+  &-large {
+    aspect-ratio: 1170/556;
   }
 }
 // .ClientName {

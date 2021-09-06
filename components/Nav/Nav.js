@@ -16,7 +16,9 @@ function Nav({}) {
 
         <ul className={styles.Links}>
           <li>
-            <span style={{ cursor: "not-allowed" }}>Work</span>
+            <Link href="/projects">
+              <a>Work</a>
+            </Link>
           </li>
           <li>
             <Link href="/people">

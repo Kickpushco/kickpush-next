@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 
@@ -6,12 +7,14 @@ import Paragraph from "@components/Paragraph/Paragraph";
 
 import styles from "./ProjectCards.module.scss";
 
-const cardTextColorMap = {
+export const projectCardTextColorMap = {
   Light: "light",
   Dark: "dark",
 };
 
-function ProjectCards({ projects = [] }) {
+function ProjectCards({ projectsList, showProjectsLink }) {
+  const { projects } = projectsList.fields;
+
   return (
     <div className={styles.Wrapper}>
       {projects.map((project) => {
@@ -19,43 +22,53 @@ function ProjectCards({ projects = [] }) {
           project.fields;
 
         return (
-          <ProjectCard
-            key={project.sys.id}
-            byline={clientName}
-            year={year}
-            title={cardTitle}
-            backgroundColor={cardColor}
-            textColor={cardTextColorMap[cardTextColor]}
-            href={`/projects/${slug}`}
-          />
+          <Link key={project.sys.id} href={`/projects/${slug}`} passHref>
+            <ProjectCard
+              byline={clientName}
+              year={year}
+              title={cardTitle}
+              backgroundColor={cardColor}
+              textColor={projectCardTextColorMap[cardTextColor]}
+            />
+          </Link>
         );
       })}
-      {/* <pre>{JSON.stringify(projects, null, 2)}</pre> */}
+      {showProjectsLink && (
+        <Link href="/projects" passHref>
+          <ProjectCard
+            byline="Kickpush Work"
+            year="2014–present"
+            title="View X more projects"
+          />
+        </Link>
+      )}
     </div>
   );
 }
 
-const cardTextColorStyles = {
-  Light: styles["Card-light"],
-  Dark: styles["Card-dark"],
-};
-
-function ProjectCard({
-  byline,
-  year,
-  backgroundColor,
-  textColor = "light",
-  title,
-  href,
-}) {
-  // const { clientName, year, cardColor, cardTextColor, cardTitle } =
-  //   project.fields;
-
-  return (
-    <Link href={href}>
+export const ProjectCard = forwardRef(
+  (
+    {
+      size = "small",
+      byline,
+      year,
+      backgroundColor,
+      textColor = "Light",
+      title,
+      href,
+    },
+    ref
+  ) => {
+    return (
       <a
-        className={clsx(styles.Card, styles[`Card-${textColor}`])}
+        className={clsx(
+          styles.Card,
+          styles[`Card-${textColor}`],
+          styles[`Card-${size}`]
+        )}
         style={{ backgroundColor }}
+        href={href}
+        ref={ref}
       >
         <p>
           <Heading className={styles.Byline} level="h5" tag="span">
@@ -72,8 +85,8 @@ function ProjectCard({
           {title}
         </Heading>
       </a>
-    </Link>
-  );
-}
+    );
+  }
+);
 
 export default ProjectCards;
