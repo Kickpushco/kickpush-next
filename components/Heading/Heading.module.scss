@@ -3,35 +3,69 @@
 .Heading {
   display: block;
   font-family: $font-family-heading;
-  font-weight: 600;
+  font-weight: $font-weight-heading;
   white-space: pre-wrap;
-  font-weight: bold;
 }
 
 .Heading {
   &-h0 {
-    font-size: rem(104);
-    line-height: rem(108);
+    font-size: rem(56);
+    line-height: rem(60);
     color: $color-kickpush-dark-red;
+    margin-bottom: rem(120);
+
+    @include min-width($bp-mobile) {
+      font-size: rem(80);
+      line-height: rem(86);
+    }
+
+    @include min-width($bp-tablet) {
+      font-size: rem(104);
+      line-height: rem(108);
+    }
   }
   &-h1 {
-    font-size: rem(72);
-    line-height: rem(85);
+    font-size: rem(40);
+    line-height: rem(48);
+
+    @include min-width($bp-mobile) {
+      font-size: rem(56);
+      line-height: rem(60);
+    }
+
+    @include min-width($bp-tablet) {
+      font-size: rem(72);
+      line-height: rem(85);
+    }
   }
   &-h2 {
-    font-size: rem(56);
-    line-height: rem(70);
+    font-size: rem(24);
+    line-height: rem(30);
+
+    @include min-width($bp-mobile) {
+      font-size: rem(56);
+      line-height: rem(70);
+    }
   }
   &-h3 {
     font-size: rem(40);
     line-height: rem(48);
   }
   &-h4 {
-    font-size: rem(32);
-    line-height: rem(42);
+    font-size: rem(24);
+    line-height: rem(30);
+
+    @include min-width($bp-mobile) {
+      font-size: rem(32);
+      line-height: rem(42);
+    }
   }
   &-h5 {
     font-size: rem(24);
     line-height: rem(30);
+  }
+  &-h6 {
+    font-size: rem(16);
+    line-height: rem(22);
   }
 }

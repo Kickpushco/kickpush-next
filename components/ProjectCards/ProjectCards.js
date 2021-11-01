@@ -35,11 +35,7 @@ function ProjectCards({ projectsList, showProjectsLink }) {
       })}
       {showProjectsLink && (
         <Link href="/projects" passHref>
-          <ProjectCard
-            byline="Kickpush Work"
-            year="2014–present"
-            title="View X more projects"
-          />
+          <ProjectCard byline="Kickpush Work" year="2014–present" />
         </Link>
       )}
     </div>

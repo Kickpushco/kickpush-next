@@ -12,6 +12,7 @@ import Paragraph from "@components/Paragraph/Paragraph";
 import Description from "@components/Meta/Description";
 import Title from "@components/Meta/Title";
 import LabelData from "@components/Meta/LabelData";
+import Button from "@components/Button/Button";
 
 import styles from "../../sass/pages/project.module.scss";
 import {
@@ -62,8 +63,10 @@ export default function Project({ project, nextProject }) {
         <section className={clsx(styles.Slide, styles.Contact)}>
           <div className="container">
             <Heading level="h2">Seen enough?</Heading>
-            <Link href="/contact">
-              <a>Let’s chat.</a>
+            <Link href="/contact" passHref>
+              <Button className={styles.ContactButton} tag="a">
+                Let’s chat.
+              </Button>
             </Link>
           </div>
         </section>

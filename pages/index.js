@@ -46,7 +46,7 @@ export default function Home({ page, contact }) {
 
         <section className={clsx("container", styles.Projects)}>
           {projectsTitle && (
-            <Heading className={styles.ProjectsHeading} level="h0" tag="h2">
+            <Heading level="h0" tag="h2">
               {projectsTitle}
             </Heading>
           )}

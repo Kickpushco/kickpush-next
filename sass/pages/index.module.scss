@@ -2,13 +2,11 @@
 
 .Projects {
   margin-bottom: rem(150);
-}
-.ProjectsHeading {
-  margin-bottom: rem(80);
+  margin-bottom: var(--section-space);
 }
 
 .Manifesto {
-  margin-bottom: rem(240);
+  margin-bottom: var(--section-space);
 }
 .ManifestoItem {
   margin-top: rem(120);

@@ -1,10 +1,17 @@
 @import "../../sass/global";
 
 .Hero {
-  margin: rem(120) 0 rem(240);
+  margin: calc(var(--section-space) / 2) 0 var(--section-space);
 
-  @media (min-width: 30em) {
+  @include min-width($bp-mobile) {
     text-align: center;
+  }
+
+  h1 {
+    @include min-max-width(320, $bp-mobile) {
+      font-size: rem(56);
+      line-height: rem(60);
+    }
   }
 }
 

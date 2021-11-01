@@ -1,7 +1,7 @@
 @import "../../sass/global";
 
 .Footer {
-  margin: rem(120) auto rem(240);
+  margin: var(--section-space) auto;
 }
 
 .Heading {

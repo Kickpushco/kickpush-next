@@ -21,8 +21,8 @@ function Nav({}) {
             </Link>
           </li>
           <li>
-            <Link href="/people">
-              <a>People</a>
+            <Link href="/about">
+              <a>About</a>
             </Link>
           </li>
           <li>

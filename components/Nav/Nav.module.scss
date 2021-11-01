@@ -5,12 +5,16 @@
   padding: rem(12) 0;
   position: sticky;
   top: 0;
-  margin-top: rem(40);
+  z-index: 99;
 
   :global(.container) {
     display: flex;
     align-items: center;
     max-width: rem(1170);
+  }
+
+  @include min-width($bp-mobile) {
+    margin-top: rem(40);
   }
 }
 
@@ -19,15 +23,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: rem(-14);
+  width: rem(111);
+
+  @include min-width($bp-mobile) {
+    margin-left: rem(-19);
+    width: rem(156);
+  }
 
   svg {
     display: block;
+    height: auto;
+    width: 100%;
   }
 }
 
 .Links {
   list-style: none;
-  display: flex;
+  display: none;
   padding: 0;
   gap: rem(56);
 
@@ -39,5 +52,9 @@
     &:focus {
       text-decoration: underline;
     }
+  }
+
+  @include min-width($bp-tablet) {
+    display: flex;
   }
 }

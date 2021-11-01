@@ -22,7 +22,7 @@
   min-height: stretch;
   display: flex;
   flex-direction: column;
-  padding: rem(56) 0;
+  padding: var(--gutter) 0;
   position: sticky;
   bottom: 0;
 }
@@ -33,8 +33,8 @@
 .HeroContent {
   margin-top: auto;
   margin-bottom: auto;
-  width: rem(820);
-  padding-bottom: rem(56);
+  max-width: rem(820);
+  padding-bottom: var(--gutter);
 }
 .HeroCopy {
   margin-top: rem(24);
@@ -43,7 +43,7 @@
   display: flex;
   gap: rem(16);
   justify-content: space-between;
-  width: rem(1160);
+  max-width: rem(1160);
   font-size: rem(16);
   line-height: rem(20);
 
@@ -58,6 +58,9 @@
   justify-content: center;
   text-align: center;
   z-index: 4;
+}
+.ContactButton {
+  margin: var(--gutter) auto 0;
 }
 
 .Footer {

@@ -35,6 +35,7 @@
 
 html {
   --gutter: #{rem(20)};
+  --section-space: #{rem(120)};
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -43,8 +44,18 @@ html {
   color: $color-kickpush-white;
   font-family: $font-stack-body;
 
-  @media (min-width: 30em) {
+  @include min-width($bp-mobile) {
     --gutter: #{rem(32)};
+    --section-space: #{rem(180)};
+  }
+
+  @include min-width($bp-tablet) {
+    --gutter: #{rem(48)};
+    --section-space: #{rem(240)};
+  }
+
+  @include min-width(1080) {
+    --gutter: #{rem(60)};
   }
 }
 

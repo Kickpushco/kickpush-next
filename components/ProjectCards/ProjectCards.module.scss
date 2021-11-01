@@ -4,7 +4,7 @@
   align-items: stretch;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: rem(60);
+  grid-gap: var(--gutter);
 
   .Card {
     box-shadow: 0 rem(40) rem(60) rem(1) $color-kickpush-dark-red;
