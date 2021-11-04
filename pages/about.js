@@ -1,6 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
-import Image from "next/image";
+// import Image from "next/image";
 
 import { fetchContact, fetchCustomPage } from "utils/contentful";
 
@@ -94,7 +94,7 @@ export default function People({ page, contact }) {
                           {photo.title}
                         </Heading>
                       )}
-                      <Image
+                      {/* <Image
                         className={styles.PhotosGridImage}
                         key={photo.id}
                         src=""
@@ -102,6 +102,11 @@ export default function People({ page, contact }) {
                         src={photo.src}
                         objectFit="cover"
                         layout="fill"
+                      /> */}
+                      <img
+                        className={styles.PhotosGridImage}
+                        src={photo.src}
+                        alt={photo.alt}
                       />
                     </Card>
                   ))}
