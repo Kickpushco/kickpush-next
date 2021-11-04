@@ -1,19 +1,13 @@
 @import "../global";
 
 .Close {
-  background: $color-kickpush-black;
-  color: $color-kickpush-white;
-  padding: rem(10);
-  padding-top: rem(8);
-  width: rem(38);
-  text-align: center;
-  border-radius: rem(4);
+  --button-icon-size: #{rem(20)};
+
+  background: rgba($color-kickpush-black, 0.5);
   position: fixed;
   top: rem(30);
   right: rem(30);
   z-index: 102;
-  font-weight: $font-weight-bold;
-  text-decoration: none;
 }
 
 .Slide {
@@ -40,12 +34,28 @@
   margin-top: rem(24);
 }
 .HeroFooter {
-  display: flex;
-  gap: rem(16);
-  justify-content: space-between;
+  display: grid;
+  gap: var(--gutter);
   max-width: rem(1160);
   font-size: rem(16);
   line-height: rem(20);
+
+  div {
+    width: 100%;
+  }
+
+  @include min-width($bp-mobile) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include min-width($bp-tablet) {
+    display: flex;
+    justify-content: space-between;
+
+    div {
+      width: auto;
+    }
+  }
 
   dt {
     font-weight: $font-weight-bold;
@@ -64,6 +74,8 @@
 }
 
 .Footer {
+  --card-shadow: #{rgba(black, 0.1)};
+
   justify-content: center;
   z-index: 3;
 

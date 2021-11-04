@@ -2,20 +2,21 @@ import { useState } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 
-import { fetchContact, fetchCustomPage } from "@utils/contentful";
+import { fetchContact, fetchCustomPage } from "utils/contentful";
 
-import Nav from "@components/Nav/Nav";
-import Footer from "@components/Footer/Footer";
-import Hero, { HeroCopy } from "@components/Hero/Hero";
-import Button from "@components/Button/Button";
-import Heading from "@components/Heading/Heading";
-import Manifesto from "@components/Manifesto/Manifesto";
-import Title from "@components/Meta/Title";
-import Description from "@components/Meta/Description";
+import AllProjectsCard from "components/Card/AllProjectsCard";
+import Button from "components/Button/Button";
+import Card from "components/Card/Card";
+import Description from "components/Meta/Description";
+import Heading from "components/Heading/Heading";
+import Hero, { HeroCopy } from "components/Hero/Hero";
+import Footer from "components/Footer/Footer";
+import Nav from "components/Nav/Nav";
+import Manifesto from "components/Manifesto/Manifesto";
+import Paragraph from "components/Paragraph/Paragraph";
+import Title from "components/Meta/Title";
 
 import styles from "../sass/pages/about.module.scss";
-
-const MOBILE_PHOTO_GRID_MAX = 4;
 
 export default function People({ page, contact }) {
   const [showAllPhotos, setShowAllPhotos] = useState(false);
@@ -28,15 +29,26 @@ export default function People({ page, contact }) {
     photosTitle,
     photosOutro,
     manifestoItems,
+    articlesTitle,
   } = page.fields;
 
   const photosGrid = page.fields.photosGrid.map(({ sys, fields }) => {
     const { title, file, description } = fields;
     return {
+      id: sys.id,
       title,
       alt: description || "",
       src: `https:${file.url}`,
+    };
+  });
+
+  const articlesItems = page.fields.articlesItems?.map(({ sys, fields }) => {
+    const { title, link, type } = fields;
+    return {
       id: sys.id,
+      title,
+      link,
+      type,
     };
   });
 
@@ -45,6 +57,7 @@ export default function People({ page, contact }) {
   };
 
   const showPhotosSection = photosTitle || photosGrid.length || photosOutro;
+  const showArticlesSection = articlesTitle || articlesItems?.length;
 
   return (
     <>
@@ -74,8 +87,8 @@ export default function People({ page, contact }) {
                     showAllPhotos && styles["PhotosGridCell-show"]
                   )}
                 >
-                  {photosGrid.map((photo) => (
-                    <div className={styles.PhotosGridCell}>
+                  {photosGrid.map((photo, photoIndex) => (
+                    <Card className={styles.PhotosGridCell} key={photoIndex}>
                       {photo.title && (
                         <Heading level="h6" tag="span">
                           {photo.title}
@@ -90,7 +103,7 @@ export default function People({ page, contact }) {
                         objectFit="cover"
                         layout="fill"
                       />
-                    </div>
+                    </Card>
                   ))}
                 </div>
                 {!showAllPhotos && (
@@ -112,7 +125,7 @@ export default function People({ page, contact }) {
           </section>
         )}
 
-        {manifestoItems.length && (
+        {!!manifestoItems.length && (
           <section className={clsx("container", styles.Manifesto)}>
             {manifestoItems.map((item) => (
               <Manifesto
@@ -124,6 +137,60 @@ export default function People({ page, contact }) {
             ))}
           </section>
         )}
+
+        <div className="container">
+          <AllProjectsCard />
+
+          {showArticlesSection && (
+            <>
+              {articlesTitle && (
+                <Heading className={styles.ArticlesTitle} level="h1" tag="h2">
+                  {articlesTitle}
+                </Heading>
+              )}
+
+              {articlesItems?.map((article) => (
+                <Card
+                  className={styles.ArticlesCard}
+                  href={article.link}
+                  key={article.id}
+                >
+                  {article.type && (
+                    <Paragraph level="label" tag="p">
+                      {article.type}
+                    </Paragraph>
+                  )}
+                  <Heading tag="p" level="h5">
+                    The British Museum, November 2016
+                  </Heading>
+
+                  <Heading className={styles.ArticlesCardTitle} level="h3">
+                    Beyond Reality: Reinventing VR workflows.
+                  </Heading>
+                </Card>
+              ))}
+
+              <Card
+                className={clsx(
+                  styles.ArticlesCard,
+                  styles["ArticlesCard--growing"]
+                )}
+                href="https://google.com"
+              >
+                <Paragraph level="label" tag="p">
+                  Article
+                </Paragraph>
+                <Heading tag="p" level="h5">
+                  London, April 2016
+                </Heading>
+
+                <Heading className={styles.ArticlesCardTitle} level="h3">
+                  Growing pains: The first year of Kickpush.
+                </Heading>
+              </Card>
+            </>
+          )}
+        </div>
       </main>
 
       <Footer contact={contact} />

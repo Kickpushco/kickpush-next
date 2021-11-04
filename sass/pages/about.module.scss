@@ -14,9 +14,10 @@
   }
 }
 .PhotosGridCell {
+  background: $color-kickpush-dark-red;
+  border-radius: rem(4);
   position: relative;
-  // TODO: Var
-  box-shadow: 0 rem(40) rem(60) rem(1) $color-kickpush-dark-red;
+  padding: 0;
 
   &::before {
     content: "";
@@ -84,4 +85,26 @@
 }
 .ManifestoItem {
   margin-top: var(--section-space);
+}
+
+.ArticlesTitle {
+  margin-bottom: 1.25em;
+  margin-top: var(--section-space);
+
+  @include min-width($bp-mobile) {
+    text-align: center;
+  }
+}
+.ArticlesCard {
+  margin-top: var(--gutter);
+  display: flex;
+  flex-direction: column;
+}
+.ArticlesCard--growing {
+  background: #ffddc2;
+  color: $color-kickpush-black;
+}
+.ArticlesCardTitle {
+  margin-top: auto;
+  width: 40%;
 }

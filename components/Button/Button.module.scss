@@ -1,6 +1,9 @@
 @import "../../sass/global";
 
 .Button {
+  --button-size: #{rem(54)};
+  --button-icon-size: #{rem(16)};
+
   appearance: none;
   border: 0;
   border-radius: rem(10);
@@ -13,19 +16,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: rem(54);
+  min-width: var(--button-size);
   padding: rem(4) rem(40);
-  min-height: rem(54);
+  min-height: var(--button-size);
   font-size: rem(20);
 
-  &:focus {
-    outline: none;
+  svg {
+    height: var(--button-icon-size);
+    width: var(--button-icon-size);
   }
-  &:focus-visible {
-    outline: rem(2) $color-kickpush-white solid;
+
+  path {
+    fill: currentColor;
   }
+}
+
+.Button-small {
+  --button-size: #{rem(40)};
 }
 
 .BlockButton {
   width: 100%;
+}
+
+.IconButton {
+  padding: 0;
+}
+
+.GhostButton {
+  border-radius: rem(4);
+  background: none;
+  padding: 0;
+  margin: calc((var(--button-icon-size) - var(--button-size)) / 2);
 }

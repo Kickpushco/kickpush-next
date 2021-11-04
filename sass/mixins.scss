@@ -1,7 +1,11 @@
 @use "sass:math";
 
-@function rem($pixels) {
-  @return math.div($pixels, 16) * 1rem;
+@function rem($pixels, $root-pixels: 16) {
+  @return math.div($pixels, $root-pixels) * 1rem;
+}
+
+@function em($pixels, $parent-pixels: 16) {
+  @return math.div($pixels, $parent-pixels) * 1em;
 }
 
 @mixin min-width($min-width-pixels) {

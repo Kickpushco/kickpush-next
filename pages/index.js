@@ -1,21 +1,17 @@
 import clsx from "clsx";
+import { fetchContact, fetchCustomPage } from "utils/contentful";
+import { CONTACT_EMAIL } from "utils/constants";
 
-import {
-  fetchContact,
-  fetchCustomPage,
-  fetchProjects,
-} from "@utils/contentful";
-import { CONTACT_EMAIL } from "@utils/constants";
-
-import Nav from "@components/Nav/Nav";
-import Footer from "@components/Footer/Footer";
-import Hero, { HeroCopy } from "@components/Hero/Hero";
-import Heading from "@components/Heading/Heading";
-import Manifesto from "@components/Manifesto/Manifesto";
-import ProjectCards from "@components/ProjectCards/ProjectCards";
-import Title from "@components/Meta/Title";
-import Description from "@components/Meta/Description";
-import LabelData from "@components/Meta/LabelData";
+import Nav from "components/Nav/Nav";
+import Footer from "components/Footer/Footer";
+import Hero, { HeroCopy } from "components/Hero/Hero";
+import Heading from "components/Heading/Heading";
+import Manifesto from "components/Manifesto/Manifesto";
+import ContentfulProjectCard from "components/ProjectCard/ContentfulProjectCard";
+import Title from "components/Meta/Title";
+import Description from "components/Meta/Description";
+import LabelData from "components/Meta/LabelData";
+import AllProjectsCard from "components/Card/AllProjectsCard";
 
 import styles from "../sass/pages/index.module.scss";
 
@@ -50,10 +46,16 @@ export default function Home({ page, contact }) {
               {projectsTitle}
             </Heading>
           )}
-          <ProjectCards projectsList={projectsList} showProjectsLink />
+
+          <div className={styles.ProjectsList} projectsList={projectsList}>
+            {projectsList.fields.projects.map((project) => (
+              <ContentfulProjectCard key={project.sys.slug} project={project} />
+            ))}
+            <AllProjectsCard className={styles.AllProjects} />
+          </div>
         </section>
 
-        {manifestoItems.length && (
+        {!!manifestoItems.length && (
           <section className={clsx("container", styles.Manifesto)}>
             {manifestoItems.map((item) => (
               <Manifesto

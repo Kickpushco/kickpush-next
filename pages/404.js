@@ -1,9 +1,9 @@
 import Head from "next/head";
 
-import Nav from "@components/Nav/Nav";
-import Hero from "@components/Hero/Hero";
-import Heading from "@components/Heading/Heading";
-import Title from "@components/Meta/Title";
+import Nav from "components/Nav/Nav";
+import Hero from "components/Hero/Hero";
+import Heading from "components/Heading/Heading";
+import Title from "components/Meta/Title";
 
 export default function PageNotFound() {
   return (

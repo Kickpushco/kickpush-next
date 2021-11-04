@@ -1,16 +1,23 @@
+import { forwardRef } from "react";
 import clsx from "clsx";
 
 import styles from "./Heading.module.scss";
 
-function Heading({ className, children, tag, level = "h2" }) {
-  const HeadingTag = tag || level;
-  return (
-    <HeadingTag
-      className={clsx(className, styles.Heading, styles[`Heading-${level}`])}
-    >
-      {children}
-    </HeadingTag>
-  );
-}
+const Heading = forwardRef(
+  ({ className, children, tag, level = "h2", ...props }, ref) => {
+    const HeadingTag = tag || level;
+    return (
+      <HeadingTag
+        className={clsx(className, styles.Heading, styles[`Heading-${level}`])}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </HeadingTag>
+    );
+  }
+);
+
+Heading.displayName = "Heading";
 
 export default Heading;

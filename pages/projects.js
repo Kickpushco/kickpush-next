@@ -1,21 +1,18 @@
 import clsx from "clsx";
 
-import {
-  fetchContact,
-  fetchCustomPage,
-  fetchProjects,
-} from "@utils/contentful";
+import { fetchContact, fetchCustomPage } from "utils/contentful";
 
-import Nav from "@components/Nav/Nav";
-import Footer from "@components/Footer/Footer";
-import Hero, { HeroCopy } from "@components/Hero/Hero";
-import Heading from "@components/Heading/Heading";
-import Manifesto from "@components/Manifesto/Manifesto";
-import ProjectCards from "@components/ProjectCards/ProjectCards";
+import Nav from "components/Nav/Nav";
+import Footer from "components/Footer/Footer";
+import Hero, { HeroCopy } from "components/Hero/Hero";
+import Heading from "components/Heading/Heading";
+import Manifesto from "components/Manifesto/Manifesto";
+import ContentfulProjectCard from "components/ProjectCard/ContentfulProjectCard";
 
-import styles from "../sass/pages/index.module.scss";
-import Title from "@components/Meta/Title";
-import Description from "@components/Meta/Description";
+import Title from "components/Meta/Title";
+import Description from "components/Meta/Description";
+
+import styles from "sass/pages/projects.module.scss";
 
 export default function Home({ page, contact }) {
   const { metaDescription, heroTitle, heroCopy, projectsList } = page.fields;
@@ -34,7 +31,9 @@ export default function Home({ page, contact }) {
         </Hero>
 
         <section className={clsx("container", styles.Projects)}>
-          <ProjectCards projectsList={projectsList} />
+          {projectsList.fields.projects.map((project) => (
+            <ContentfulProjectCard key={project.sys.slug} project={project} />
+          ))}
         </section>
       </main>
 

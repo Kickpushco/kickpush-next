@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import Heading from "@components/Heading/Heading";
+import Heading from "components/Heading/Heading";
 
 import styles from "./Manifesto.module.scss";
 

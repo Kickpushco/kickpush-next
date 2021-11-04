@@ -1,0 +1,32 @@
+@import "../../sass/global";
+
+.Card {
+  box-shadow: 0 rem(40) rem(60) rem(1)
+    var(--card-shadow, #{$color-kickpush-dark-red});
+  color: $color-kickpush-white;
+  border-radius: rem(10);
+  display: block;
+  margin: 0 auto;
+  max-width: rem(440);
+  padding: var(--gutter);
+  width: 100%;
+
+  &-small {
+    aspect-ratio: 440/496;
+  }
+  &-large {
+    aspect-ratio: 1170/556;
+  }
+
+  @include min-width($bp-tablet) {
+    max-width: none;
+
+    &-small {
+      padding: rem(32);
+    }
+  }
+}
+
+a.Card {
+  text-decoration: none;
+}

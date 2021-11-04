@@ -1,5 +1,7 @@
 @import "../../sass/global";
 
+@value mobileNav: #{em($bp-tablet)};
+
 .Nav {
   background: $color-kickpush-red;
   padding: rem(12) 0;
@@ -13,7 +15,7 @@
     max-width: rem(1170);
   }
 
-  @include min-width($bp-mobile) {
+  @include min-width($bp-tablet) {
     margin-top: rem(40);
   }
 }
@@ -25,6 +27,7 @@
   align-items: center;
   margin-left: rem(-14);
   width: rem(111);
+  outline-offset: 0;
 
   @include min-width($bp-mobile) {
     margin-left: rem(-19);
@@ -38,23 +41,64 @@
   }
 }
 
+.Menu {
+  @include max-width($bp-tablet) {
+    background: $color-kickpush-red;
+    position: fixed;
+    align-items: center;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    padding: var(--gutter);
+
+    .Nav-mobileOpen & {
+      display: flex;
+    }
+  }
+}
+
 .Links {
   list-style: none;
-  display: none;
+  display: flex;
   padding: 0;
-  gap: rem(56);
+  gap: var(--gutter);
 
   a {
     text-decoration: none;
     font-weight: bold;
+    display: block;
+    margin: 0;
 
-    &:hover,
-    &:focus {
+    &:hover {
       text-decoration: underline;
     }
   }
 
-  @include min-width($bp-tablet) {
-    display: flex;
+  @include max-width($bp-tablet) {
+    margin: auto 0;
+    flex-direction: column;
+
+    a {
+      width: fit-content;
+      margin: 0 auto;
+      padding: 0 0.25em;
+    }
   }
+}
+
+.MobileToggle {
+  padding-top: rem(2); // Offsets hamburger
+
+  svg {
+    width: rem(16);
+    height: rem(16);
+  }
+}
+.MobileClose {
+  --button-icon-size: #{rem(20)};
+
+  margin-top: var(--gutter);
 }

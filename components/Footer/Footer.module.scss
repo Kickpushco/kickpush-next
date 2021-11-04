@@ -6,10 +6,11 @@
 
 .Heading {
   max-width: 11em;
+  margin-bottom: var(--gutter);
 }
 
 .Email {
-  margin-top: rem(48);
+  margin-bottom: 0;
 
   a {
     text-decoration: none;

@@ -1,11 +1,11 @@
-import { fetchContact } from "@utils/contentful";
-import { CONTACT_EMAIL } from "@utils/constants";
+import { fetchContact } from "utils/contentful";
+import { CONTACT_EMAIL } from "utils/constants";
 
-import Nav from "@components/Nav/Nav";
-import Footer from "@components/Footer/Footer";
-import Title from "@components/Meta/Title";
-import LabelData from "@components/Meta/LabelData";
-import Description from "@components/Meta/Description";
+import Nav from "components/Nav/Nav";
+import Footer from "components/Footer/Footer";
+import Title from "components/Meta/Title";
+import LabelData from "components/Meta/LabelData";
+import Description from "components/Meta/Description";
 
 export default function Contact({ page }) {
   const { metaDescription, shortName } = page;

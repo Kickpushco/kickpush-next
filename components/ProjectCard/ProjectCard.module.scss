@@ -1,0 +1,18 @@
+@import "../../sass/global";
+
+.Card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  &-light {
+    color: $color-kickpush-white;
+  }
+  &-dark {
+    color: $color-kickpush-black;
+  }
+}
+
+.Title {
+  align-self: flex-end;
+  margin-bottom: 0;
+}

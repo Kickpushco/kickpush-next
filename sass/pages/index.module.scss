@@ -4,6 +4,18 @@
   margin-bottom: rem(150);
   margin-bottom: var(--section-space);
 }
+.ProjectsList {
+  align-items: stretch;
+  display: grid;
+  gap: var(--gutter);
+
+  @include min-width($bp-tablet) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.AllProjects {
+  grid-column: 1 / -1;
+}
 
 .Manifesto {
   margin-bottom: var(--section-space);

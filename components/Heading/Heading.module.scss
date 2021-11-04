@@ -2,6 +2,7 @@
 
 .Heading {
   display: block;
+  margin-bottom: 0.25em;
   font-family: $font-family-heading;
   font-weight: $font-weight-heading;
   white-space: pre-wrap;
@@ -12,7 +13,7 @@
     font-size: rem(56);
     line-height: rem(60);
     color: $color-kickpush-dark-red;
-    margin-bottom: rem(120);
+    margin-bottom: 1.25em;
 
     @include min-width($bp-mobile) {
       font-size: rem(80);

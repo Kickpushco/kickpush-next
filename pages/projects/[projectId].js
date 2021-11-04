@@ -1,24 +1,19 @@
 import Link from "next/link";
 import clsx from "clsx";
 
-import {
-  fetchProject,
-  fetchProjects,
-  fetchCustomPage,
-} from "@utils/contentful";
+import { fetchProject, fetchProjects, fetchCustomPage } from "utils/contentful";
 
-import Heading from "@components/Heading/Heading";
-import Paragraph from "@components/Paragraph/Paragraph";
-import Description from "@components/Meta/Description";
-import Title from "@components/Meta/Title";
-import LabelData from "@components/Meta/LabelData";
-import Button from "@components/Button/Button";
+import Heading from "components/Heading/Heading";
+import Paragraph from "components/Paragraph/Paragraph";
+import Description from "components/Meta/Description";
+import Title from "components/Meta/Title";
+import LabelData from "components/Meta/LabelData";
+import Button from "components/Button/Button";
+import ContentfulProjectCard from "components/ProjectCard/ContentfulProjectCard";
+
+import IconClose from "assets/icons/20-close.svg";
 
 import styles from "../../sass/pages/project.module.scss";
-import {
-  ProjectCard,
-  projectCardTextColorMap,
-} from "@components/ProjectCards/ProjectCards";
 
 const footerStyles = {
   Light: styles["Footer-light"],
@@ -46,9 +41,14 @@ export default function Project({ project, nextProject }) {
 
       <main>
         <Link href="/projects">
-          <a className={styles.Close} aria-label="Back to projects">
-            &times;
-          </a>
+          <Button
+            className={styles.Close}
+            aria-label="Back to projects"
+            ghost
+            size="small"
+          >
+            <IconClose role="presentation" />
+          </Button>
         </Link>
 
         <ProjectHero
@@ -79,17 +79,11 @@ export default function Project({ project, nextProject }) {
           )}
         >
           <div className="container">
-            <Link href={`/projects/${nextProject.fields.slug}`} passHref>
-              <ProjectCard
-                className={styles.FooterCard}
-                size="large"
-                byline={nextClientName}
-                year={nextYear}
-                title={nextCardTitle}
-                backgroundColor={nextCardColor}
-                textColor={projectCardTextColorMap[nextCardTextColor]}
-              />
-            </Link>
+            <ContentfulProjectCard
+              className={styles.FooterCard}
+              size="large"
+              project={nextProject}
+            />
           </div>
         </section>
       </main>
