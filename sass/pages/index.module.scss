@@ -12,6 +12,13 @@
   @include min-width($bp-tablet) {
     grid-template-columns: 1fr 1fr;
   }
+
+  @include max-width($bp-tablet) {
+    // Hides all but the first 3 and the all projects cards
+    > :nth-child(n + 4):not(:last-child) {
+      display: none;
+    }
+  }
 }
 .AllProjects {
   grid-column: 1 / -1;
