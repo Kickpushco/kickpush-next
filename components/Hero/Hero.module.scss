@@ -8,11 +8,17 @@
   }
 
   h1 {
+    @include hero-animation("h1");
+
     @include min-max-width(320, $bp-mobile) {
       font-size: rem(56);
       line-height: rem(60);
     }
   }
+}
+
+.Copy {
+  @include hero-animation("copy");
 }
 
 .Container {

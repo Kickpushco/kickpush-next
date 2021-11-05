@@ -16,13 +16,18 @@
     margin-bottom: 1.25em;
 
     @include min-width($bp-mobile) {
-      font-size: rem(80);
-      line-height: rem(86);
+      font-size: rem(72);
+      line-height: rem(78);
     }
 
     @include min-width($bp-tablet) {
+      font-size: rem(88);
+      line-height: rem(93);
+    }
+
+    @include min-width($bp-desktop) {
       font-size: rem(104);
-      line-height: rem(108);
+      line-height: rem(110);
     }
   }
   &-h1 {
@@ -44,13 +49,23 @@
     line-height: rem(30);
 
     @include min-width($bp-mobile) {
+      font-size: rem(40);
+      line-height: rem(50);
+    }
+
+    @include min-width($bp-tablet) {
       font-size: rem(56);
       line-height: rem(70);
     }
   }
   &-h3 {
-    font-size: rem(40);
-    line-height: rem(48);
+    font-size: rem(24);
+    line-height: rem(30);
+
+    @include min-width($bp-mobile) {
+      font-size: rem(40);
+      line-height: rem(48);
+    }
   }
   &-h4 {
     font-size: rem(24);
@@ -62,8 +77,13 @@
     }
   }
   &-h5 {
-    font-size: rem(24);
-    line-height: rem(30);
+    font-size: rem(16);
+    line-height: rem(22);
+
+    @include min-width($bp-mobile) {
+      font-size: rem(24);
+      line-height: rem(30);
+    }
   }
   &-h6 {
     font-size: rem(16);

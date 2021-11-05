@@ -7,6 +7,8 @@ import Title from "components/Meta/Title";
 import LabelData from "components/Meta/LabelData";
 import Description from "components/Meta/Description";
 
+import styles from "sass/pages/contact.module.scss";
+
 export default function Contact({ page }) {
   const { metaDescription, shortName } = page;
 
@@ -18,7 +20,7 @@ export default function Contact({ page }) {
 
       <Nav />
 
-      <Footer contact={page} />
+      <Footer className={styles.Footer} contact={page} isHero />
     </>
   );
 }

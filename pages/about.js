@@ -7,6 +7,7 @@ import { fetchContact, fetchCustomPage } from "utils/contentful";
 import AllProjectsCard from "components/Card/AllProjectsCard";
 import Button from "components/Button/Button";
 import Card from "components/Card/Card";
+import ActionCard from "components/Card/ActionCard";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
 import Hero, { HeroCopy } from "components/Hero/Hero";
@@ -155,44 +156,52 @@ export default function People({ page, contact }) {
               )}
 
               {articlesItems?.map((article) => (
-                <Card
+                <ActionCard
                   className={styles.ArticlesCard}
                   href={article.link}
                   key={article.id}
+                  topChildren={
+                    <>
+                      {article.type && (
+                        <Paragraph level="label" tag="p">
+                          {article.type}
+                        </Paragraph>
+                      )}
+                      <Heading tag="p" level="h5">
+                        The British Museum, November 2016
+                      </Heading>
+                    </>
+                  }
+                  actionCta={`View ${article.type}`}
                 >
-                  {article.type && (
-                    <Paragraph level="label" tag="p">
-                      {article.type}
-                    </Paragraph>
-                  )}
-                  <Heading tag="p" level="h5">
-                    The British Museum, November 2016
-                  </Heading>
-
                   <Heading className={styles.ArticlesCardTitle} level="h3">
                     Beyond Reality: Reinventing VR workflows.
                   </Heading>
-                </Card>
+                </ActionCard>
               ))}
 
-              <Card
+              <ActionCard
                 className={clsx(
                   styles.ArticlesCard,
                   styles["ArticlesCard--growing"]
                 )}
                 href="https://google.com"
+                actionCta="View Article"
+                topChildren={
+                  <>
+                    <Paragraph level="label" tag="p">
+                      Article
+                    </Paragraph>
+                    <Heading tag="p" level="h5">
+                      London, April 2016
+                    </Heading>
+                  </>
+                }
               >
-                <Paragraph level="label" tag="p">
-                  Article
-                </Paragraph>
-                <Heading tag="p" level="h5">
-                  London, April 2016
-                </Heading>
-
                 <Heading className={styles.ArticlesCardTitle} level="h3">
                   Growing pains: The first year of Kickpush.
                 </Heading>
-              </Card>
+              </ActionCard>
             </>
           )}
         </div>

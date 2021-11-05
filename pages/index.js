@@ -47,9 +47,9 @@ export default function Home({ page, contact }) {
             </Heading>
           )}
 
-          <div className={styles.ProjectsList} projectsList={projectsList}>
+          <div className={styles.ProjectsList}>
             {projectsList.fields.projects.map((project) => (
-              <ContentfulProjectCard key={project.sys.slug} project={project} />
+              <ContentfulProjectCard key={project.sys.id} project={project} />
             ))}
             <AllProjectsCard className={styles.AllProjects} />
           </div>

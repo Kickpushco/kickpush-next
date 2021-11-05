@@ -6,12 +6,22 @@ import Heading from "components/Heading/Heading";
 
 import styles from "./Footer.module.scss";
 
-function Footer({ contact }) {
+function Footer({ className, contact, isHero, ...props }) {
   if (!contact) return null;
 
+  const headingTag = isHero ? "h1" : "p";
+
   return (
-    <footer className={clsx("container", styles.Footer)}>
-      <Heading className={styles.Heading} level="h1" tag="p">
+    <footer
+      className={clsx(
+        className,
+        "container",
+        styles.Footer,
+        isHero && styles["Footer-hero"]
+      )}
+      {...props}
+    >
+      <Heading className={styles.Heading} level="h1" tag={headingTag}>
         {contact.fields.heroTitle}
       </Heading>
       <Heading className={styles.Email} level="h4" tag="p">

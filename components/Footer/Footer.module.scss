@@ -1,19 +1,29 @@
 @import "../../sass/global";
 
 .Footer {
-  margin: var(--section-space) auto;
+  padding-bottom: var(--section-space);
 }
 
 .Heading {
   max-width: 11em;
   margin-bottom: var(--gutter);
+
+  .Footer-hero & {
+    @include hero-animation("h1");
+  }
 }
 
 .Email {
   margin-bottom: 0;
 
+  .Footer-hero & {
+    @include hero-animation("copy");
+  }
+
   a {
     text-decoration: none;
+    padding: 0 0.25em;
+    margin: 0 -0.25em;
 
     &:hover,
     &:focus {

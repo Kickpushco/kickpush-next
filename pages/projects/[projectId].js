@@ -39,7 +39,7 @@ export default function Project({ project, nextProject }) {
       <LabelData number="1" label="Client" data={clientName} />
       <LabelData number="2" label="Designed in" data={year} />
 
-      <main>
+      <main className={styles.Main}>
         <Link href="/projects">
           <Button
             className={styles.Close}
@@ -79,6 +79,7 @@ export default function Project({ project, nextProject }) {
           )}
         >
           <div className="container">
+            {/* TODO: Fix scroll to on focus */}
             <ContentfulProjectCard
               className={styles.FooterCard}
               size="large"
@@ -95,7 +96,9 @@ function ProjectHero({ title, copy, year, designer, deliverables, platform }) {
   return (
     <section className={clsx(styles.Slide, styles.Hero)}>
       <div className={clsx("container", styles.HeroContent)}>
-        <Heading level="h1">{title}</Heading>
+        <Heading className={styles.HeroTitle} level="h1">
+          {title}
+        </Heading>
         {copy && (
           <Paragraph className={styles.HeroCopy} level="huge">
             {copy}

@@ -103,8 +103,6 @@
 }
 .ArticlesCard {
   margin-top: var(--gutter);
-  display: flex;
-  flex-direction: column;
 }
 .ArticlesCard--growing {
   background: #ffddc2;
@@ -112,5 +110,5 @@
 }
 .ArticlesCardTitle {
   margin-top: auto;
-  width: 40%;
+  max-width: 14em;
 }

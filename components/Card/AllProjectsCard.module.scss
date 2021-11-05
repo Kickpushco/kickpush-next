@@ -1,0 +1,47 @@
+@use "sass:math";
+
+@import "../../sass/global";
+
+$temp: 100%;
+
+.Rows {
+  transform: rotate(-15deg);
+  width: calc(100% + (var(--gutter) * 2));
+  margin: calc(var(--gutter) * -1);
+  margin-top: 0;
+  align-self: flex-end;
+
+  @include max-width($bp-tablet) {
+    width: calc(#{100% + $temp} + (var(--gutter) * 2));
+    margin-left: calc(var(--gutter) * -1 - #{math.div($temp, 2)});
+    margin-right: calc(var(--gutter) * -1 - #{math.div($temp, 2)});
+    margin-top: 10%;
+  }
+
+  img {
+    display: block;
+    height: auto;
+    width: 1114 / 940 * 100%;
+    transition: transform $duration-card-image-out ease-out;
+
+    &:last-child {
+      margin-top: math.div(16, 940) * 100%;
+      margin-left: math.div(105 + 8, 940) * 100%;
+    }
+  }
+
+  .Card:hover &,
+  .Card:focus & {
+    img {
+      transition-duration: $duration-card-image-in;
+
+      &:first-child {
+        transform: translateX(-4%);
+      }
+
+      &:last-child {
+        transform: translateX(8%);
+      }
+    }
+  }
+}

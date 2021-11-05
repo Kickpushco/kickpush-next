@@ -10,6 +10,10 @@
   z-index: 102;
 }
 
+.Main {
+  margin-bottom: 0;
+}
+
 .Slide {
   background: $color-kickpush-black;
   height: 100vh;
@@ -30,8 +34,11 @@
   max-width: rem(820);
   padding-bottom: var(--gutter);
 }
+.HeroTitle {
+  @include hero-animation("h1");
+}
 .HeroCopy {
-  margin-top: rem(24);
+  @include hero-animation("copy");
 }
 .HeroFooter {
   display: grid;
@@ -80,9 +87,13 @@
   z-index: 3;
 
   &-light {
+    --focus-ring: #{rgba($color-kickpush-black, 0.6)};
+
     background: $color-kickpush-white;
   }
   &-dark {
+    --focus-ring: #{rgba($color-kickpush-white, 0.6)};
+
     background: $color-kickpush-black;
   }
 }

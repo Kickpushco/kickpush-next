@@ -6,10 +6,18 @@ const projectCardTextColorMap = {
 };
 
 function ContentfulProjectCard({ project, ...props }) {
-  const { slug, clientName, year, cardTitle, cardColor, cardTextColor } =
-    project.fields;
+  const {
+    slug,
+    clientName,
+    year,
+    cardTitle,
+    cardColor,
+    cardTextColor,
+    cardImage,
+  } = project.fields;
 
   const textColor = projectCardTextColorMap[cardTextColor];
+  const cardImageUrl = cardImage ? `https:${cardImage.fields.file.url}` : null;
 
   return (
     <ProjectCard
@@ -18,6 +26,7 @@ function ContentfulProjectCard({ project, ...props }) {
       year={year}
       title={cardTitle}
       backgroundColor={cardColor}
+      backgroundImage={cardImageUrl}
       textColor={textColor}
       {...props}
     />

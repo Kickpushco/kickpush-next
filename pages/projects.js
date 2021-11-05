@@ -32,7 +32,7 @@ export default function Home({ page, contact }) {
 
         <section className={clsx("container", styles.Projects)}>
           {projectsList.fields.projects.map((project) => (
-            <ContentfulProjectCard key={project.sys.slug} project={project} />
+            <ContentfulProjectCard key={project.sys.id} project={project} />
           ))}
         </section>
       </main>

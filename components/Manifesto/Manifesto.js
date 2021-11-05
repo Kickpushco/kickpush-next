@@ -11,7 +11,7 @@ function Manifesto({ className, short, long }) {
       <Heading className={styles.Short} level="h4" tag="h3">
         {short}
       </Heading>
-      <Heading level="h2" tag="p">
+      <Heading className={styles.Long} level="h2" tag="p">
         {long}
       </Heading>
     </div>

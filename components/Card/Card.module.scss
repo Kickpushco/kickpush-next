@@ -1,6 +1,9 @@
+@use "sass:math";
+
 @import "../../sass/global";
 
 .Card {
+  aspect-ratio: 440/496;
   box-shadow: 0 rem(40) rem(60) rem(1)
     var(--card-shadow, #{$color-kickpush-dark-red});
   color: $color-kickpush-white;
@@ -9,14 +12,8 @@
   margin: 0 auto;
   max-width: rem(440);
   padding: var(--gutter);
+  position: relative;
   width: 100%;
-
-  &-small {
-    aspect-ratio: 440/496;
-  }
-  &-large {
-    aspect-ratio: 1170/556;
-  }
 
   @include min-width($bp-tablet) {
     max-width: none;
@@ -24,9 +21,41 @@
     &-small {
       padding: rem(32);
     }
+
+    &-large {
+      aspect-ratio: 1170/556;
+    }
   }
 }
 
-a.Card {
-  text-decoration: none;
+.AllProjectsCardRows {
+  transform: rotate(-15deg);
+  width: calc(100% + (var(--gutter) * 2));
+  margin: 0 calc(var(--gutter) * -1);
+
+  img {
+    display: block;
+    height: auto;
+    width: 1114 / 940 * 100%;
+    transition: transform $duration-card-image-out ease-out;
+
+    &:last-child {
+      margin-top: math.div(16, 940) * 100%;
+      margin-left: math.div(105 + 8, 940) * 100%;
+    }
+  }
+
+  .AllProjectsCard:hover & {
+    img {
+      transition-duration: $duration-card-image-in;
+
+      &:first-child {
+        transform: translateX(-8%);
+      }
+
+      &:last-child {
+        transform: translateX(12%);
+      }
+    }
+  }
 }

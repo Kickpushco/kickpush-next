@@ -1,0 +1,68 @@
+@use "sass:math";
+
+@import "../../sass/global";
+
+.Card {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  text-decoration: none;
+  transition: $duration-card-action ease-in-out;
+  transition-property: box-shadow, transform;
+
+  &:hover {
+    box-shadow: 0 rem(20) rem(30) rem(1)
+      var(--card-shadow, #{$color-kickpush-dark-red});
+  }
+
+  &:active {
+    box-shadow: 0 rem(10) rem(15) rem(1)
+      var(--card-shadow, #{$color-kickpush-dark-red});
+    transform: translateY(#{rem(4)});
+  }
+}
+
+.Top {
+  grid-row: 1;
+  grid-column: 1;
+  transition: $duration-card-action ease-in-out;
+
+  &-action {
+    opacity: 0;
+    transform: translateX(#{rem(-8)});
+    padding-right: 0.25em;
+
+    svg {
+      height: auto;
+      width: 0.75em;
+      transition: transform $duration-card-action ease-in;
+      transition-property: transform, opacity;
+    }
+
+    path {
+      fill: currentColor;
+    }
+
+    .Card:hover &,
+    .Card:focus & {
+      opacity: 1;
+      transition-delay: $duration-card-action;
+      transform: none;
+
+      svg {
+        transform: translateX(0.25em);
+        transition: transform $duration-card-image-in ease-out;
+      }
+    }
+  }
+  &-info {
+    transition-delay: $duration-card-action;
+
+    .Card:hover &,
+    .Card:focus & {
+      opacity: 0;
+      transform: translateX(#{rem(8)});
+      transition-delay: 0ms;
+    }
+  }
+}

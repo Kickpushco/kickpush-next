@@ -13,7 +13,7 @@ function Hero({ children }) {
 
 export function HeroCopy({ children }) {
   return (
-    <Paragraph className={styles.HeroCopy} level="huge">
+    <Paragraph className={styles.Copy} level="huge">
       {children}
     </Paragraph>
   );
