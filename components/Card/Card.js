@@ -3,8 +3,10 @@ import clsx from "clsx";
 
 import styles from "./Card.module.scss";
 
+export const CARD_DEFAULT_SIZE = "large";
+
 const Card = forwardRef(
-  ({ className, children, size = "large", ...props }, ref) => {
+  ({ className, children, size = CARD_DEFAULT_SIZE, ...props }, ref) => {
     const CardTag = props.href ? "a" : "div";
     return (
       <CardTag

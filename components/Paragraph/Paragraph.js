@@ -2,7 +2,13 @@ import clsx from "clsx";
 
 import styles from "./Paragraph.module.scss";
 
-function Paragraph({ className, children, tag = "p", level = "big" }) {
+function Paragraph({
+  className,
+  children,
+  tag = "p",
+  level = "big",
+  ...props
+}) {
   const ParagraphTag = tag;
   return (
     <ParagraphTag
@@ -11,6 +17,7 @@ function Paragraph({ className, children, tag = "p", level = "big" }) {
         styles.Paragraph,
         styles[`Paragraph-${level}`]
       )}
+      {...props}
     >
       {children}
     </ParagraphTag>

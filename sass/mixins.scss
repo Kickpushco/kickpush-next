@@ -33,6 +33,29 @@
   }
 }
 
+@mixin card-shadow($card-shadow-state: "idle") {
+  // Darkened to compensate for smaller shadows (required to avoid overlaps)
+  $card-default-shadow: darken($color-kickpush-dark-red, 15%);
+  $card-shadow-color: var(--card-shadow-color, #{$card-default-shadow});
+
+  $multiplier-1: 0.25;
+  $multiplier-2: 0.75;
+
+  @if ($card-shadow-state == "hover") {
+    $multiplier-1: 0.125;
+    $multiplier-2: 0.5;
+  }
+  @if ($card-shadow-state == "active") {
+    $multiplier-1: 0.1;
+    $multiplier-2: 0.25;
+  }
+
+  $temp-1: calc(var(--gutter) * #{$multiplier-1});
+  $temp-2: calc(var(--gutter) * #{$multiplier-2});
+
+  box-shadow: $card-shadow-color 0 $temp-1 $temp-2 0;
+}
+
 @mixin sr-only {
   position: absolute;
   width: 1px;

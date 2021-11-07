@@ -1,0 +1,15 @@
+@use "sass:math";
+
+@import "../../sass/global";
+
+.CardsWrapper {
+  align-items: stretch;
+  display: grid;
+  gap: var(--gutter);
+  margin-left: rem(-16);
+  margin-right: rem(-16);
+
+  @include min-width($bp-unstack-cards) {
+    grid-template-columns: 1fr 1fr;
+  }
+}

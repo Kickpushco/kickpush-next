@@ -1,0 +1,49 @@
+@import "../../sass/global";
+
+.Info,
+.Action {
+  grid-row: 1;
+  grid-column: 1;
+  transition: $duration-card-action ease-in-out;
+  margin: 0;
+}
+
+.Action {
+  opacity: 0;
+  transform: translateX(#{rem(-8)});
+  padding-right: 0.25em;
+
+  svg {
+    height: auto;
+    width: 0.75em;
+    transition: transform $duration-card-action ease-in;
+    transition-property: transform, opacity;
+  }
+
+  path {
+    fill: currentColor;
+  }
+
+  a:hover &,
+  a:focus & {
+    opacity: 1;
+    transition-delay: $duration-card-action;
+    transform: none;
+
+    svg {
+      transform: translateX(0.25em);
+      transition: transform $duration-card-image-in ease-out;
+    }
+  }
+}
+
+.Info {
+  transition-delay: $duration-card-action;
+
+  a:hover &,
+  a:focus & {
+    opacity: 0;
+    transform: translateX(#{rem(8)});
+    transition-delay: 0ms;
+  }
+}

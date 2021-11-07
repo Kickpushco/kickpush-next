@@ -14,20 +14,42 @@
 }
 
 .Email {
-  margin-bottom: 0;
+  position: relative;
+  width: fit-content;
 
   .Footer-hero & {
     @include hero-animation("copy");
   }
+}
+.EmailLink {
+  display: grid;
+  text-decoration: none;
+  padding: 0 0.25em;
+  margin: 0 -0.25em;
+}
+.EmailChunk {
+  display: inline-block;
+  vertical-align: top;
+  text-decoration: inherit;
+  margin: 0;
+}
 
-  a {
-    text-decoration: none;
-    padding: 0 0.25em;
-    margin: 0 -0.25em;
+.CopiedToast {
+  border-radius: rem(4);
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background: $color-kickpush-black;
+  color: $color-kickpush-white;
+  transition: opacity 400ms ease-in-out, transform 0ms 400ms;
+  padding: 0.25em 0.5em;
+  margin: 0;
+  opacity: 0;
+  transform: scale(0.95);
 
-    &:hover,
-    &:focus {
-      text-decoration: underline;
-    }
+  &[aria-hidden="false"] {
+    opacity: 1;
+    transform: none;
+    transition: opacity 200ms ease-in-out, transform 200ms ease-out;
   }
 }

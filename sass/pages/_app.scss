@@ -14,13 +14,6 @@
 
 @font-face {
   font-family: $font-family-body;
-  src: url(../../assets/fonts/lineto-circular-book.woff2);
-  font-weight: $font-weight-book;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: $font-family-body;
   src: url(../../assets/fonts/lineto-circular-medium.woff2);
   font-weight: $font-weight-medium;
   font-style: normal;
@@ -34,7 +27,7 @@
 }
 
 html {
-  --gutter: #{rem(20)};
+  --gutter: #{rem(24)};
   --section-space: #{rem(120)};
   --nav-height: #{rem(60)};
   --nav-offset: 0rem;
@@ -46,11 +39,15 @@ html {
   background: $color-kickpush-red;
   color: $color-kickpush-white;
   font-family: $font-stack-body;
+  font-weight: $font-weight-medium;
   min-height: 100%;
   min-height: stretch;
 
+  @include min-width($bp-tiny) {
+    --gutter: #{rem(40)};
+  }
+
   @include min-width($bp-mobile) {
-    --gutter: #{rem(32)};
     --section-space: #{rem(180)};
     --nav-offset: #{rem(20)};
   }

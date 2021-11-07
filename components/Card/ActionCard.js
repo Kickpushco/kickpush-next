@@ -1,33 +1,33 @@
 import { forwardRef } from "react";
 import clsx from "clsx";
 
-import Card from "./Card";
-import Heading from "components/Heading/Heading";
-
-import ActionCardArrow from "./action-card-arrow.svg";
+import Action from "components/Action/Action";
+import Card, { CARD_DEFAULT_SIZE } from "./Card";
 
 import styles from "./ActionCard.module.scss";
 
 const ActionCard = forwardRef(
   (
-    { className, children, topChildren, actionCta = "See more", ...props },
+    {
+      className,
+      children,
+      topChildren,
+      size = CARD_DEFAULT_SIZE,
+      actionCta,
+      ...props
+    },
     ref
   ) => {
     return (
-      <Card className={clsx(className, styles.Card)} ref={ref} {...props}>
-        <span className={clsx(styles.Top, styles["Top-info"])}>
-          {topChildren}
-        </span>
+      <Card
+        className={clsx(className, styles.Card, styles[`Card-${size}`])}
+        size={size}
+        ref={ref}
+        {...props}
+      >
+        <Action ctaText={actionCta}>{topChildren}</Action>
 
         {children}
-
-        <Heading
-          level="h5"
-          tag="p"
-          className={clsx(styles.Top, styles["Top-action"])}
-        >
-          {actionCta} <ActionCardArrow role="presentation" />
-        </Heading>
       </Card>
     );
   }

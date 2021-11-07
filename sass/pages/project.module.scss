@@ -1,7 +1,7 @@
 @import "../global";
 
 .Close {
-  --button-icon-size: #{rem(20)};
+  --button-icon-size: #{rem(18)};
 
   background: rgba($color-kickpush-black, 0.5);
   position: fixed;
@@ -81,7 +81,7 @@
 }
 
 .Footer {
-  --card-shadow: #{rgba(black, 0.1)};
+  --card-shadow-color: #{rgba(black, 0.1)};
 
   justify-content: center;
   z-index: 3;

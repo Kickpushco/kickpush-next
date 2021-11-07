@@ -5,15 +5,23 @@
   margin-bottom: 0.25em;
   font-family: $font-family-heading;
   font-weight: $font-weight-heading;
-  white-space: pre-wrap;
+
+  @include min-width($bp-tiny) {
+    white-space: pre-wrap;
+  }
 }
 
 .Heading {
   &-h0 {
-    font-size: rem(56);
-    line-height: rem(60);
+    font-size: calc((100vw - (var(--gutter) * 2)) * 0.2);
+    line-height: 1.1;
     color: $color-kickpush-dark-red;
     margin-bottom: 1.25em;
+
+    @include min-width($bp-tiny) {
+      font-size: rem(56);
+      line-height: rem(60);
+    }
 
     @include min-width($bp-mobile) {
       font-size: rem(72);
@@ -31,8 +39,13 @@
     }
   }
   &-h1 {
-    font-size: rem(40);
-    line-height: rem(48);
+    font-size: calc((100vw - (var(--gutter) * 2)) * 0.2);
+    line-height: 1.1;
+
+    @include min-width($bp-tiny) {
+      font-size: rem(40);
+      line-height: rem(48);
+    }
 
     @include min-width($bp-mobile) {
       font-size: rem(56);
@@ -63,6 +76,11 @@
     line-height: rem(30);
 
     @include min-width($bp-mobile) {
+      font-size: rem(32);
+      line-height: rem(40);
+    }
+
+    @include min-width($bp-tablet) {
       font-size: rem(40);
       line-height: rem(48);
     }
@@ -72,6 +90,11 @@
     line-height: rem(30);
 
     @include min-width($bp-mobile) {
+      font-size: rem(28);
+      line-height: rem(35);
+    }
+
+    @include min-width($bp-tablet) {
       font-size: rem(32);
       line-height: rem(42);
     }

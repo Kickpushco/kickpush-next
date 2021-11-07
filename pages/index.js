@@ -14,6 +14,7 @@ import LabelData from "components/Meta/LabelData";
 import AllProjectsCard from "components/Card/AllProjectsCard";
 
 import styles from "../sass/pages/index.module.scss";
+import CardsWrapper from "components/Card/CardsWrapper";
 
 export default function Home({ page, contact }) {
   const {
@@ -47,22 +48,21 @@ export default function Home({ page, contact }) {
             </Heading>
           )}
 
-          <div className={styles.ProjectsList}>
+          <CardsWrapper className={styles.ProjectsList}>
             {projectsList.fields.projects.map((project) => (
               <ContentfulProjectCard key={project.sys.id} project={project} />
             ))}
             <AllProjectsCard className={styles.AllProjects} />
-          </div>
+          </CardsWrapper>
         </section>
 
         {!!manifestoItems.length && (
-          <section className={clsx("container", styles.Manifesto)}>
-            {manifestoItems.map((item) => (
+          <section className={"container"}>
+            {manifestoItems.map(({ sys, fields }) => (
               <Manifesto
-                className={styles.ManifestoItem}
-                key={item.sys.id}
-                short={item.fields.shortText}
-                long={item.fields.longText}
+                key={sys.id}
+                short={fields.shortText}
+                long={fields.longText}
               />
             ))}
           </section>
