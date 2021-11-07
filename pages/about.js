@@ -7,7 +7,7 @@ import { fetchContact, fetchCustomPage } from "utils/contentful";
 import ActionCardProjects from "components/ActionCard/ActionCardProjects";
 import Button from "components/Button/Button";
 import Card from "components/Card/Card";
-import ActionCard from "components/Card/ActionCard";
+import ActionCard from "components/ActionCard/ActionCard";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
 import Hero, { HeroCopy } from "components/Hero/Hero";
