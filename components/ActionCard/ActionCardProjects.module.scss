@@ -2,19 +2,23 @@
 
 @import "../../sass/global";
 
-$temp: 100%;
+$rows-oversize: 100%;
 
 .Rows {
   transform: rotate(-15deg);
-  width: calc(100% + (var(--gutter) * 2));
-  margin: calc(var(--gutter) * -1);
+  width: calc(100% + (var(--card-padding) * 2));
+  margin: calc(var(--card-padding) * -1);
   margin-top: 0;
   align-self: flex-end;
 
-  @include max-width($bp-tablet) {
-    width: calc(#{100% + $temp} + (var(--gutter) * 2));
-    margin-left: calc(var(--gutter) * -1 - #{math.div($temp, 2)});
-    margin-right: calc(var(--gutter) * -1 - #{math.div($temp, 2)});
+  @include max-width($bp-unstack-cards) {
+    width: calc(#{100% + $rows-oversize} + (var(--card-padding) * 2));
+    margin-left: calc(
+      var(--card-padding) * -1 - #{math.div($rows-oversize, 2)}
+    );
+    margin-right: calc(
+      var(--card-padding) * -1 - #{math.div($rows-oversize, 2)}
+    );
     margin-top: 10%;
   }
 

@@ -33,6 +33,10 @@ export async function fetchContact() {
   return await fetchCustomPage("customPageContact");
 }
 
+export async function fetchGlobalSettings() {
+  return await fetchCustomPage("globalSettings");
+}
+
 export async function fetchProjects() {
   const query = {
     content_type: "project",

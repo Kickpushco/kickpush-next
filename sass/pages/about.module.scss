@@ -15,7 +15,7 @@
 }
 .PhotosGridCell {
   background: $color-kickpush-dark-red;
-  border-radius: rem(4);
+  border-radius: $border-radius-small;
   position: relative;
   padding: 0;
 

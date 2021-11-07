@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import clsx from "clsx";
 
 import Action from "components/Action/Action";
-import Card, { CARD_DEFAULT_SIZE } from "./Card";
+import Card, { CARD_DEFAULT_SIZE } from "components/Card/Card";
 
 import styles from "./ActionCard.module.scss";
 

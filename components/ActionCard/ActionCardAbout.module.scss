@@ -1,0 +1,100 @@
+@use "sass:math";
+
+@import "../../sass/global";
+
+$photos-width: 1069;
+$photos-height: 596;
+
+.Heading {
+  @include min-width($bp-unstack-cards) {
+    width: 50%;
+  }
+}
+
+.Photos {
+  aspect-ratio: $photos-width / $photos-height;
+  position: relative;
+  transform: rotate(-15deg);
+  width: 210%;
+  margin-top: 5%;
+  margin-left: -20%;
+  align-self: flex-end;
+
+  @include min-width($bp-unstack-cards) {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    margin-top: -10%;
+    margin-left: -37%;
+    transform-origin: right top;
+  }
+}
+.PhotosCell {
+  background: $color-kickpush-dark-red;
+  box-shadow: rgba($color-kickpush-dark-red, 0.4) 0 rem(20) rem(30) 0;
+  border-radius: $border-radius-small;
+  width: math.div(403, $photos-width) * 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transition: transform $duration-card-image-out ease-in-out;
+
+  a:hover &,
+  a:focus & {
+    transition: transform $duration-card-image-in ease-out;
+  }
+
+  img {
+    aspect-ratio: 403 / 263;
+    display: block;
+    width: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+  }
+
+  &:nth-of-type(1) {
+    top: math.div(140, $photos-height) * 100%;
+
+    a:hover &,
+    a:focus & {
+      transform: translate(-3%, 0);
+    }
+  }
+
+  &:nth-of-type(2) {
+    left: math.div(343, $photos-width) * 100%;
+    top: math.div(221, $photos-height) * 100%;
+    z-index: 2;
+
+    a:hover &,
+    a:focus & {
+      transform: translate(2%, 0);
+    }
+  }
+
+  &:nth-of-type(3) {
+    left: math.div(451, $photos-width) * 100%;
+
+    a:hover &,
+    a:focus & {
+      transform: translate(-5%, 0);
+    }
+  }
+
+  &:nth-of-type(4) {
+    z-index: 2;
+    left: math.div(634, $photos-width) * 100%;
+    top: math.div(331, $photos-height) * 100%;
+
+    a:hover &,
+    a:focus & {
+      transform: translate(-10%, 0);
+    }
+
+    @include max-width($bp-unstack-cards) {
+      display: none;
+    }
+  }
+}

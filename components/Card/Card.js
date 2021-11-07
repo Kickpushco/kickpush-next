@@ -5,6 +5,10 @@ import styles from "./Card.module.scss";
 
 export const CARD_DEFAULT_SIZE = "large";
 
+export function CardsWrapper({ className, ...props }) {
+  return <div className={clsx(className, styles.CardsWrapper)} {...props} />;
+}
+
 const Card = forwardRef(
   ({ className, children, size = CARD_DEFAULT_SIZE, ...props }, ref) => {
     const CardTag = props.href ? "a" : "div";

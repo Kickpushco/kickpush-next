@@ -1,7 +1,14 @@
 import clsx from "clsx";
-import { fetchContact, fetchCustomPage } from "utils/contentful";
+import {
+  fetchContact,
+  fetchCustomPage,
+  fetchGlobalSettings,
+} from "utils/contentful";
 import { CONTACT_EMAIL } from "utils/constants";
 
+import ActionCardProjects from "components/ActionCard/ActionCardProjects";
+import { ContentfulActionAboutCard } from "components/ActionCard/ActionCardAbout";
+import { CardsWrapper } from "components/Card/Card";
 import Nav from "components/Nav/Nav";
 import Footer from "components/Footer/Footer";
 import Hero, { HeroCopy } from "components/Hero/Hero";
@@ -11,12 +18,10 @@ import ContentfulProjectCard from "components/ProjectCard/ContentfulProjectCard"
 import Title from "components/Meta/Title";
 import Description from "components/Meta/Description";
 import LabelData from "components/Meta/LabelData";
-import AllProjectsCard from "components/Card/AllProjectsCard";
 
 import styles from "../sass/pages/index.module.scss";
-import CardsWrapper from "components/Card/CardsWrapper";
 
-export default function Home({ page, contact }) {
+export default function Home({ page, contact, globalSettings }) {
   const {
     shortName,
     metaDescription,
@@ -52,12 +57,12 @@ export default function Home({ page, contact }) {
             {projectsList.fields.projects.map((project) => (
               <ContentfulProjectCard key={project.sys.id} project={project} />
             ))}
-            <AllProjectsCard className={styles.AllProjects} />
+            <ActionCardProjects className={styles.AllProjects} />
           </CardsWrapper>
         </section>
 
         {!!manifestoItems.length && (
-          <section className={"container"}>
+          <section className={clsx("container", styles.Manifesto)}>
             {manifestoItems.map(({ sys, fields }) => (
               <Manifesto
                 key={sys.id}
@@ -67,6 +72,10 @@ export default function Home({ page, contact }) {
             ))}
           </section>
         )}
+
+        <section className="container">
+          <ContentfulActionAboutCard globalSettings={globalSettings} />
+        </section>
       </main>
 
       <Footer contact={contact} />
@@ -77,11 +86,15 @@ export default function Home({ page, contact }) {
 export async function getStaticProps() {
   const page = await fetchCustomPage("customPageHome", { include: 2 });
   const contact = await fetchContact();
+  const globalSettings = await fetchGlobalSettings();
+
+  console.log(globalSettings);
 
   return {
     props: {
       page,
       contact,
+      globalSettings,
     },
   };
 }

@@ -9,9 +9,9 @@ import Paragraph from "components/Paragraph/Paragraph";
 import workRow1 from "assets/images/work-row-1.png";
 import workRow2 from "assets/images/work-row-2.png";
 
-import styles from "./AllProjectsCard.module.scss";
+import styles from "./ActionCardProjects.module.scss";
 
-function AllProjectsCard({ className, ...props }) {
+function ActionCardProjects({ className, ...props }) {
   return (
     <Link href="/projects" passHref>
       <ActionCard
@@ -37,4 +37,4 @@ function AllProjectsCard({ className, ...props }) {
   );
 }
 
-export default AllProjectsCard;
+export default ActionCardProjects;

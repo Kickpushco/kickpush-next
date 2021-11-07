@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 
-import ActionCard from "components/Card/ActionCard";
+import ActionCard from "components/ActionCard/ActionCard";
 import Heading from "components/Heading/Heading";
 import Paragraph from "components/Paragraph/Paragraph";
 

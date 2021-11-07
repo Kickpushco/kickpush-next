@@ -44,7 +44,7 @@
 }
 
 .GhostButton {
-  border-radius: rem(4);
+  border-radius: $border-radius-small;
   background: none;
   padding: 0;
   margin: calc((var(--button-icon-size) - var(--button-size)) / 2);

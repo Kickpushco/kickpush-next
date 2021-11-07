@@ -90,7 +90,7 @@ a {
 }
 a,
 button {
-  border-radius: rem(4);
+  border-radius: $border-radius-small;
 }
 a:focus,
 button:focus {

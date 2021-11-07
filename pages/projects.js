@@ -1,18 +1,14 @@
-import clsx from "clsx";
-
 import { fetchContact, fetchCustomPage } from "utils/contentful";
 
+import { CardsWrapper } from "components/Card/Card";
 import Nav from "components/Nav/Nav";
 import Footer from "components/Footer/Footer";
 import Hero, { HeroCopy } from "components/Hero/Hero";
 import Heading from "components/Heading/Heading";
-import Manifesto from "components/Manifesto/Manifesto";
 import ContentfulProjectCard from "components/ProjectCard/ContentfulProjectCard";
 
 import Title from "components/Meta/Title";
 import Description from "components/Meta/Description";
-
-import styles from "sass/pages/projects.module.scss";
 
 export default function Home({ page, contact }) {
   const { metaDescription, heroTitle, heroCopy, projectsList } = page.fields;
@@ -30,10 +26,12 @@ export default function Home({ page, contact }) {
           {heroCopy && <HeroCopy>{heroCopy}</HeroCopy>}
         </Hero>
 
-        <section className={clsx("container", styles.Projects)}>
-          {projectsList.fields.projects.map((project) => (
-            <ContentfulProjectCard key={project.sys.id} project={project} />
-          ))}
+        <section className="container">
+          <CardsWrapper className={"container"}>
+            {projectsList.fields.projects.map((project) => (
+              <ContentfulProjectCard key={project.sys.id} project={project} />
+            ))}
+          </CardsWrapper>
         </section>
       </main>
 

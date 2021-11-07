@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 import { fetchContact, fetchCustomPage } from "utils/contentful";
 
-import AllProjectsCard from "components/Card/AllProjectsCard";
+import ActionCardProjects from "components/ActionCard/ActionCardProjects";
 import Button from "components/Button/Button";
 import Card from "components/Card/Card";
 import ActionCard from "components/Card/ActionCard";
@@ -145,7 +145,7 @@ export default function People({ page, contact }) {
         )}
 
         <div className="container">
-          <AllProjectsCard />
+          <ActionCardProjects />
 
           {showArticlesSection && (
             <>
