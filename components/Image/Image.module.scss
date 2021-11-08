@@ -1,0 +1,31 @@
+@import "../../sass/global";
+
+.Image {
+  display: block;
+
+  img {
+    border-radius: inherit;
+    display: block;
+    height: auto;
+    width: 100%;
+  }
+
+  &-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &-regular {
+    background: $color-kickpush-dark-red;
+    border-radius: $border-radius-small;
+  }
+}

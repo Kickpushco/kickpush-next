@@ -1,99 +1,40 @@
 @import "../global";
 
+// .Text {
+//   &-light {
+//     --focus-ring: #{rgba($color-kickpush-white, 0.6)};
+
+//     color: $color-kickpush-white;
+//   }
+//   &-dark {
+//     color: $color-kickpush-black;
+
+//     --focus-ring: #{rgba($color-kickpush-black, 0.6)};
+//   }
+// }
+
 .Close {
   --button-icon-size: #{rem(18)};
 
-  background: rgba($color-kickpush-black, 0.5);
+  background: var(--project-background-color);
+  color: currentColor;
   position: fixed;
-  top: rem(30);
-  right: rem(30);
+  top: rem(24);
+  right: rem(24);
   z-index: 102;
 }
 
 .Main {
   margin-bottom: 0;
-}
-
-.Slide {
-  background: $color-kickpush-black;
-  height: 100vh;
-  min-height: stretch;
-  display: flex;
-  flex-direction: column;
-  padding: var(--gutter) 0;
-  position: sticky;
-  bottom: 0;
-}
-
-.Hero {
-  z-index: 99;
-}
-.HeroContent {
-  margin-top: auto;
-  margin-bottom: auto;
-  max-width: rem(820);
-  padding-bottom: var(--gutter);
-}
-.HeroTitle {
-  @include hero-animation("h1");
-}
-.HeroCopy {
-  @include hero-animation("copy");
-}
-.HeroFooter {
-  display: grid;
-  gap: var(--gutter);
-  max-width: rem(1160);
-  font-size: rem(16);
-  line-height: rem(20);
-
-  div {
-    width: 100%;
-  }
-
-  @include min-width($bp-mobile) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @include min-width($bp-tablet) {
-    display: flex;
-    justify-content: space-between;
-
-    div {
-      width: auto;
-    }
-  }
-
-  dt {
-    font-weight: $font-weight-bold;
-    margin-bottom: rem(5);
-  }
-}
-
-.Contact {
-  background: $color-kickpush-red;
-  justify-content: center;
-  text-align: center;
-  z-index: 4;
-}
-.ContactButton {
-  margin: var(--gutter) auto 0;
-}
-
-.Footer {
-  --card-shadow-color: #{rgba(black, 0.1)};
-
-  justify-content: center;
-  z-index: 3;
 
   &-light {
-    --focus-ring: #{rgba($color-kickpush-black, 0.6)};
-
-    background: $color-kickpush-white;
-  }
-  &-dark {
     --focus-ring: #{rgba($color-kickpush-white, 0.6)};
 
-    background: $color-kickpush-black;
+    color: $color-kickpush-white;
+  }
+  &-dark {
+    color: $color-kickpush-black;
+
+    --focus-ring: #{rgba($color-kickpush-black, 0.6)};
   }
 }

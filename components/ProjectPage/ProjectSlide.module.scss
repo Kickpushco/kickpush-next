@@ -1,0 +1,25 @@
+@import "../../sass/global";
+
+.Slide {
+  height: 100vh;
+  min-height: stretch;
+  display: flex;
+  flex-direction: column;
+  padding: var(--gutter) 0;
+  position: sticky;
+  bottom: 0;
+
+  &-projectBackground {
+    background: var(--project-background-color);
+  }
+
+  &-darkBackground {
+    background: $color-kickpush-black;
+    color: $color-kickpush-white;
+  }
+
+  &-lightBackground {
+    background: $color-kickpush-white;
+    color: $color-kickpush-black;
+  }
+}

@@ -1,36 +1,32 @@
-import { fetchContact } from "utils/contentful";
-import { CONTACT_EMAIL } from "utils/constants";
+import { fetchCustomPage } from "services/contentful";
 
-import Nav from "components/Nav/Nav";
-import Footer from "components/Footer/Footer";
+import { ContentfulNav } from "components/Nav/Nav";
+import { ContentfulFooter } from "components/Footer/Footer";
 import Title from "components/Meta/Title";
 import LabelData from "components/Meta/LabelData";
 import Description from "components/Meta/Description";
 
-import styles from "sass/pages/contact.module.scss";
-
-export default function Contact({ page }) {
-  const { metaDescription, shortName } = page;
-
+export default function Contact({ pageFields, globalSettings }) {
   return (
     <>
-      <Title shortTitle={shortName} longTitle={page.fields.heroTitle} />
-      <Description description={metaDescription} />
-      <LabelData number="1" label="Email" data={CONTACT_EMAIL} />
+      <Title
+        shortTitle={pageFields.shortName}
+        longTitle={globalSettings.footerTitle}
+      />
+      <Description description={pageFields.metaDescription} />
+      <LabelData number="1" label="Email" data={globalSettings.contactEmail} />
 
-      <Nav />
+      <ContentfulNav globalSettings={globalSettings} />
 
-      <Footer className={styles.Footer} contact={page} isHero />
+      <ContentfulFooter globalSettings={globalSettings} isHero />
     </>
   );
 }
 
 export async function getStaticProps() {
-  const page = await fetchContact();
+  const props = await fetchCustomPage("customPageContact");
 
   return {
-    props: {
-      page,
-    },
+    props,
   };
 }

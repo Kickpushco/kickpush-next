@@ -8,6 +8,12 @@
   @return math.div($pixels, $parent-pixels) * 1em;
 }
 
+@mixin can-hover {
+  @media screen and (hover: hover) {
+    @content;
+  }
+}
+
 @mixin min-width($min-width-pixels) {
   $min-width-em: math.div($min-width-pixels, 16);
 

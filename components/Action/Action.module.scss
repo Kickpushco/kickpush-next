@@ -24,15 +24,17 @@
     fill: currentColor;
   }
 
-  a:hover &,
-  a:focus & {
-    opacity: 1;
-    transition-delay: $duration-card-action;
-    transform: none;
+  @include can-hover {
+    a:hover &,
+    a:focus & {
+      opacity: 1;
+      transition-delay: $duration-card-action;
+      transform: none;
 
-    svg {
-      transform: translateX(0.25em);
-      transition: transform $duration-card-image-in ease-out;
+      svg {
+        transform: translateX(0.25em);
+        transition: transform $duration-card-image-in ease-out;
+      }
     }
   }
 }
@@ -40,10 +42,12 @@
 .Info {
   transition-delay: $duration-card-action;
 
-  a:hover &,
-  a:focus & {
-    opacity: 0;
-    transform: translateX(#{rem(8)});
-    transition-delay: 0ms;
+  @include can-hover {
+    a:hover &,
+    a:focus & {
+      opacity: 0;
+      transform: translateX(#{rem(8)});
+      transition-delay: 0ms;
+    }
   }
 }

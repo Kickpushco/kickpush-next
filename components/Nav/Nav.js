@@ -28,7 +28,16 @@ const NavLink = forwardRef(({ isMobile, children, ...props }, ref) => {
   );
 });
 
-function Nav() {
+export function ContentfulNav({ globalSettings, ...props }) {
+  const labels = {
+    projects: globalSettings.navWork,
+    about: globalSettings.navAbout,
+    contact: globalSettings.navContact,
+  };
+  return <Nav labels={labels} {...props} />;
+}
+
+function Nav({ labels, ...props }) {
   const [isMobile, setIsMobile] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -78,7 +87,10 @@ function Nav() {
   useFocusTrap(menuRef, mobileOpen, handleMobileClose);
 
   return (
-    <nav className={clsx(styles.Nav, mobileOpen && styles["Nav-mobileOpen"])}>
+    <nav
+      className={clsx(styles.Nav, mobileOpen && styles["Nav-mobileOpen"])}
+      {...props}
+    >
       <div className="container">
         <Link href="/">
           <a className={styles.Logo}>
@@ -92,7 +104,7 @@ function Nav() {
             className={styles.MobileToggle}
             aria-label="Open menu"
             onClick={toggleMobileOpen}
-            ghost
+            variant="ghost"
             size="small"
           >
             <IconHamburger role="presentation" />
@@ -103,17 +115,17 @@ function Nav() {
           <ul className={styles.Links}>
             <li>
               <Link href="/projects" passHref>
-                <NavLink isMobile={isMobile}>Work</NavLink>
+                <NavLink isMobile={isMobile}>{labels.projects}</NavLink>
               </Link>
             </li>
             <li>
               <Link href="/about" passHref>
-                <NavLink isMobile={isMobile}>About</NavLink>
+                <NavLink isMobile={isMobile}>{labels.about}</NavLink>
               </Link>
             </li>
             <li>
               <Link href="/contact" passHref>
-                <NavLink isMobile={isMobile}>Contact</NavLink>
+                <NavLink isMobile={isMobile}>{labels.contact}</NavLink>
               </Link>
             </li>
           </ul>

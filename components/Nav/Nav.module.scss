@@ -1,6 +1,6 @@
 @import "../../sass/global";
 
-@value mobileNav: #{em($bp-tablet)};
+@value mobileNav: #{em($bp-hamburger-menu)};
 
 .Nav {
   background: $color-kickpush-red;
@@ -44,7 +44,7 @@
 }
 
 .Menu {
-  @include max-width($bp-tablet) {
+  @include max-width($bp-hamburger-menu) {
     background: $color-kickpush-red;
     position: fixed;
     align-items: center;
@@ -81,7 +81,7 @@
     }
   }
 
-  @include max-width($bp-tablet) {
+  @include max-width($bp-hamburger-menu) {
     margin: auto 0;
     flex-direction: column;
 

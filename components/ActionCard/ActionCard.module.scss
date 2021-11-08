@@ -6,27 +6,64 @@
   --card-scale: #{math.div(420, 440)};
 
   overflow: hidden;
-  display: grid;
-  grid-template-rows: auto 1fr;
   text-decoration: none;
   transition: $duration-card-action ease-in-out;
   transition-property: box-shadow, transform;
 
-  &:hover {
-    @include card-shadow("hover");
+  @include can-hover {
+    &:hover {
+      @include card-shadow("hover");
 
-    transform: scale(var(--card-scale));
-  }
+      transform: scale(var(--card-scale));
+    }
 
-  &:active {
-    @include card-shadow("active");
+    &:active {
+      @include card-shadow("active");
 
-    transform: scale(var(--card-scale)) translateY(#{rem(4)});
+      transform: scale(var(--card-scale)) translateY(#{rem(4)});
+    }
   }
 
   &-large {
     @include min-width($bp-unstack-cards) {
       --card-scale: #{math.div(920, 940)};
     }
+  }
+}
+
+.Content {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  position: relative;
+  z-index: 1;
+  height: 100%;
+}
+
+.Background {
+  background: center / cover no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: transform $duration-card-image-out ease-in-out;
+
+  .Card-large & {
+    --project-card-hover-scale: 1.025;
+
+    @include min-width($bp-unstack-cards) {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      width: 55%;
+      left: auto;
+      right: 0;
+    }
+  }
+
+  .Card:hover &,
+  .Card:focus & {
+    transform: scale(var(--project-card-hover-scale, 1.05));
+    transition: transform $duration-card-image-in ease-out;
   }
 }

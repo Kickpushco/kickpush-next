@@ -1,27 +1,22 @@
 import clsx from "clsx";
-import {
-  fetchContact,
-  fetchCustomPage,
-  fetchGlobalSettings,
-} from "utils/contentful";
-import { CONTACT_EMAIL } from "utils/constants";
+import { fetchCustomPage } from "services/contentful";
 
-import ActionCardProjects from "components/ActionCard/ActionCardProjects";
+import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
 import { ContentfulActionAboutCard } from "components/ActionCard/ActionCardAbout";
 import { CardsWrapper } from "components/Card/Card";
-import Nav from "components/Nav/Nav";
-import Footer from "components/Footer/Footer";
+import { ContentfulNav } from "components/Nav/Nav";
+import { ContentfulFooter } from "components/Footer/Footer";
 import Hero, { HeroCopy } from "components/Hero/Hero";
 import Heading from "components/Heading/Heading";
 import Manifesto from "components/Manifesto/Manifesto";
-import ContentfulProjectCard from "components/ProjectCard/ContentfulProjectCard";
+import { ContentfulProjectCard } from "components/ProjectCard/ProjectCard";
 import Title from "components/Meta/Title";
 import Description from "components/Meta/Description";
 import LabelData from "components/Meta/LabelData";
 
 import styles from "../sass/pages/index.module.scss";
 
-export default function Home({ page, contact, globalSettings }) {
+export default function Home({ pageFields, globalSettings }) {
   const {
     shortName,
     metaDescription,
@@ -30,15 +25,15 @@ export default function Home({ page, contact, globalSettings }) {
     manifestoItems,
     heroCopy,
     projectsList,
-  } = page.fields;
+  } = pageFields;
 
   return (
     <>
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
-      <LabelData number="1" label="Email" data={CONTACT_EMAIL} />
+      <LabelData number="1" label="Email" data={globalSettings.contactEmail} />
 
-      <Nav />
+      <ContentfulNav globalSettings={globalSettings} />
 
       <main>
         <Hero>
@@ -55,9 +50,16 @@ export default function Home({ page, contact, globalSettings }) {
 
           <CardsWrapper className={styles.ProjectsList}>
             {projectsList.fields.projects.map((project) => (
-              <ContentfulProjectCard key={project.sys.id} project={project} />
+              <ContentfulProjectCard
+                key={project.sys.id}
+                project={project}
+                globalSettings={globalSettings}
+              />
             ))}
-            <ActionCardProjects className={styles.AllProjects} />
+            <ContentfulActionCardProjects
+              globalSettings={globalSettings}
+              className={styles.AllProjects}
+            />
           </CardsWrapper>
         </section>
 
@@ -74,27 +76,21 @@ export default function Home({ page, contact, globalSettings }) {
         )}
 
         <section className="container">
-          <ContentfulActionAboutCard globalSettings={globalSettings} />
+          <CardsWrapper columns={false}>
+            <ContentfulActionAboutCard globalSettings={globalSettings} />
+          </CardsWrapper>
         </section>
       </main>
 
-      <Footer contact={contact} />
+      <ContentfulFooter globalSettings={globalSettings} />
     </>
   );
 }
 
 export async function getStaticProps() {
-  const page = await fetchCustomPage("customPageHome", { include: 2 });
-  const contact = await fetchContact();
-  const globalSettings = await fetchGlobalSettings();
-
-  console.log(globalSettings);
+  const props = await fetchCustomPage("customPageHome", { include: 2 });
 
   return {
-    props: {
-      page,
-      contact,
-      globalSettings,
-    },
+    props,
   };
 }

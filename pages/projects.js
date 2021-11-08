@@ -1,24 +1,24 @@
-import { fetchContact, fetchCustomPage } from "utils/contentful";
+import { fetchCustomPage } from "services/contentful";
 
 import { CardsWrapper } from "components/Card/Card";
-import Nav from "components/Nav/Nav";
-import Footer from "components/Footer/Footer";
+import { ContentfulNav } from "components/Nav/Nav";
+import { ContentfulFooter } from "components/Footer/Footer";
 import Hero, { HeroCopy } from "components/Hero/Hero";
 import Heading from "components/Heading/Heading";
-import ContentfulProjectCard from "components/ProjectCard/ContentfulProjectCard";
-
+import { ContentfulProjectCard } from "components/ProjectCard/ProjectCard";
 import Title from "components/Meta/Title";
 import Description from "components/Meta/Description";
 
-export default function Home({ page, contact }) {
-  const { metaDescription, heroTitle, heroCopy, projectsList } = page.fields;
+export default function Projects({ pageFields, globalSettings }) {
+  const { shortName, metaDescription, heroTitle, heroCopy, projectsList } =
+    pageFields;
 
   return (
     <>
-      <Title shortTitle="What we do" longTitle={heroTitle} />
+      <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
 
-      <Nav />
+      <ContentfulNav globalSettings={globalSettings} />
 
       <main>
         <Hero>
@@ -29,25 +29,25 @@ export default function Home({ page, contact }) {
         <section className="container">
           <CardsWrapper className={"container"}>
             {projectsList.fields.projects.map((project) => (
-              <ContentfulProjectCard key={project.sys.id} project={project} />
+              <ContentfulProjectCard
+                key={project.sys.id}
+                project={project}
+                globalSettings={globalSettings}
+              />
             ))}
           </CardsWrapper>
         </section>
       </main>
 
-      <Footer contact={contact} />
+      <ContentfulFooter globalSettings={globalSettings} />
     </>
   );
 }
 
 export async function getStaticProps() {
-  const page = await fetchCustomPage("customPageProjects", { include: 2 });
-  const contact = await fetchContact();
+  const props = await fetchCustomPage("customPageProjects", { include: 2 });
 
   return {
-    props: {
-      page,
-      contact,
-    },
+    props,
   };
 }

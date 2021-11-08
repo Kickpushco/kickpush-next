@@ -2,6 +2,12 @@
 
 .Footer {
   padding-bottom: var(--section-space);
+
+  &-hero {
+    margin: auto;
+    padding-top: calc(var(--section-space) / 2 - var(--nav-height));
+    padding-bottom: calc(var(--section-space) / 2);
+  }
 }
 
 .Heading {

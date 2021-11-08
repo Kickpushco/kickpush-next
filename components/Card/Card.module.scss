@@ -5,6 +5,8 @@
 .Card {
   @include card-shadow();
 
+  --card-padding: #{rem(24)};
+
   aspect-ratio: 440 / 496;
   color: $color-kickpush-white;
   border-radius: rem(10);
@@ -15,19 +17,24 @@
   position: relative;
   width: 100%;
 
-  &-small {
-    --card-padding: #{rem(24)};
+  &-light {
+    color: $color-kickpush-white;
+  }
+  &-dark {
+    color: $color-kickpush-black;
   }
 
-  &-large {
-    --card-padding: var(--gutter);
+  @include min-width($bp-mobile) {
+    max-width: rem(360);
   }
 
   @include min-width($bp-unstack-cards) {
     max-width: none;
 
     &-large {
-      aspect-ratio: 1170/556;
+      --card-padding: var(--gutter);
+
+      aspect-ratio: 940 / 496;
     }
   }
 
@@ -42,12 +49,19 @@
   align-items: stretch;
   display: grid;
   gap: var(--gutter);
-  margin: 0 rem(-16);
-  width: calc(100% + #{rem(32)});
+  margin: 0 rem(-8);
+  width: calc(100% + #{rem(16)});
 
-  @include min-width($bp-unstack-cards) {
-    margin: 0;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
+  @include min-width($bp-tiny) {
+    margin: 0 rem(-16);
+    width: calc(100% + #{rem(32)});
+  }
+
+  &-columns {
+    @include min-width($bp-unstack-cards) {
+      margin: 0;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+    }
   }
 }

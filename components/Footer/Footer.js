@@ -1,27 +1,44 @@
 import { useRef, useState } from "react";
 import clsx from "clsx";
 
-import { CONTACT_EMAIL } from "utils/constants";
-
 import Action from "components/Action/Action";
 import Heading from "components/Heading/Heading";
 import Paragraph from "components/Paragraph/Paragraph";
 
 import styles from "./Footer.module.scss";
 
-function Footer({ className, contact, isHero, ...props }) {
+export function ContentfulFooter({ globalSettings, ...props }) {
+  return (
+    <Footer
+      title={globalSettings.footerTitle}
+      actionCta={globalSettings.footerCta}
+      email={globalSettings.contactEmail}
+      copiedTooltip={globalSettings.footerCopiedTooltip}
+      {...props}
+    />
+  );
+}
+
+function Footer({
+  className,
+  title,
+  email = "",
+  actionCta,
+  copiedTooltip,
+  isHero,
+  ...props
+}) {
   const [copied, setCopied] = useState(false);
   const copyTimeoutRef = useRef(null);
 
-  if (!contact) return null;
-
   const headingTag = isHero ? "h1" : "p";
+  const WrapperTag = isHero ? "main" : "footer";
 
   async function handleCopyEmail(e) {
     e.preventDefault();
 
     clearTimeout(copyTimeoutRef.current);
-    await navigator.clipboard.writeText(CONTACT_EMAIL);
+    await navigator.clipboard.writeText(email);
 
     setCopied(true);
 
@@ -31,7 +48,7 @@ function Footer({ className, contact, isHero, ...props }) {
   }
 
   return (
-    <footer
+    <WrapperTag
       className={clsx(
         className,
         "container",
@@ -41,17 +58,17 @@ function Footer({ className, contact, isHero, ...props }) {
       {...props}
     >
       <Heading className={styles.Heading} level="h1" tag={headingTag}>
-        {contact.fields.heroTitle}
+        {title}
       </Heading>
 
       <p className={styles.Email}>
         <a
           className={styles.EmailLink}
-          href={`mailto:${CONTACT_EMAIL}`}
+          href={`mailto:${email}`}
           onClick={handleCopyEmail}
         >
-          <Action ctaText="Copy email address" ctaLevel="h4">
-            {CONTACT_EMAIL.split("@").map((chunk, chunkIndex) => (
+          <Action ctaText={actionCta} ctaLevel="h4">
+            {email.split("@").map((chunk, chunkIndex) => (
               <Heading
                 className={styles.EmailChunk}
                 key={chunkIndex}
@@ -69,10 +86,10 @@ function Footer({ className, contact, isHero, ...props }) {
           aria-hidden={!copied}
           tag="span"
         >
-          Copied to clipboard
+          {copiedTooltip}
         </Paragraph>
       </p>
-    </footer>
+    </WrapperTag>
   );
 }
 

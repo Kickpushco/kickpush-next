@@ -1,51 +1,6 @@
 @import "../../sass/global";
 
-.Card {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  position: relative;
-  overflow: hidden;
-
-  &-light {
-    color: $color-kickpush-white;
-  }
-  &-dark {
-    color: $color-kickpush-black;
-  }
-
-  > *:not(.Background) {
-    position: relative;
-    z-index: 2;
-  }
-}
-
-.Background {
-  background: center / cover no-repeat;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  transition: transform ease-out $duration-card-image-out;
-
-  .Card-large & {
-    --project-card-hover-scale: 1.025;
-    width: 60%;
-    left: auto;
-    right: 0;
-  }
-
-  .Card:hover &,
-  .Card:focus & {
-    transform: scale(var(--project-card-hover-scale, 1.05));
-    transition-duration: $duration-card-image-in;
-  }
-}
-
 .Title {
-  align-self: flex-end;
-  margin-bottom: 0;
-  position: relative;
-  z-index: 1;
+  margin-top: auto;
+  margin-bottom: -0.1em;
 }

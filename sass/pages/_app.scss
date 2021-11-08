@@ -29,7 +29,7 @@
 html {
   --gutter: #{rem(24)};
   --section-space: #{rem(120)};
-  --nav-height: #{rem(60)};
+  --nav-height: #{rem(52)};
   --nav-offset: 0rem;
   --focus-ring: #{darken($color-kickpush-dark-red, 10%)};
 
@@ -45,6 +45,7 @@ html {
 
   @include min-width($bp-tiny) {
     --gutter: #{rem(40)};
+    --nav-height: #{rem(60)};
   }
 
   @include min-width($bp-mobile) {

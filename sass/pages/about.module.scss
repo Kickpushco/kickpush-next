@@ -14,16 +14,11 @@
   }
 }
 .PhotosGridCell {
+  aspect-ratio: 1 / 1;
   background: $color-kickpush-dark-red;
   border-radius: $border-radius-small;
   position: relative;
   padding: 0;
-
-  &::before {
-    content: "";
-    padding-top: 100%;
-    display: block;
-  }
 
   &:nth-of-type(n + 4) {
     display: none;
@@ -48,9 +43,7 @@
   }
 
   @include min-width($bp-tablet) {
-    &::before {
-      padding-top: math.div(320, 440) * 100%;
-    }
+    aspect-ratio: 440 / 320;
   }
 
   > span {
@@ -81,10 +74,6 @@
     display: none;
   }
 }
-.PhotosOutro {
-  margin: var(--section-space) auto 0;
-  text-align: center;
-}
 
 .Manifesto {
   margin-bottom: var(--section-space);
@@ -94,21 +83,10 @@
 }
 
 .ArticlesTitle {
-  margin-bottom: 1.25em;
+  margin-bottom: 1.25em; // TODO: Var
   margin-top: var(--section-space);
 
   @include min-width($bp-mobile) {
     text-align: center;
   }
-}
-.ArticlesCard {
-  margin-top: var(--gutter);
-}
-.ArticlesCard--growing {
-  background: #ffddc2;
-  color: $color-kickpush-black;
-}
-.ArticlesCardTitle {
-  margin-top: auto;
-  max-width: 14em;
 }

@@ -39,7 +39,7 @@
     }
   }
   &-h1 {
-    font-size: calc((100vw - (var(--gutter) * 2)) * 0.2);
+    font-size: calc((100vw - (var(--gutter) * 2)) * 0.15);
     line-height: 1.1;
 
     @include min-width($bp-tiny) {

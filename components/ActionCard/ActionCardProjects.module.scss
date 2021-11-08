@@ -22,10 +22,10 @@ $rows-oversize: 100%;
     margin-top: 10%;
   }
 
-  img {
+  .Row {
     display: block;
     height: auto;
-    width: 1114 / 940 * 100%;
+    width: math.div(1114, 940) * 100%;
     transition: transform $duration-card-image-out ease-out;
 
     &:last-child {
@@ -36,7 +36,7 @@ $rows-oversize: 100%;
 
   .Card:hover &,
   .Card:focus & {
-    img {
+    .Row {
       transition-duration: $duration-card-image-in;
 
       &:first-child {

@@ -1,25 +1,24 @@
 import { useState } from "react";
 import clsx from "clsx";
-// import Image from "next/image";
 
-import { fetchContact, fetchCustomPage } from "utils/contentful";
+import { fetchCustomPage } from "services/contentful";
 
-import ActionCardProjects from "components/ActionCard/ActionCardProjects";
+import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
 import Button from "components/Button/Button";
-import Card from "components/Card/Card";
-import ActionCard from "components/ActionCard/ActionCard";
+import Card, { CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
 import Hero, { HeroCopy } from "components/Hero/Hero";
-import Footer from "components/Footer/Footer";
-import Nav from "components/Nav/Nav";
+import { ContentfulImage } from "components/Image/Image";
+import { ContentfulFooter } from "components/Footer/Footer";
+import { ContentfulNav } from "components/Nav/Nav";
 import Manifesto from "components/Manifesto/Manifesto";
-import Paragraph from "components/Paragraph/Paragraph";
 import Title from "components/Meta/Title";
 
 import styles from "../sass/pages/about.module.scss";
+import { ContentfulArticle } from "components/Article/Article";
 
-export default function People({ page, contact }) {
+export default function About({ pageFields, globalSettings }) {
   const [showAllPhotos, setShowAllPhotos] = useState(false);
 
   const {
@@ -28,44 +27,22 @@ export default function People({ page, contact }) {
     heroTitle,
     heroCopy,
     photosTitle,
-    photosOutro,
+    photosGrid,
     manifestoItems,
     articlesTitle,
-  } = page.fields;
-
-  const photosGrid = page.fields.photosGrid.map(({ sys, fields }) => {
-    const { title, file, description } = fields;
-    return {
-      id: sys.id,
-      title,
-      alt: description || "",
-      src: `https:${file.url}`,
-    };
-  });
-
-  const articlesItems = page.fields.articlesItems?.map(({ sys, fields }) => {
-    const { title, link, type } = fields;
-    return {
-      id: sys.id,
-      title,
-      link,
-      type,
-    };
-  });
+    articlesItems,
+  } = pageFields;
 
   const handleShowMorePhotos = () => {
     setShowAllPhotos(true);
   };
-
-  const showPhotosSection = photosTitle || photosGrid.length || photosOutro;
-  const showArticlesSection = articlesTitle || articlesItems?.length;
 
   return (
     <>
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
 
-      <Nav />
+      <ContentfulNav globalSettings={globalSettings} />
 
       <main>
         <Hero>
@@ -73,60 +50,39 @@ export default function People({ page, contact }) {
           {heroCopy && <HeroCopy>{heroCopy}</HeroCopy>}
         </Hero>
 
-        {showPhotosSection && (
+        {!!photosGrid.length && (
           <section className={clsx("container", styles.Photos)}>
             {photosTitle && (
               <Heading level="h0" tag="h2">
                 {photosTitle}
               </Heading>
             )}
-            {photosGrid.length && (
-              <>
-                <div
-                  className={clsx(
-                    styles.PhotosGrid,
-                    showAllPhotos && styles["PhotosGridCell-show"]
+
+            <div
+              className={clsx(
+                styles.PhotosGrid,
+                showAllPhotos && styles["PhotosGridCell-show"]
+              )}
+            >
+              {photosGrid.map((photo, photoIndex) => (
+                <Card className={styles.PhotosGridCell} key={photoIndex}>
+                  {photo.fields.title && (
+                    <Heading level="h6" tag="span">
+                      {photo.fields.title}
+                    </Heading>
                   )}
-                >
-                  {photosGrid.map((photo, photoIndex) => (
-                    <Card className={styles.PhotosGridCell} key={photoIndex}>
-                      {photo.title && (
-                        <Heading level="h6" tag="span">
-                          {photo.title}
-                        </Heading>
-                      )}
-                      {/* <Image
-                        className={styles.PhotosGridImage}
-                        key={photo.id}
-                        src=""
-                        alt={photo.alt}
-                        src={photo.src}
-                        objectFit="cover"
-                        layout="fill"
-                      /> */}
-                      <img
-                        className={styles.PhotosGridImage}
-                        src={photo.src}
-                        alt={photo.alt}
-                      />
-                    </Card>
-                  ))}
-                </div>
-                {!showAllPhotos && (
-                  <Button
-                    className={styles.PhotosGridShowMore}
-                    onClick={handleShowMorePhotos}
-                    block
-                  >
-                    Load more
-                  </Button>
-                )}
-              </>
-            )}
-            {photosOutro && (
-              <Heading className={styles.PhotosOutro} level="h1" tag="p">
-                {photosOutro}
-              </Heading>
+                  <ContentfulImage image={photo} objectFit="cover" />
+                </Card>
+              ))}
+            </div>
+            {!showAllPhotos && (
+              <Button
+                className={styles.PhotosGridShowMore}
+                onClick={handleShowMorePhotos}
+                block
+              >
+                Load more
+              </Button>
             )}
           </section>
         )}
@@ -145,9 +101,9 @@ export default function People({ page, contact }) {
         )}
 
         <div className="container">
-          <ActionCardProjects />
+          <ContentfulActionCardProjects globalSettings={globalSettings} />
 
-          {showArticlesSection && (
+          {!!articlesItems.length && (
             <>
               {articlesTitle && (
                 <Heading className={styles.ArticlesTitle} level="h1" tag="h2">
@@ -155,71 +111,25 @@ export default function People({ page, contact }) {
                 </Heading>
               )}
 
-              {articlesItems?.map((article) => (
-                <ActionCard
-                  className={styles.ArticlesCard}
-                  href={article.link}
-                  key={article.id}
-                  topChildren={
-                    <>
-                      {article.type && (
-                        <Paragraph level="label" tag="p">
-                          {article.type}
-                        </Paragraph>
-                      )}
-                      <Heading tag="p" level="h5">
-                        The British Museum, November 2016
-                      </Heading>
-                    </>
-                  }
-                  actionCta={`View ${article.type}`}
-                >
-                  <Heading className={styles.ArticlesCardTitle} level="h3">
-                    Beyond Reality: Reinventing VR workflows.
-                  </Heading>
-                </ActionCard>
-              ))}
-
-              <ActionCard
-                className={clsx(
-                  styles.ArticlesCard,
-                  styles["ArticlesCard--growing"]
-                )}
-                href="https://google.com"
-                actionCta="View Article"
-                topChildren={
-                  <>
-                    <Paragraph level="label" tag="p">
-                      Article
-                    </Paragraph>
-                    <Heading tag="p" level="h5">
-                      London, April 2016
-                    </Heading>
-                  </>
-                }
-              >
-                <Heading className={styles.ArticlesCardTitle} level="h3">
-                  Growing pains: The first year of Kickpush.
-                </Heading>
-              </ActionCard>
+              <CardsWrapper columns={false}>
+                {articlesItems.map((article, articleIndex) => (
+                  <ContentfulArticle key={articleIndex} article={article} />
+                ))}
+              </CardsWrapper>
             </>
           )}
         </div>
       </main>
 
-      <Footer contact={contact} />
+      <ContentfulFooter globalSettings={globalSettings} />
     </>
   );
 }
 
 export async function getStaticProps() {
-  const page = await fetchCustomPage("customPagePeople");
-  const contact = await fetchContact();
+  const props = await fetchCustomPage("customPagePeople");
 
   return {
-    props: {
-      page,
-      contact,
-    },
+    props,
   };
 }

@@ -12,12 +12,12 @@ const Button = forwardRef(
       tag = "button",
       size = "medium",
       iconOnly,
-      ghost,
+      variant = "default", // "default" | "ghost" | "dark" | "light"
       ...props
     },
     ref
   ) => {
-    const ButtonTag = "button";
+    const ButtonTag = tag;
 
     return (
       <ButtonTag
@@ -25,9 +25,9 @@ const Button = forwardRef(
           className,
           styles.Button,
           styles[`Button-${size}`],
+          styles[`Button-${variant}`],
           block && styles.BlockButton,
-          iconOnly && styles.IconButton,
-          ghost && styles.GhostButton
+          iconOnly && styles.IconButton
         )}
         ref={ref}
         {...props}

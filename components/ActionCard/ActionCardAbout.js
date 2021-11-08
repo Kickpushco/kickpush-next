@@ -3,35 +3,20 @@ import clsx from "clsx";
 
 import ActionCard from "./ActionCard";
 import Heading from "components/Heading/Heading";
+import { ContentfulImage } from "components/Image/Image";
 import Paragraph from "components/Paragraph/Paragraph";
-
-// TODO: Reorder these
-import workRow1 from "assets/images/work-row-1.png";
-import workRow2 from "assets/images/work-row-2.png";
 
 import styles from "./ActionCardAbout.module.scss";
 
 export function ContentfulActionAboutCard({ globalSettings, ...props }) {
-  const {
-    aboutCardTitle,
-    aboutCardSubtitle,
-    aboutCardAction,
-    aboutCardPhotos,
-  } = globalSettings.fields;
-
-  const photos = globalSettings.fields.aboutCardPhotos.map(
-    ({ sys, fields }) => ({
-      id: sys.id,
-      src: `https:${fields.file.url}`,
-    })
-  );
-
   return (
     <ActionAboutCard
-      heading={aboutCardTitle}
-      subtitle={aboutCardSubtitle}
-      actionCta={aboutCardAction}
-      photos={photos}
+      heading={globalSettings.aboutCardTitle}
+      subtitle={globalSettings.aboutCardSubtitle}
+      actionCta={globalSettings.aboutCardAction}
+      photos={globalSettings.aboutCardPhotos.map((image, photoIndex) => (
+        <ContentfulImage image={image} objectFit="cover" />
+      ))}
       {...props}
     />
   );
@@ -45,6 +30,7 @@ function ActionAboutCard({
   photos,
   ...props
 }) {
+  console.log(photos);
   return (
     <Link href="/projects" passHref>
       <ActionCard
@@ -56,21 +42,15 @@ function ActionAboutCard({
             <Heading className={styles.Heading} level="h3" tag="p">
               {heading}
             </Heading>
-            <Paragraph level="label">2008–Present</Paragraph>
+            {subtitle && <Paragraph level="label">{subtitle}</Paragraph>}
           </>
         }
         {...props}
       >
         <div className={styles.Photos}>
           {photos.map((photo, photoIndex) => (
-            <div className={styles.PhotosCell}>
-              <img
-                className={styles.PhotosImage}
-                key={photoIndex}
-                src={photo.src}
-                alt=""
-                loading="lazy"
-              />
+            <div className={styles.PhotosLayer} key={photoIndex}>
+              {photo}
             </div>
           ))}
         </div>

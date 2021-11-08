@@ -1,36 +1,53 @@
+import { useRouter } from "next/router";
 import Link from "next/link";
 import clsx from "clsx";
 
-import { fetchProject, fetchProjects, fetchCustomPage } from "utils/contentful";
+import useEscKey from "hooks/useEscKey";
 
-import Heading from "components/Heading/Heading";
-import Paragraph from "components/Paragraph/Paragraph";
-import Description from "components/Meta/Description";
-import Title from "components/Meta/Title";
-import LabelData from "components/Meta/LabelData";
+import {
+  computeTextColor,
+  fetchCustomPage,
+  fetchProject,
+  fetchProjectIds,
+} from "services/contentful";
+
 import Button from "components/Button/Button";
-import ContentfulProjectCard from "components/ProjectCard/ContentfulProjectCard";
-
+import Description from "components/Meta/Description";
 import IconClose from "assets/icons/20-close.svg";
+import LabelData from "components/Meta/LabelData";
+import Title from "components/Meta/Title";
+import { ContentfulProjectHero } from "components/ProjectPage/ProjectHero";
+import { ContentfulProjectCover } from "components/ProjectPage/ProjectCover";
+import { ContentfulProjectFooter } from "components/ProjectPage/ProjectFooter";
+import { ContentfulProjectContact } from "components/ProjectPage/ProjectContact";
+import ProjectSlide from "components/ProjectPage/ProjectSlide";
 
-import styles from "../../sass/pages/project.module.scss";
+import styles from "sass/pages/project.module.scss";
 
-const footerStyles = {
-  Light: styles["Footer-light"],
-  Dark: styles["Footer-dark"],
-};
+const PROJECT_CLOSE_URL = "/projects";
 
-export default function Project({ project, nextProject }) {
-  const { clientName, year, designer, projectPage, platform } = project.fields;
-  const { heroTitle, heroCopy, heroDeliverables } = projectPage.fields;
+export default function Project({ pageFields, nextProject, globalSettings }) {
+  const router = useRouter();
 
-  const {
-    clientName: nextClientName,
-    cardColor: nextCardColor,
-    cardTitle: nextCardTitle,
-    cardTextColor: nextCardTextColor,
-    year: nextYear,
-  } = nextProject.fields;
+  const { clientName, color, year, heroTitle, heroCopy } = pageFields;
+
+  const textColor = computeTextColor(pageFields.textColor);
+
+  useEscKey(() => {
+    router.push(PROJECT_CLOSE_URL);
+  });
+
+  // Temporary example slides
+  const TEMP_SLIDES = [
+    {
+      backgroundColor: "dark",
+    },
+    {
+      backgroundColor: "light",
+    },
+  ];
+
+  const slidesLength = TEMP_SLIDES.length;
 
   return (
     <>
@@ -39,135 +56,93 @@ export default function Project({ project, nextProject }) {
       <LabelData number="1" label="Client" data={clientName} />
       <LabelData number="2" label="Designed in" data={year} />
 
-      <main className={styles.Main}>
-        <Link href="/projects">
+      <main
+        className={clsx(styles.Main, styles[`Main-${textColor}`])}
+        style={{
+          "--project-background-color": color,
+        }}
+      >
+        <Link href={PROJECT_CLOSE_URL}>
           <Button
             className={styles.Close}
             aria-label="Back to projects"
-            ghost
+            variant="ghost"
             size="small"
           >
             <IconClose role="presentation" />
           </Button>
         </Link>
 
-        <ProjectHero
-          title={heroTitle}
-          copy={heroCopy}
-          year={year}
-          designer={designer}
-          platform={platform}
-          deliverables={heroDeliverables}
+        <ContentfulProjectCover
+          pageFields={pageFields}
+          index={slidesLength + 4}
         />
 
-        <section className={clsx(styles.Slide, styles.Contact)}>
-          <div className="container">
-            <Heading level="h2">Seen enough?</Heading>
-            <Link href="/contact" passHref>
-              <Button className={styles.ContactButton} tag="a">
-                Let’s chat.
-              </Button>
-            </Link>
-          </div>
-        </section>
+        <ContentfulProjectHero
+          pageFields={pageFields}
+          index={slidesLength + 3}
+        />
 
-        <section
-          className={clsx(
-            styles.Slide,
-            styles.Footer,
-            footerStyles[nextCardTextColor]
-          )}
-        >
-          <div className="container">
-            {/* TODO: Fix scroll to on focus */}
-            <ContentfulProjectCard
-              className={styles.FooterCard}
-              size="large"
-              project={nextProject}
-            />
-          </div>
-        </section>
+        {TEMP_SLIDES.map((slide, slideIndex) => (
+          <ProjectSlide
+            key={slideIndex}
+            backgroundColor={slide.backgroundColor}
+            index={slidesLength - slideIndex + 2}
+          >
+            <div style={{ margin: "auto" }}>Example slide</div>
+          </ProjectSlide>
+        ))}
+
+        <ContentfulProjectContact
+          pageFields={pageFields}
+          textColor={textColor}
+          index={2}
+        />
+
+        <ContentfulProjectFooter
+          globalSettings={globalSettings}
+          nextProject={nextProject}
+          index={1}
+        />
       </main>
     </>
   );
 }
 
-function ProjectHero({ title, copy, year, designer, deliverables, platform }) {
-  return (
-    <section className={clsx(styles.Slide, styles.Hero)}>
-      <div className={clsx("container", styles.HeroContent)}>
-        <Heading className={styles.HeroTitle} level="h1">
-          {title}
-        </Heading>
-        {copy && (
-          <Paragraph className={styles.HeroCopy} level="huge">
-            {copy}
-          </Paragraph>
-        )}
-      </div>
-      <dl className={clsx("container", styles.HeroFooter)}>
-        {year && (
-          <div>
-            <dt>Designed in</dt>
-            <dd>{year}</dd>
-          </div>
-        )}
-        {designer && (
-          <div>
-            <dt>Designed by</dt>
-            <dd>{designer}</dd>
-          </div>
-        )}
-        {deliverables && (
-          <div>
-            <dt>Deliverables</dt>
-            <dd>{deliverables}</dd>
-          </div>
-        )}
-        {platform && (
-          <div>
-            <dt>Platform</dt>
-            <dd>{platform}</dd>
-          </div>
-        )}
-      </dl>
-    </section>
-  );
-}
-
 export async function getStaticProps({ params }) {
-  const project = await fetchProject(params.projectId);
-  const projectsPage = await fetchCustomPage("customPageProjects", {
-    include: 2,
-  });
+  const projectFields = await fetchProject(params.projectId);
+  const { pageFields, globalSettings } = await fetchCustomPage(
+    "customPageProject",
+    { include: 2 }
+  );
 
-  const { projects } = projectsPage.fields.projectsList.fields;
+  const { projects } = pageFields.projectsList.fields;
 
   const currentProjectIndex = projects.findIndex((project) => {
     return project.fields.slug === params.projectId;
   });
-
   const nextProject = projects[currentProjectIndex + 1] || projects[0];
 
   return {
     props: {
-      project,
+      pageFields: {
+        ...pageFields,
+        ...projectFields,
+      },
       nextProject,
+      globalSettings,
     },
   };
 }
 
 export async function getStaticPaths() {
-  const projects = await fetchProjects();
+  const projects = await fetchProjectIds();
 
-  const paths = projects.map((project) => {
-    const { slug } = project.fields;
-    return {
-      params: {
-        projectId: slug,
-      },
-    };
-  });
+  const paths = projects.map((projectId) => ({
+    params: {
+      projectId,
+    },
+  }));
 
   return {
     paths,
