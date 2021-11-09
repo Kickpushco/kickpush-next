@@ -50,7 +50,7 @@ function Nav({ labels, ...props }) {
   }
 
   useEffect(() => {
-    const mediaQueryList = matchMedia(`(min-width: ${styles.mobileNav}`);
+    const mediaQueryList = matchMedia(`(min-width: ${styles.mobileNav})`);
 
     function handleMQLChange(e) {
       const isNotMobile = e.matches;
