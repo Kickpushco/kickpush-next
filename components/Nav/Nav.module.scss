@@ -127,7 +127,7 @@
     }
   }
 
-  &:focus {
+  &:focus-visible {
     &::after {
       background: none;
     }
