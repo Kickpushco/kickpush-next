@@ -2,6 +2,7 @@
 
 .Hero {
   margin: calc(var(--section-space) / 2) 0 var(--section-space);
+  width: 100%;
 
   @include min-width($bp-mobile) {
     text-align: center;

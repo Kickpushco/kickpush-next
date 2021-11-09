@@ -1,0 +1,7 @@
+@import "../../sass/global";
+
+.Hero {
+  margin: auto;
+  padding-top: calc(var(--section-space) / 2 - var(--nav-height));
+  padding-bottom: calc(var(--section-space) / 2);
+}
