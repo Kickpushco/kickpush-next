@@ -66,8 +66,9 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           <Button
             className={styles.Close}
             aria-label="Back to projects"
-            variant="ghost"
+            variant={textColor}
             size="small"
+            iconOnly
           >
             <IconClose role="presentation" />
           </Button>

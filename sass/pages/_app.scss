@@ -64,7 +64,7 @@ html {
     --gutter: #{rem(60)};
   }
 
-  @media screen and (max-height: #{em(700)}) {
+  @media screen and (max-height: #{em(670)}) {
     --nav-offset: 0rem;
   }
 }

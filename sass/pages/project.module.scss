@@ -16,8 +16,7 @@
 .Close {
   --button-icon-size: #{rem(18)};
 
-  background: var(--project-background-color);
-  color: currentColor;
+  border-radius: rem(4);
   position: fixed;
   top: rem(24);
   right: rem(24);
