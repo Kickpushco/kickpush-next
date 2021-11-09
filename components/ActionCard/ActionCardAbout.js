@@ -30,7 +30,6 @@ function ActionAboutCard({
   photos,
   ...props
 }) {
-  console.log(photos);
   return (
     <Link href="/projects" passHref>
       <ActionCard
