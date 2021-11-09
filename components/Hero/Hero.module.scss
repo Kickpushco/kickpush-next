@@ -20,6 +20,8 @@
 
 .Copy {
   @include hero-animation("copy");
+
+  margin-top: 1em;
 }
 
 .Container {

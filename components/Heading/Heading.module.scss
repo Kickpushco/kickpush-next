@@ -13,7 +13,7 @@
 
 .Heading {
   &-h0 {
-    font-size: calc((100vw - (var(--gutter) * 2)) * 0.2);
+    font-size: calc((100vw - var(--gutter)) * 0.18);
     line-height: 1.1;
     color: $color-kickpush-dark-red;
     margin-bottom: 1.25em;
@@ -39,7 +39,7 @@
     }
   }
   &-h1 {
-    font-size: calc((100vw - (var(--gutter) * 2)) * 0.15);
+    font-size: calc((100vw - var(--gutter)) * 0.15);
     line-height: 1.1;
 
     @include min-width($bp-tiny) {
