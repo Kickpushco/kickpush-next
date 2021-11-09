@@ -19,7 +19,6 @@ $rows-oversize: 100%;
     margin-right: calc(
       var(--card-padding) * -1 - #{math.div($rows-oversize, 2)}
     );
-    margin-top: 10%;
   }
 
   .Row {

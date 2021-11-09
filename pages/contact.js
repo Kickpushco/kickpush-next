@@ -16,7 +16,7 @@ export default function Contact({ pageFields, globalSettings }) {
       <Description description={pageFields.metaDescription} />
       <LabelData number="1" label="Email" data={globalSettings.contactEmail} />
 
-      <ContentfulNav globalSettings={globalSettings} />
+      <ContentfulNav globalSettings={globalSettings} selected="contact" />
 
       <ContentfulFooter globalSettings={globalSettings} isHero tag="main" />
     </>

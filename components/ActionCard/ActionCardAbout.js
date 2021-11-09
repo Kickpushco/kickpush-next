@@ -39,10 +39,14 @@ function ActionAboutCard({
         actionCta={actionCta}
         topChildren={
           <>
-            <Heading className={styles.Heading} level="h3" tag="p">
+            <Heading className={styles.Title} level="h3" tag="p">
               {heading}
             </Heading>
-            {subtitle && <Paragraph level="label">{subtitle}</Paragraph>}
+            {subtitle && (
+              <Paragraph level="label" className={styles.Subtitle}>
+                {subtitle}
+              </Paragraph>
+            )}
           </>
         }
         {...props}

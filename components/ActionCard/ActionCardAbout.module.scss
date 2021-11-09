@@ -5,10 +5,17 @@
 $photos-width: 1069;
 $photos-height: 596;
 
-.Heading {
+.Title {
   @include min-width($bp-unstack-cards) {
     width: 50%;
   }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.Subtitle {
+  margin-bottom: 0;
 }
 
 .Photos {
@@ -16,23 +23,14 @@ $photos-height: 596;
   position: relative;
   transform: rotate(-15deg);
   width: 210%;
-  margin-top: 5%;
+  margin-top: -5%;
   margin-left: -20%;
   align-self: flex-end;
 
   @include min-width($bp-unstack-cards) {
-    position: absolute;
-    top: 0;
-    left: 36%;
-    width: 132%;
-    margin-top: -18%;
-    margin-left: -37%;
-    transform-origin: right top;
-  }
-
-  @include min-width($bp-tablet) {
-    left: 36%;
-    width: 120%;
+    width: calc(117% + (#{var(--card-padding)} * 2));
+    margin-left: 4%;
+    margin-top: -10%;
   }
 }
 .PhotosLayer {
@@ -46,29 +44,30 @@ $photos-height: 596;
   a:hover &,
   a:focus & {
     transition: transform $duration-card-image-in ease-out;
-    transform: scale(var(--photo-transform, 0.975));
+    transform: scale(var(--photo-transform, 1.025));
   }
 
   &:nth-of-type(1) {
-    --photo-top: 140;
+    --photo-top: 0;
   }
 
   &:nth-of-type(2) {
-    --photo-top: 221;
-    --photo-left: 343;
-    --photo-transform: 1.025;
+    --photo-top: 210;
+    --photo-left: 220;
+    --photo-transform: 1.05;
 
     z-index: 2;
   }
 
   &:nth-of-type(3) {
+    --photo-top: 40;
     --photo-left: 451;
   }
 
   &:nth-of-type(4) {
-    --photo-left: 634;
-    --photo-top: 331;
-    --photo-transform: 1.1;
+    --photo-left: 580;
+    --photo-top: 345;
+    --photo-transform: 1.075;
 
     z-index: 2;
 

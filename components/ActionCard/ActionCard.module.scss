@@ -5,6 +5,7 @@
 .Card {
   --card-scale: #{math.div(420, 440)};
 
+  padding: 0;
   overflow: hidden;
   text-decoration: none;
   transition: $duration-card-action ease-in-out;
@@ -34,6 +35,8 @@
 .Content {
   display: grid;
   grid-template-rows: auto 1fr;
+  gap: var(--card-padding) 0;
+  padding: var(--card-padding);
   position: relative;
   z-index: 1;
   height: 100%;

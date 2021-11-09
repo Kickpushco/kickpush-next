@@ -68,7 +68,7 @@ function Footer({
           href={`mailto:${email}`}
           onClick={handleCopyEmail}
         >
-          <Action ctaText={actionCta} ctaLevel="h4">
+          <Action ctaText={actionCta} ctaLevel="h4" infoTag="span">
             {email.split("@").map((chunk, chunkIndex) => (
               <Heading
                 className={styles.EmailChunk}

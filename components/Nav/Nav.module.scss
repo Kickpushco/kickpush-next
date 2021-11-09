@@ -29,7 +29,10 @@
   align-items: center;
   margin-left: rem(-14);
   width: rem(111);
-  outline-offset: 0;
+
+  &:focus {
+    outline-offset: rem(-2);
+  }
 
   @include min-width($bp-mobile) {
     margin-left: rem(-19);
@@ -68,27 +71,65 @@
   padding: 0;
   gap: var(--gutter);
 
-  a {
-    text-decoration: none;
-    font-weight: bold;
-    display: block;
-    margin: 0;
-    padding: 0.25em 0.5em;
-    margin: 0 -0.5em;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
   @include max-width($bp-hamburger-menu) {
     margin: auto 0;
     flex-direction: column;
 
     a {
-      width: fit-content;
-      margin: 0 auto;
-      padding: 0 0.25em;
+    }
+  }
+}
+.Link {
+  position: relative;
+  text-decoration: none;
+  font-weight: $font-weight-bold;
+  display: block;
+  padding: 0.5em;
+  margin: 0 -0.5em;
+  border-radius: rem(6);
+
+  &:focus {
+    outline-offset: rem(-2);
+  }
+
+  @include max-width($bp-hamburger-menu) {
+    width: fit-content;
+    margin: -0.5em auto;
+    border-radius: calc(#{rem(4)} + 0.1em);
+
+    &:focus {
+      outline-offset: calc(-0.1em - #{rem(1)});
+    }
+  }
+
+  &::after {
+    background: $color-kickpush-dark-red;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0.5em;
+    right: 0.5em;
+    height: 0.2em;
+    transform: scale(0, 1);
+    transform-origin: center right;
+    transition: transform 200ms ease-in-out;
+
+    @include max-width($bp-hamburger-menu) {
+      height: rem(2);
+    }
+  }
+
+  &[aria-current],
+  &:hover {
+    &::after {
+      transform: none;
+      transform-origin: center left;
+    }
+  }
+
+  &:focus {
+    &::after {
+      background: none;
     }
   }
 }

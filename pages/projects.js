@@ -18,7 +18,7 @@ export default function Projects({ pageFields, globalSettings }) {
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
 
-      <ContentfulNav globalSettings={globalSettings} />
+      <ContentfulNav globalSettings={globalSettings} selected="projects" />
 
       <main>
         <Hero>

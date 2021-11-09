@@ -42,7 +42,7 @@ export default function About({ pageFields, globalSettings }) {
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
 
-      <ContentfulNav globalSettings={globalSettings} />
+      <ContentfulNav globalSettings={globalSettings} selected="about" />
 
       <main>
         <Hero>

@@ -9,10 +9,12 @@ function Action({
   ctaText = "See more",
   ctaLevel = "h5",
   ctaTag = "span",
+  infoTag = "div",
 }) {
+  const InfoTag = infoTag;
   return (
     <>
-      <span className={styles.Info}>{children}</span>
+      <InfoTag className={styles.Info}>{children}</InfoTag>
 
       <Heading level={ctaLevel} tag={ctaTag} className={styles.Action}>
         {ctaText} <IconActionArrow role="presentation" />

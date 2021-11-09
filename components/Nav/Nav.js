@@ -13,20 +13,21 @@ import useFocusTrap from "hooks/useFocusTrap";
 
 import styles from "./Nav.module.scss";
 
-const NavLink = forwardRef(({ isMobile, children, ...props }, ref) => {
-  if (isMobile) {
-    return (
-      <Heading level="h3" tag="a" ref={ref} {...props}>
-        {children}
-      </Heading>
-    );
+const NavLink = forwardRef(
+  ({ className, isMobile, selected, ...props }, ref) => {
+    const sharedProps = {
+      className: clsx(className, styles.Link),
+      "aria-current": selected || undefined,
+      ref,
+      ...props,
+    };
+
+    if (isMobile) {
+      return <Heading level="h3" tag="a" {...sharedProps} />;
+    }
+    return <a {...sharedProps} />;
   }
-  return (
-    <a ref={ref} {...props}>
-      {children}
-    </a>
-  );
-});
+);
 
 export function ContentfulNav({ globalSettings, ...props }) {
   const labels = {
@@ -37,7 +38,7 @@ export function ContentfulNav({ globalSettings, ...props }) {
   return <Nav labels={labels} {...props} />;
 }
 
-function Nav({ labels, ...props }) {
+function Nav({ labels, selected, ...props }) {
   const [isMobile, setIsMobile] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -115,17 +116,23 @@ function Nav({ labels, ...props }) {
           <ul className={styles.Links}>
             <li>
               <Link href="/projects" passHref>
-                <NavLink isMobile={isMobile}>{labels.projects}</NavLink>
+                <NavLink isMobile={isMobile} selected={selected === "projects"}>
+                  {labels.projects}
+                </NavLink>
               </Link>
             </li>
             <li>
               <Link href="/about" passHref>
-                <NavLink isMobile={isMobile}>{labels.about}</NavLink>
+                <NavLink isMobile={isMobile} selected={selected === "about"}>
+                  {labels.about}
+                </NavLink>
               </Link>
             </li>
             <li>
               <Link href="/contact" passHref>
-                <NavLink isMobile={isMobile}>{labels.contact}</NavLink>
+                <NavLink isMobile={isMobile} selected={selected === "contact"}>
+                  {labels.contact}
+                </NavLink>
               </Link>
             </li>
           </ul>
