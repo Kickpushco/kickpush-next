@@ -19,10 +19,10 @@ import Title from "components/Meta/Title";
 import { ContentfulProjectHero } from "components/ProjectPage/ProjectHero";
 import { ContentfulProjectCover } from "components/ProjectPage/ProjectCover";
 import { ContentfulProjectFooter } from "components/ProjectPage/ProjectFooter";
-import { ContentfulProjectContact } from "components/ProjectPage/ProjectContact";
 import ProjectSlide from "components/ProjectPage/ProjectSlide";
 
 import styles from "sass/pages/project.module.scss";
+import { ContentfulFooter } from "components/Footer/Footer";
 
 const PROJECT_CLOSE_URL = "/projects";
 
@@ -94,11 +94,13 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           </ProjectSlide>
         ))}
 
-        <ContentfulProjectContact
-          pageFields={pageFields}
-          textColor={textColor}
-          index={2}
-        />
+        <ProjectSlide index={2}>
+          <ContentfulFooter
+            className={styles.Contact}
+            globalSettings={globalSettings}
+            tag="div"
+          />
+        </ProjectSlide>
 
         <ContentfulProjectFooter
           globalSettings={globalSettings}

@@ -18,7 +18,7 @@ export default function Contact({ pageFields, globalSettings }) {
 
       <ContentfulNav globalSettings={globalSettings} />
 
-      <ContentfulFooter globalSettings={globalSettings} isHero />
+      <ContentfulFooter globalSettings={globalSettings} isHero tag="main" />
     </>
   );
 }

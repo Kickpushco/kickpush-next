@@ -1,18 +1,5 @@
 @import "../global";
 
-// .Text {
-//   &-light {
-//     --focus-ring: #{rgba($color-kickpush-white, 0.6)};
-
-//     color: $color-kickpush-white;
-//   }
-//   &-dark {
-//     color: $color-kickpush-black;
-
-//     --focus-ring: #{rgba($color-kickpush-black, 0.6)};
-//   }
-// }
-
 .Close {
   --button-icon-size: #{rem(18)};
 
@@ -36,4 +23,11 @@
 
     --focus-ring: #{rgba($color-kickpush-black, 0.6)};
   }
+}
+
+.Contact {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-top: calc(var(--section-space) / 2);
+  padding-bottom: calc(var(--section-space) / 2);
 }

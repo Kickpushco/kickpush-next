@@ -23,6 +23,7 @@ function Footer({
   className,
   title,
   email = "",
+  tag = "footer",
   actionCta,
   copiedTooltip,
   isHero,
@@ -32,7 +33,7 @@ function Footer({
   const copyTimeoutRef = useRef(null);
 
   const headingTag = isHero ? "h1" : "p";
-  const WrapperTag = isHero ? "main" : "footer";
+  const WrapperTag = tag;
 
   async function handleCopyEmail(e) {
     e.preventDefault();
