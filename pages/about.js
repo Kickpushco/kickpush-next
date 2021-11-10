@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { fetchCustomPage } from "services/contentful";
 
 import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
+import { ContentfulArticle } from "components/Article/Article";
 import Button from "components/Button/Button";
 import Card, { CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
@@ -16,7 +17,6 @@ import Manifesto from "components/Manifesto/Manifesto";
 import Title from "components/Meta/Title";
 
 import styles from "../sass/pages/about.module.scss";
-import { ContentfulArticle } from "components/Article/Article";
 
 export default function About({ pageFields, globalSettings }) {
   const [showAllPhotos, setShowAllPhotos] = useState(false);

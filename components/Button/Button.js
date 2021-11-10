@@ -9,7 +9,7 @@ const Button = forwardRef(
       className,
       children,
       block,
-      tag = "button",
+      tag,
       size = "medium",
       iconOnly,
       variant = "default", // "default" | "ghost" | "dark" | "light"
@@ -17,7 +17,7 @@ const Button = forwardRef(
     },
     ref
   ) => {
-    const ButtonTag = tag;
+    const ButtonTag = tag || (props.href ? "a" : "button");
 
     return (
       <ButtonTag

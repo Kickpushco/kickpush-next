@@ -71,6 +71,8 @@ function Article({
         </>
       }
       actionCta={`View ${type}`}
+      target="_blank"
+      rel="noopener"
       {...props}
     >
       {isVideo && (

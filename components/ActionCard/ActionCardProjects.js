@@ -6,19 +6,21 @@ import Heading from "components/Heading/Heading";
 import Image from "components/Image/Image";
 import Paragraph from "components/Paragraph/Paragraph";
 
-import workRow1png from "assets/images/work-row-1.png";
-import workRow1webp from "assets/images/work-row-1.webp";
-import workRow2png from "assets/images/work-row-2.png";
-import workRow2webp from "assets/images/work-row-2.webp";
+import workRow1Png from "assets/images/work-row-1.png";
+import workRow1Webp from "assets/images/work-row-1.webp";
+import workRow2Png from "assets/images/work-row-2.png";
+import workRow2Webp from "assets/images/work-row-2.webp";
 
 import styles from "./ActionCardProjects.module.scss";
 
 function computeRowProps(pngSrc, webpSrc) {
-  const { src, width, height } = pngSrc;
+  const { width, height } = pngSrc;
   return {
     className: styles.Row,
-    src,
-    webpSrc: webpSrc?.src,
+    srcSet: {
+      legacy: pngSrc.src,
+      webp: webpSrc.src,
+    },
     variant: "ghost",
     width,
     height,
@@ -32,6 +34,21 @@ export function ContentfulActionCardProjects({ globalSettings, ...props }) {
       subtitle={globalSettings.projectsCardSubtitle}
       actionCta={globalSettings.projectsCardAction}
       {...props}
+    />
+  );
+}
+
+function Row({ png, webp }) {
+  return (
+    <Image
+      className={styles.Row}
+      variant="ghost"
+      srcSet={{
+        legacy: png.src,
+        webp: webp.src,
+      }}
+      width={png.width}
+      height={png.height}
     />
   );
 }
@@ -60,8 +77,8 @@ function ActionCardProjects({
         {...props}
       >
         <div className={styles.Rows}>
-          <Image {...computeRowProps(workRow1png, workRow1webp)} />
-          <Image {...computeRowProps(workRow2png, workRow2webp)} />
+          <Row png={workRow1Png} webp={workRow1Webp} />
+          <Row png={workRow2Png} webp={workRow2Webp} />
         </div>
       </ActionCard>
     </Link>

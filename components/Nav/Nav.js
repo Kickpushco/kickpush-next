@@ -23,7 +23,7 @@ const NavLink = forwardRef(
     };
 
     if (isMobile) {
-      return <Heading level="h3" tag="a" {...sharedProps} />;
+      return <Heading level="h3" {...sharedProps} />;
     }
     return <a {...sharedProps} />;
   }

@@ -1,6 +1,8 @@
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import clsx from "clsx";
+import { useInView } from "react-intersection-observer";
 
 import useEscKey from "hooks/useEscKey";
 
@@ -13,21 +15,26 @@ import {
 
 import Button from "components/Button/Button";
 import Description from "components/Meta/Description";
-import IconClose from "assets/icons/20-close.svg";
 import LabelData from "components/Meta/LabelData";
+import { ContentfulFooter } from "components/Footer/Footer";
 import Title from "components/Meta/Title";
 import { ContentfulProjectHero } from "components/ProjectPage/ProjectHero";
 import { ContentfulProjectCover } from "components/ProjectPage/ProjectCover";
 import { ContentfulProjectFooter } from "components/ProjectPage/ProjectFooter";
 import ProjectSlide from "components/ProjectPage/ProjectSlide";
 
+import IconClose from "assets/icons/20-close.svg";
+
 import styles from "sass/pages/project.module.scss";
-import { ContentfulFooter } from "components/Footer/Footer";
 
 const PROJECT_CLOSE_URL = "/projects";
 
 export default function Project({ pageFields, nextProject, globalSettings }) {
   const router = useRouter();
+
+  const [footerTriggerRef, footerInView] = useInView({
+    rootMargin: "0% 0% -50% 0%",
+  });
 
   const { clientName, color, year, heroTitle, heroCopy } = pageFields;
 
@@ -48,6 +55,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
   ];
 
   const slidesLength = TEMP_SLIDES.length;
+  const FOOTER_SLIDES_COUNT = 2;
 
   return (
     <>
@@ -62,17 +70,20 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           "--project-background-color": color,
         }}
       >
-        <Link href={PROJECT_CLOSE_URL}>
-          <Button
-            className={styles.Close}
-            aria-label="Back to projects"
-            variant={textColor}
-            size="small"
-            iconOnly
-          >
-            <IconClose role="presentation" />
-          </Button>
-        </Link>
+        <div
+          className={clsx(styles.Close, footerInView && styles["Close-hidden"])}
+        >
+          <Link href={PROJECT_CLOSE_URL} passHref>
+            <Button
+              aria-label="Back to projects"
+              variant={textColor}
+              size="small"
+              iconOnly
+            >
+              <IconClose role="presentation" />
+            </Button>
+          </Link>
+        </div>
 
         <ContentfulProjectCover
           pageFields={pageFields}
@@ -88,7 +99,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           <ProjectSlide
             key={slideIndex}
             backgroundColor={slide.backgroundColor}
-            index={slidesLength - slideIndex + 2}
+            index={slidesLength - slideIndex + FOOTER_SLIDES_COUNT}
           >
             <div style={{ margin: "auto" }}>Example slide</div>
           </ProjectSlide>
@@ -101,6 +112,8 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
             tag="div"
           />
         </ProjectSlide>
+
+        <span className={styles.Trigger} ref={footerTriggerRef} />
 
         <ContentfulProjectFooter
           globalSettings={globalSettings}

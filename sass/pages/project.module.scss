@@ -1,13 +1,23 @@
 @import "../global";
 
 .Close {
-  --button-icon-size: #{rem(18)};
-
-  border-radius: rem(4);
   position: fixed;
   top: rem(24);
   right: rem(24);
   z-index: 102;
+  transition: 200ms ease-in-out;
+  transition-property: opacity, transform;
+
+  &-hidden {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  a {
+    --button-icon-size: #{rem(18)};
+
+    border-radius: rem(4);
+  }
 }
 
 .Main {
