@@ -76,7 +76,7 @@ $photos-height: 596;
     }
   }
 }
-.Photos picture {
+.Photos > div {
   aspect-ratio: 403 / 263;
   background: $color-kickpush-dark-red;
   box-shadow: rgba($color-kickpush-dark-red, 0.4) 0 rem(20) rem(30) 0;

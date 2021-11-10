@@ -14,7 +14,7 @@ export function ContentfulActionAboutCard({ globalSettings, ...props }) {
       heading={globalSettings.aboutCardTitle}
       subtitle={globalSettings.aboutCardSubtitle}
       actionCta={globalSettings.aboutCardAction}
-      photos={globalSettings.aboutCardPhotos.map((image, photoIndex) => (
+      photos={globalSettings.aboutCardPhotos.map((image) => (
         <ContentfulImage image={image} objectFit="cover" />
       ))}
       {...props}
