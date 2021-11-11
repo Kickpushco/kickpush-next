@@ -52,7 +52,7 @@ function App({ Component, pageProps }) {
         ))}
 
         <meta name="msapplication-TileColor" content={styles.kickpushRed} />
-        <meta name="msapplication-TileImage" content="/icon-144.png" />
+        <meta name="msapplication-TileImage" content="/logo-144.png" />
         <meta name="theme-color" content={styles.kickpushRed} />
       </Head>
 
