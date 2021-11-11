@@ -1,0 +1,120 @@
+@import "../global";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+@font-face {
+  font-family: $font-family-heading;
+  src: url(../../assets/fonts/kickpush-headings.woff2);
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: $font-family-body;
+  src: url(../../assets/fonts/lineto-circular-medium.woff2);
+  font-weight: $font-weight-medium;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: $font-family-body;
+  src: url(../../assets/fonts/lineto-circular-bold.woff2);
+  font-weight: $font-weight-bold;
+  font-style: normal;
+}
+
+html {
+  --gutter: #{rem(24)};
+  --section-space: #{rem(120)};
+  --nav-height: #{rem(52)};
+  --nav-offset: 0rem;
+  --focus-ring: #{darken($color-kickpush-dark-red, 10%)};
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background: $color-kickpush-red;
+  color: $color-kickpush-white;
+  font-family: $font-stack-body;
+  font-weight: $font-weight-medium;
+  min-height: 100%;
+  min-height: stretch;
+
+  @include min-width($bp-tiny) {
+    --gutter: #{rem(40)};
+    --nav-height: #{rem(60)};
+  }
+
+  @include min-width($bp-mobile) {
+    --section-space: #{rem(180)};
+    --nav-offset: #{rem(20)};
+  }
+
+  @include min-width($bp-tablet) {
+    --gutter: #{rem(48)};
+    --section-space: #{rem(240)};
+    --nav-offset: #{rem(40)};
+    --nav-height: #{rem(80)};
+  }
+
+  @include min-width($bp-desktop) {
+    --gutter: #{rem(60)};
+  }
+
+  @media screen and (max-height: #{em(670)}) {
+    --nav-offset: 0rem;
+  }
+}
+
+html,
+body,
+#__next {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  // min-height: 100%;
+}
+
+main {
+  margin-bottom: var(--section-space);
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+a {
+  color: currentColor;
+}
+a,
+button {
+  border-radius: $border-radius-small;
+}
+a:focus,
+button:focus {
+  outline: var(--focus-ring) rem(2) solid;
+  outline-offset: rem(2);
+}
+a:not(:focus-visible),
+button:not(:focus-visible) {
+  outline: 0;
+}
+a:focus-visible,
+button:focus-visible {
+  outline: var(--focus-ring) rem(2) solid;
+}
+
+a,
+input,
+button {
+  scroll-margin-top: var(--nav-height);
+}
+
+.container {
+  margin: 0 auto;
+  width: calc(100% - (var(--gutter) * 2));
+  max-width: rem(940);
+}

@@ -1,0 +1,70 @@
+@import "../../sass/global";
+
+$image-blur-duration: 100ms;
+
+.Image {
+  display: block;
+  position: relative;
+
+  img,
+  picture {
+    border-radius: inherit;
+  }
+
+  img {
+    display: block;
+    height: auto;
+    width: 100%;
+
+    &:not([src]) {
+      opacity: 0;
+    }
+  }
+
+  &-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &-regular {
+    background: $color-kickpush-dark-red;
+    border-radius: $border-radius-small;
+  }
+
+  &-ghost {
+    img {
+      filter: blur(#{rem(15)});
+      transition: filter $image-blur-duration ease-in-out;
+    }
+
+    &.Image-loaded {
+      img {
+        filter: none;
+      }
+    }
+  }
+}
+
+.Blur {
+  border-radius: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(#{rem(15)});
+  transition: opacity $image-blur-duration ease-in-out;
+
+  .Image-loaded & {
+    opacity: 0;
+  }
+}

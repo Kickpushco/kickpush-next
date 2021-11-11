@@ -1,0 +1,20 @@
+@import "../../sass/global";
+
+.Wrapper {
+  text-align: center;
+  margin-top: rem(80);
+
+  @include min-width($bp-mobile) {
+    margin-top: rem(120);
+  }
+
+  @include min-width($bp-tablet) {
+    margin-top: rem(240);
+  }
+}
+.Short {
+  color: $color-kickpush-dark-red;
+}
+.Long {
+  margin-bottom: 0;
+}

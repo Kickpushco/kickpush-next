@@ -1,0 +1,92 @@
+@use "sass:math";
+
+@import "../../sass/global";
+
+.Photos {
+  margin-bottom: var(--section-space);
+}
+.PhotosGrid {
+  display: grid;
+  gap: var(--gutter);
+
+  @include min-width($bp-tablet) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.PhotosGridCell {
+  aspect-ratio: 1 / 1;
+  background: $color-kickpush-dark-red;
+  border-radius: $border-radius-small;
+  position: relative;
+  padding: 0;
+
+  &:nth-of-type(n + 4) {
+    display: none;
+  }
+
+  .PhotosGridCell-show & {
+    display: block;
+  }
+
+  @include min-width($bp-mobile) {
+    display: block !important;
+    grid-row: span 2;
+
+    &:nth-of-type(1) {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
+
+    &:nth-of-type(2) {
+      grid-row: 2 / span 2;
+    }
+  }
+
+  @include min-width($bp-tablet) {
+    aspect-ratio: 440 / 320;
+  }
+
+  > span {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    z-index: 2;
+  }
+}
+.PhotosGridYear {
+  font-size: rem(16);
+}
+.PhotosGridImage {
+  border-radius: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.PhotosGridShowMore {
+  margin-top: var(--gutter);
+  z-index: 2;
+  position: relative;
+
+  @include min-width($bp-mobile) {
+    display: none;
+  }
+}
+
+.Manifesto {
+  margin-bottom: var(--section-space);
+}
+.ManifestoItem {
+  margin-top: var(--section-space);
+}
+
+.ArticlesTitle {
+  margin-bottom: 1.25em; // TODO: Var
+  margin-top: var(--section-space);
+
+  @include min-width($bp-mobile) {
+    text-align: center;
+  }
+}

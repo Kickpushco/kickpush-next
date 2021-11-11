@@ -1,0 +1,21 @@
+@import "../../sass/global";
+
+.Projects {
+  margin-bottom: rem(150);
+  margin-bottom: var(--section-space);
+}
+.ProjectsList {
+  @include max-width($bp-unstack-cards) {
+    // Hides all but the first 3 and the all projects cards
+    > :nth-child(n + 4):not(:last-child) {
+      display: none;
+    }
+  }
+}
+.AllProjects {
+  grid-column: 1 / -1;
+}
+
+.Manifesto {
+  margin-bottom: var(--section-space);
+}

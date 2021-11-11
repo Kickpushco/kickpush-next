@@ -1,0 +1,76 @@
+@use "sass:math";
+
+@function rem($pixels, $root-pixels: 16) {
+  @return math.div($pixels, $root-pixels) * 1rem;
+}
+
+@function em($pixels, $parent-pixels: 16) {
+  @return math.div($pixels, $parent-pixels) * 1em;
+}
+
+@mixin can-hover {
+  @media screen and (hover: hover) {
+    @content;
+  }
+}
+
+@mixin min-width($min-width-pixels) {
+  $min-width-em: math.div($min-width-pixels, 16);
+
+  @media screen and (min-width: #{$min-width-em}em) {
+    @content;
+  }
+}
+
+@mixin max-width($max-width-pixels) {
+  $max-width-em: math.div($max-width-pixels - 1, 16);
+
+  @media screen and (max-width: #{$max-width-em}em) {
+    @content;
+  }
+}
+
+@mixin min-max-width($min-width-pixels, $max-width-pixels) {
+  $min-width-em: math.div($min-width-pixels, 16);
+  $max-width-em: math.div($max-width-pixels - 1, 16);
+
+  @media screen and (min-width: #{$min-width-em}em) and (max-width: #{$max-width-em}em) {
+    @content;
+  }
+}
+
+@mixin card-shadow($card-shadow-state: "idle") {
+  // Darkened to compensate for smaller shadows (required to avoid overlaps)
+  $card-default-shadow: darken($color-kickpush-dark-red, 15%);
+  $card-shadow-color: var(--card-shadow-color, #{$card-default-shadow});
+
+  $multiplier-1: 0.25;
+  $multiplier-2: 0.75;
+
+  @if ($card-shadow-state == "hover") {
+    $multiplier-1: 0.125;
+    $multiplier-2: 0.5;
+  }
+  @if ($card-shadow-state == "active") {
+    $multiplier-1: 0.1;
+    $multiplier-2: 0.25;
+  }
+
+  $temp-1: calc(var(--gutter) * #{$multiplier-1});
+  $temp-2: calc(var(--gutter) * #{$multiplier-2});
+
+  box-shadow: $card-shadow-color 0 $temp-1 $temp-2 0;
+}
+
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  border: 0;
+}

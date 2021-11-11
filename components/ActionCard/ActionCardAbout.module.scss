@@ -1,0 +1,89 @@
+@use "sass:math";
+
+@import "../../sass/global";
+
+$photos-width: 1069;
+$photos-height: 596;
+
+.Title {
+  @include min-width($bp-unstack-cards) {
+    width: 50%;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.Subtitle {
+  margin-bottom: 0;
+}
+
+.Photos {
+  aspect-ratio: #{$photos-width} / #{$photos-height};
+  position: relative;
+  transform: rotate(-15deg);
+  width: 210%;
+  margin-top: -5%;
+  margin-left: -20%;
+  align-self: flex-end;
+
+  @include min-width($bp-unstack-cards) {
+    width: calc(117% + (#{var(--card-padding)} * 2));
+    margin-left: 4%;
+    margin-top: -10%;
+  }
+}
+.PhotosLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform $duration-card-image-out ease-in-out;
+
+  a:hover &,
+  a:focus & {
+    transition: transform $duration-card-image-in ease-out;
+    transform: scale(var(--photo-transform, 1.025));
+  }
+
+  &:nth-of-type(1) {
+    --photo-top: 0;
+  }
+
+  &:nth-of-type(2) {
+    --photo-top: 210;
+    --photo-left: 220;
+    --photo-transform: 1.05;
+
+    z-index: 2;
+  }
+
+  &:nth-of-type(3) {
+    --photo-top: 40;
+    --photo-left: 451;
+  }
+
+  &:nth-of-type(4) {
+    --photo-left: 580;
+    --photo-top: 345;
+    --photo-transform: 1.075;
+
+    z-index: 2;
+
+    @include max-width($bp-unstack-cards) {
+      display: none;
+    }
+  }
+}
+.Photos > div {
+  aspect-ratio: 403 / 263;
+  background: $color-kickpush-dark-red;
+  box-shadow: rgba($color-kickpush-dark-red, 0.4) 0 rem(20) rem(30) 0;
+  border-radius: $border-radius-small;
+  width: math.div(403, $photos-width) * 100%;
+  top: calc(var(--photo-top) / #{$photos-height} * 100%);
+  left: calc(var(--photo-left) / #{$photos-width} * 100%);
+  height: auto;
+  z-index: 1;
+}

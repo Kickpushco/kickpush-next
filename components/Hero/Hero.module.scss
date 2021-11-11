@@ -1,0 +1,35 @@
+@import "../../sass/global";
+
+.Hero {
+  margin: calc(var(--section-space) / 2) 0 var(--section-space);
+  width: 100%;
+
+  @include min-width($bp-mobile) {
+    text-align: center;
+  }
+
+  h1 {
+    @include hero-animation("h1");
+
+    @include min-max-width(320, $bp-mobile) {
+      font-size: rem(56);
+      line-height: rem(60);
+    }
+  }
+}
+
+.Copy {
+  @include hero-animation("copy");
+
+  margin-top: 1em;
+}
+
+.Container {
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}

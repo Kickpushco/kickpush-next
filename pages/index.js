@@ -1,79 +1,96 @@
-import Head from 'next/head'
+import clsx from "clsx";
+import { fetchCustomPage } from "services/contentful";
 
-import { fetchEntries } from '@utils/contentfulPosts'
+import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
+import { ContentfulActionAboutCard } from "components/ActionCard/ActionCardAbout";
+import { CardsWrapper } from "components/Card/Card";
+import { ContentfulNav } from "components/Nav/Nav";
+import { ContentfulFooter } from "components/Footer/Footer";
+import Hero, { HeroCopy } from "components/Hero/Hero";
+import Heading from "components/Heading/Heading";
+import Manifesto from "components/Manifesto/Manifesto";
+import { ContentfulProjectCard } from "components/ProjectCard/ProjectCard";
+import Title from "components/Meta/Title";
+import Description from "components/Meta/Description";
+import LabelData from "components/Meta/LabelData";
 
-import Header from '@components/Header'
-import Footer from '@components/Footer'
-import Post from '@components/Post'
+import styles from "../sass/pages/index.module.scss";
 
-export default function Home({ posts }) {
+export default function Home({ pageFields, globalSettings }) {
+  const {
+    shortName,
+    metaDescription,
+    heroTitle,
+    projectsTitle,
+    manifestoItems,
+    heroCopy,
+    projectsList,
+  } = pageFields;
+
   return (
-    <div className="container">
-      <Head>
-        <title>Next + Contentful Starter</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <>
+      <Title shortTitle={shortName} longTitle={heroTitle} />
+      <Description description={metaDescription} />
+      <LabelData number="1" label="Email" data={globalSettings.contactEmail} />
+
+      <ContentfulNav globalSettings={globalSettings} />
 
       <main>
-        <Header />
-        <div className="posts">
-          {posts.map((p) => {
-            return <Post key={p.date} date={p.date} image={p.image.fields} title={p.title} />
-          })}
-        </div>
+        <Hero>
+          <Heading level="h1">{heroTitle}</Heading>
+          {heroCopy && <HeroCopy>{heroCopy}</HeroCopy>}
+        </Hero>
+
+        <section className={clsx("container", styles.Projects)}>
+          {projectsTitle && (
+            <Heading level="h0" tag="h2">
+              {projectsTitle}
+            </Heading>
+          )}
+
+          <CardsWrapper className={styles.ProjectsList}>
+            {projectsList.fields.projects.map((project) => (
+              <ContentfulProjectCard
+                key={project.sys.id}
+                project={project}
+                globalSettings={globalSettings}
+              />
+            ))}
+            <ContentfulActionCardProjects
+              globalSettings={globalSettings}
+              className={styles.AllProjects}
+            />
+          </CardsWrapper>
+        </section>
+
+        {!!manifestoItems.length && (
+          <section className={clsx("container", styles.Manifesto)}>
+            {manifestoItems.map(({ sys, fields }) => (
+              <Manifesto
+                key={sys.id}
+                short={fields.shortText}
+                long={fields.longText}
+              />
+            ))}
+          </section>
+        )}
+
+        <section className="container">
+          <CardsWrapper columns={false}>
+            <ContentfulActionAboutCard globalSettings={globalSettings} />
+          </CardsWrapper>
+        </section>
       </main>
 
-      <Footer />
-
-      <style jsx>{`
-        .container {
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .posts {
-          display: flex;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-            Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
-  )
+      <ContentfulFooter globalSettings={globalSettings} />
+    </>
+  );
 }
 
 export async function getStaticProps() {
-  const res = await fetchEntries()
-  const posts = await res.map((p) => {
-    return p.fields
-  })
+  const props = await fetchCustomPage("customPageHome", { include: 2 });
 
   return {
-    props: {
-      posts,
-    },
-  }
+    props,
+  };
 }

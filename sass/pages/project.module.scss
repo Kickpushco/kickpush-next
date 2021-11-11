@@ -1,0 +1,43 @@
+@import "../global";
+
+.Close {
+  position: fixed;
+  top: rem(24);
+  right: rem(24);
+  z-index: 102;
+  transition: 200ms ease-in-out;
+  transition-property: opacity, transform;
+
+  &-hidden {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  a {
+    --button-icon-size: #{rem(18)};
+
+    border-radius: rem(4);
+  }
+}
+
+.Main {
+  margin-bottom: 0;
+
+  &-light {
+    --focus-ring: #{rgba($color-kickpush-white, 0.6)};
+
+    color: $color-kickpush-white;
+  }
+  &-dark {
+    color: $color-kickpush-black;
+
+    --focus-ring: #{rgba($color-kickpush-black, 0.6)};
+  }
+}
+
+.Contact {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-top: calc(var(--section-space) / 2);
+  padding-bottom: calc(var(--section-space) / 2);
+}

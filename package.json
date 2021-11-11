@@ -1,5 +1,5 @@
 {
-  "name": "next-contentful-starter",
+  "name": "kickpush-next",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,9 +9,14 @@
     "export": "next export"
   },
   "dependencies": {
-    "contentful": "^7.14.6",
-    "next": "10.0.6",
+    "@svgr/webpack": "^5.5.0",
+    "clsx": "^1.1.1",
+    "contentful": "^8.5.3",
+    "next": "^11.1.2",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
-  }
+    "react-dom": "17.0.1",
+    "react-intersection-observer": "^8.32.2",
+    "sass": "^1.39.0"
+  },
+  "prettier": {}
 }

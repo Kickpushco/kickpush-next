@@ -1,0 +1,50 @@
+@use "sass:math";
+
+@import "../../sass/global";
+
+$rows-oversize: 100%;
+
+.Rows {
+  transform: rotate(-15deg);
+  width: calc(100% + (var(--card-padding) * 2));
+  margin: calc(var(--card-padding) * -1);
+  margin-top: 0;
+  align-self: flex-end;
+
+  @include max-width($bp-unstack-cards) {
+    width: calc(#{100% + $rows-oversize} + (var(--card-padding) * 2));
+    margin-left: calc(
+      var(--card-padding) * -1 - #{math.div($rows-oversize, 2)}
+    );
+    margin-right: calc(
+      var(--card-padding) * -1 - #{math.div($rows-oversize, 2)}
+    );
+  }
+
+  .Row {
+    display: block;
+    height: auto;
+    width: math.div(1114, 940) * 100%;
+    transition: transform $duration-card-image-out ease-out;
+
+    &:last-child {
+      margin-top: math.div(16, 940) * 100%;
+      margin-left: math.div(105 + 8, 940) * 100%;
+    }
+  }
+
+  .Card:hover &,
+  .Card:focus & {
+    .Row {
+      transition-duration: $duration-card-image-in;
+
+      &:first-child {
+        transform: translateX(-4%);
+      }
+
+      &:last-child {
+        transform: translateX(8%);
+      }
+    }
+  }
+}
