@@ -2,6 +2,7 @@ import { useState } from "react";
 import clsx from "clsx";
 
 import { fetchCustomPage } from "services/contentful";
+import { fetchFromCache } from "services/cache";
 
 import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
 import { ContentfulArticle } from "components/Article/Article";
@@ -127,7 +128,10 @@ export default function About({ pageFields, globalSettings }) {
 }
 
 export async function getStaticProps() {
-  const props = await fetchCustomPage("customPagePeople");
+  const props = await fetchFromCache(
+    "customPagePeople",
+    async () => await fetchCustomPage("customPagePeople")
+  );
 
   return {
     props,

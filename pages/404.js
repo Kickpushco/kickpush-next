@@ -1,6 +1,7 @@
 import Head from "next/head";
 
 import { fetchCustomPage } from "services/contentful";
+import { fetchFromCache } from "services/cache";
 
 import { ContentfulNav } from "components/Nav/Nav";
 import Hero from "components/Hero/Hero";
@@ -29,7 +30,10 @@ export default function PageNotFound({ globalSettings }) {
 }
 
 export async function getStaticProps() {
-  const props = await fetchCustomPage("customPageHome", { include: 1 });
+  const props = await fetchFromCache(
+    "customPageHome",
+    async () => await fetchCustomPage("customPageHome", { include: 1 })
+  );
 
   return {
     props,

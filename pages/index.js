@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { fetchCustomPage } from "services/contentful";
+import { fetchFromCache } from "services/cache";
 
 import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
 import { ContentfulActionAboutCard } from "components/ActionCard/ActionCardAbout";
@@ -88,7 +89,10 @@ export default function Home({ pageFields, globalSettings }) {
 }
 
 export async function getStaticProps() {
-  const props = await fetchCustomPage("customPageHome", { include: 2 });
+  const props = await fetchFromCache(
+    "customPageHome",
+    async () => await fetchCustomPage("customPageHome", { include: 2 })
+  );
 
   return {
     props,
