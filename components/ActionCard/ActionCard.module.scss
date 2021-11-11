@@ -47,7 +47,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: calc(100% + 1px); // Fixes aliasing issues
   height: 100%;
   z-index: 1;
   transition: transform $duration-card-image-out ease-in-out;

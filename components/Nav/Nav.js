@@ -14,18 +14,21 @@ import useFocusTrap from "hooks/useFocusTrap";
 import styles from "./Nav.module.scss";
 
 const NavLink = forwardRef(
-  ({ className, isMobile, selected, ...props }, ref) => {
-    const sharedProps = {
-      className: clsx(className, styles.Link),
-      "aria-current": selected || undefined,
-      ref,
-      ...props,
-    };
+  ({ className, isMobile, children, selected, ...props }, ref) => {
+    const NavLinkTag = isMobile ? Heading : "a";
 
-    if (isMobile) {
-      return <Heading level="h3" {...sharedProps} />;
-    }
-    return <a {...sharedProps} />;
+    return (
+      <NavLinkTag
+        ref={ref}
+        className={clsx(className, styles.Link)}
+        aria-current={selected || undefined}
+        level={isMobile ? "h3" : undefined}
+        tag={isMobile ? "a" : undefined}
+        {...props}
+      >
+        <span>{children}</span>
+      </NavLinkTag>
+    );
   }
 );
 
