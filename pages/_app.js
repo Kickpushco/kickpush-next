@@ -53,7 +53,11 @@ function App({ Component, pageProps }) {
 
         <meta name="msapplication-TileColor" content={styles.kickpushRed} />
         <meta name="msapplication-TileImage" content="/logo-144.png" />
+
         <meta name="theme-color" content={styles.kickpushRed} />
+
+        {/* TODO: Config */}
+        <meta name="twitter:site" content="@kickpush" />
       </Head>
 
       <Component {...pageProps} />

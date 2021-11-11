@@ -14,6 +14,7 @@ import { ContentfulProjectCard } from "components/ProjectCard/ProjectCard";
 import Title from "components/Meta/Title";
 import Description from "components/Meta/Description";
 import LabelData from "components/Meta/LabelData";
+import { ContentfulMetaImage } from "components/Meta/MetaImage";
 
 import styles from "../sass/pages/index.module.scss";
 
@@ -21,6 +22,7 @@ export default function Home({ pageFields, globalSettings }) {
   const {
     shortName,
     metaDescription,
+    metaImage,
     heroTitle,
     projectsTitle,
     manifestoItems,
@@ -33,6 +35,7 @@ export default function Home({ pageFields, globalSettings }) {
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
       <LabelData number="1" label="Email" data={globalSettings.contactEmail} />
+      <ContentfulMetaImage image={metaImage} />
 
       <ContentfulNav globalSettings={globalSettings} />
 
