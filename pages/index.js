@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { fetchCustomPage } from "services/contentful";
+import { fetchFromCache } from "services/cache";
 
 import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
 import { ContentfulActionAboutCard } from "components/ActionCard/ActionCardAbout";
@@ -13,6 +14,7 @@ import { ContentfulProjectCard } from "components/ProjectCard/ProjectCard";
 import Title from "components/Meta/Title";
 import Description from "components/Meta/Description";
 import LabelData from "components/Meta/LabelData";
+import { ContentfulMetaImage } from "components/Meta/MetaImage";
 
 import styles from "../sass/pages/index.module.scss";
 
@@ -20,6 +22,7 @@ export default function Home({ pageFields, globalSettings }) {
   const {
     shortName,
     metaDescription,
+    metaImage,
     heroTitle,
     projectsTitle,
     manifestoItems,
@@ -32,6 +35,7 @@ export default function Home({ pageFields, globalSettings }) {
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
       <LabelData number="1" label="Email" data={globalSettings.contactEmail} />
+      <ContentfulMetaImage image={metaImage} />
 
       <ContentfulNav globalSettings={globalSettings} />
 
@@ -88,7 +92,10 @@ export default function Home({ pageFields, globalSettings }) {
 }
 
 export async function getStaticProps() {
-  const props = await fetchCustomPage("customPageHome", { include: 2 });
+  const props = await fetchFromCache(
+    "customPageHome",
+    async () => await fetchCustomPage("customPageHome", { include: 2 })
+  );
 
   return {
     props,

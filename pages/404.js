@@ -1,11 +1,13 @@
 import Head from "next/head";
 
 import { fetchCustomPage } from "services/contentful";
+import { fetchFromCache } from "services/cache";
 
 import { ContentfulNav } from "components/Nav/Nav";
 import Hero from "components/Hero/Hero";
 import Heading from "components/Heading/Heading";
 import Title from "components/Meta/Title";
+import { ContentfulMetaImage } from "components/Meta/MetaImage";
 
 import styles from "sass/pages/404.module.scss";
 
@@ -17,6 +19,10 @@ export default function PageNotFound({ globalSettings }) {
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
+      <ContentfulMetaImage
+        image={globalSettings.metaDefaultImage}
+        card="summary"
+      />
 
       <ContentfulNav globalSettings={globalSettings} />
 
@@ -29,7 +35,10 @@ export default function PageNotFound({ globalSettings }) {
 }
 
 export async function getStaticProps() {
-  const props = await fetchCustomPage("customPageHome", { include: 1 });
+  const props = await fetchFromCache(
+    "customPageHome",
+    async () => await fetchCustomPage("customPageHome", { include: 1 })
+  );
 
   return {
     props,

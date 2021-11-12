@@ -1,4 +1,5 @@
 import { fetchCustomPage } from "services/contentful";
+import { fetchFromCache } from "services/cache";
 
 import { CardsWrapper } from "components/Card/Card";
 import { ContentfulNav } from "components/Nav/Nav";
@@ -45,7 +46,10 @@ export default function Projects({ pageFields, globalSettings }) {
 }
 
 export async function getStaticProps() {
-  const props = await fetchCustomPage("customPageProjects", { include: 2 });
+  const props = await fetchFromCache(
+    "customPageProjects",
+    async () => await fetchCustomPage("customPageProjects", { include: 2 })
+  );
 
   return {
     props,

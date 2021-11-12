@@ -1,4 +1,5 @@
 import { fetchCustomPage } from "services/contentful";
+import { fetchFromCache } from "services/cache";
 
 import { ContentfulNav } from "components/Nav/Nav";
 import { ContentfulFooter } from "components/Footer/Footer";
@@ -24,7 +25,10 @@ export default function Contact({ pageFields, globalSettings }) {
 }
 
 export async function getStaticProps() {
-  const props = await fetchCustomPage("customPageContact");
+  const props = await fetchFromCache(
+    "customPageContact",
+    async () => await fetchCustomPage("customPageContact")
+  );
 
   return {
     props,

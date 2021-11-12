@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import clsx from "clsx";
@@ -12,6 +11,7 @@ import {
   fetchProject,
   fetchProjectIds,
 } from "services/contentful";
+import { fetchFromCache } from "services/cache";
 
 import Button from "components/Button/Button";
 import Description from "components/Meta/Description";
@@ -126,10 +126,15 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
 }
 
 export async function getStaticProps({ params }) {
-  const projectFields = await fetchProject(params.projectId);
-  const { pageFields, globalSettings } = await fetchCustomPage(
+  const { projectId } = params;
+
+  const projectFields = await fetchFromCache(
+    `project-${projectId}`,
+    async () => await fetchProject(projectId)
+  );
+  const { pageFields, globalSettings } = await fetchFromCache(
     "customPageProject",
-    { include: 2 }
+    async () => await fetchCustomPage("customPageProject", { include: 2 })
   );
 
   const { projects } = pageFields.projectsList.fields;
@@ -152,7 +157,10 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const projects = await fetchProjectIds();
+  const projects = await fetchFromCache(
+    "projectIds",
+    async () => await fetchProjectIds()
+  );
 
   const paths = projects.map((projectId) => ({
     params: {
