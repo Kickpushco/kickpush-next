@@ -35,7 +35,7 @@ export default function Home({ pageFields, globalSettings }) {
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
       <LabelData number="1" label="Email" data={globalSettings.contactEmail} />
-      <ContentfulMetaImage image={metaImage} />
+      <ContentfulMetaImage image={metaImage} globalSettings={globalSettings} />
 
       <ContentfulNav globalSettings={globalSettings} />
 
@@ -94,7 +94,8 @@ export default function Home({ pageFields, globalSettings }) {
 export async function getStaticProps() {
   const props = await fetchFromCache(
     "customPageHome",
-    async () => await fetchCustomPage("customPageHome", { include: 2 })
+    async () => await fetchCustomPage("customPageHome", { include: 2 }),
+    true
   );
 
   return {

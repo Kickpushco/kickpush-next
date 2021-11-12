@@ -9,15 +9,23 @@ import Heading from "components/Heading/Heading";
 import { ContentfulProjectCard } from "components/ProjectCard/ProjectCard";
 import Title from "components/Meta/Title";
 import Description from "components/Meta/Description";
+import { ContentfulMetaImage } from "components/Meta/MetaImage";
 
 export default function Projects({ pageFields, globalSettings }) {
-  const { shortName, metaDescription, heroTitle, heroCopy, projectsList } =
-    pageFields;
+  const {
+    shortName,
+    metaDescription,
+    metaImage,
+    heroTitle,
+    heroCopy,
+    projectsList,
+  } = pageFields;
 
   return (
     <>
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
+      <ContentfulMetaImage image={metaImage} globalSettings={globalSettings} />
 
       <ContentfulNav globalSettings={globalSettings} selected="projects" />
 

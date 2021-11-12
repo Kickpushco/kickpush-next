@@ -16,6 +16,7 @@ import { ContentfulFooter } from "components/Footer/Footer";
 import { ContentfulNav } from "components/Nav/Nav";
 import Manifesto from "components/Manifesto/Manifesto";
 import Title from "components/Meta/Title";
+import { ContentfulMetaImage } from "components/Meta/MetaImage";
 
 import styles from "../sass/pages/about.module.scss";
 
@@ -25,6 +26,7 @@ export default function About({ pageFields, globalSettings }) {
   const {
     shortName,
     metaDescription,
+    metaImage,
     heroTitle,
     heroCopy,
     photosTitle,
@@ -42,6 +44,7 @@ export default function About({ pageFields, globalSettings }) {
     <>
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
+      <ContentfulMetaImage image={metaImage} globalSettings={globalSettings} />
 
       <ContentfulNav globalSettings={globalSettings} selected="about" />
 

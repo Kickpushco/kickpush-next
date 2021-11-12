@@ -22,6 +22,7 @@ import { ContentfulProjectHero } from "components/ProjectPage/ProjectHero";
 import { ContentfulProjectCover } from "components/ProjectPage/ProjectCover";
 import { ContentfulProjectFooter } from "components/ProjectPage/ProjectFooter";
 import ProjectSlide from "components/ProjectPage/ProjectSlide";
+import { ContentfulMetaImage } from "components/Meta/MetaImage";
 
 import IconClose from "assets/icons/20-close.svg";
 
@@ -36,7 +37,8 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     rootMargin: "0% 0% -50% 0%",
   });
 
-  const { clientName, color, year, heroTitle, heroCopy } = pageFields;
+  const { metaImage, clientName, color, year, heroTitle, heroCopy } =
+    pageFields;
 
   const textColor = computeTextColor(pageFields.textColor);
 
@@ -61,6 +63,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     <>
       <Title shortTitle={clientName} longTitle={heroTitle} />
       <Description description={heroCopy} />
+      <ContentfulMetaImage image={metaImage} globalSettings={globalSettings} />
       <LabelData number="1" label="Client" data={clientName} />
       <LabelData number="2" label="Designed in" data={year} />
 
