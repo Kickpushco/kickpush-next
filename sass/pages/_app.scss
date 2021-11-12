@@ -50,18 +50,22 @@ html {
 
   @include min-width($bp-mobile) {
     --section-space: #{rem(180)};
+  }
+
+  @include min-width($bp-hamburger-menu) {
     --nav-offset: #{rem(20)};
   }
 
   @include min-width($bp-tablet) {
     --gutter: #{rem(48)};
-    --section-space: #{rem(240)};
+    --section-space: #{rem(208)};
     --nav-offset: #{rem(40)};
     --nav-height: #{rem(80)};
   }
 
   @include min-width($bp-desktop) {
     --gutter: #{rem(60)};
+    --section-space: #{rem(240)};
   }
 
   @media screen and (max-height: #{em(670)}) {

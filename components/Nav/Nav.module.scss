@@ -46,24 +46,7 @@
   }
 }
 
-.Menu {
-  @include max-width($bp-hamburger-menu) {
-    background: $color-kickpush-red;
-    position: fixed;
-    align-items: center;
-    flex-direction: column;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    padding: var(--gutter);
-
-    .Nav-mobileOpen & {
-      display: flex;
-    }
-  }
-}
+$nav-menu-duration: 200ms;
 
 .Links {
   list-style: none;
@@ -72,8 +55,30 @@
   gap: var(--gutter);
 
   @include max-width($bp-hamburger-menu) {
-    margin: auto 0;
+    background: $color-kickpush-red;
     flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(1.1);
+    transition-property: opacity, transform;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    min-height: stretch;
+    padding: var(--gutter);
+    visibility: hidden;
+    transition: opacity $nav-menu-duration ease-in,
+      transform $nav-menu-duration ease-in, visibility 0ms $nav-menu-duration;
+
+    .Nav-mobileOpen & {
+      opacity: 1;
+      transform: none;
+      transition: opacity $nav-menu-duration ease-out,
+        transform $nav-menu-duration ease-out, visiblity 0ms;
+      visibility: visible;
+    }
   }
 }
 .Link {
@@ -122,16 +127,15 @@
   }
 }
 
-.MobileToggle {
-  padding-top: rem(2); // Offsets hamburger
+.Toggle {
+  margin-right: rem(-12);
+  position: relative;
+  z-index: 2;
 
-  svg {
-    width: rem(16);
-    height: rem(16);
+  &-closed {
+    --button-icon-size: #{rem(16)};
+
+    background: none;
+    padding-top: rem(2); // Optically balances the hamburger
   }
-}
-.MobileClose {
-  --button-icon-size: #{rem(18)};
-
-  margin-top: var(--gutter);
 }

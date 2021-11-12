@@ -13,7 +13,7 @@ import {
 } from "services/contentful";
 import { fetchFromCache } from "services/cache";
 
-import Button from "components/Button/Button";
+import { CloseButton } from "components/Button/CloseButton";
 import Description from "components/Meta/Description";
 import LabelData from "components/Meta/LabelData";
 import { ContentfulFooter } from "components/Footer/Footer";
@@ -74,14 +74,9 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           className={clsx(styles.Close, footerInView && styles["Close-hidden"])}
         >
           <Link href={PROJECT_CLOSE_URL} passHref>
-            <Button
-              aria-label="Back to projects"
-              variant={textColor}
-              size="small"
-              iconOnly
-            >
+            <CloseButton aria-label="Back to projects" variant={textColor}>
               <IconClose role="presentation" />
-            </Button>
+            </CloseButton>
           </Link>
         </div>
 
