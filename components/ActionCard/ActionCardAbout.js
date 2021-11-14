@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 import ActionCard from "./ActionCard";
 import Heading from "components/Heading/Heading";
-import { ContentfulImage } from "components/Image/Image";
+import Image, { computeImageProps } from "components/Image/Image";
 import Paragraph from "components/Paragraph/Paragraph";
 
 import styles from "./ActionCardAbout.module.scss";
@@ -14,9 +14,10 @@ export function ContentfulActionAboutCard({ globalSettings, ...props }) {
       heading={globalSettings.aboutCardTitle}
       subtitle={globalSettings.aboutCardSubtitle}
       actionCta={globalSettings.aboutCardAction}
-      photos={globalSettings.aboutCardPhotos.map((image) => (
-        <ContentfulImage image={image} objectFit="cover" />
-      ))}
+      photosProps={globalSettings.aboutCardPhotos.map((image) => ({
+        ...computeImageProps(image),
+        objectFit: "cover",
+      }))}
       {...props}
     />
   );
@@ -27,7 +28,7 @@ function ActionAboutCard({
   heading,
   subtitle,
   actionCta = "Read more",
-  photos,
+  photosProps,
   ...props
 }) {
   return (
@@ -51,9 +52,9 @@ function ActionAboutCard({
         {...props}
       >
         <div className={styles.Photos}>
-          {photos.map((photo, photoIndex) => (
+          {photosProps.map((photoProps, photoIndex) => (
             <div className={styles.PhotosLayer} key={photoIndex}>
-              {photo}
+              <Image className={styles.Photo} {...photoProps} />
             </div>
           ))}
         </div>
