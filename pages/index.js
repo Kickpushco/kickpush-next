@@ -35,7 +35,7 @@ export default function Home({ pageFields, globalSettings }) {
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
       <LabelData number="1" label="Email" data={globalSettings.contactEmail} />
-      <ContentfulMetaImage image={metaImage} />
+      <ContentfulMetaImage image={metaImage} globalSettings={globalSettings} />
 
       <ContentfulNav globalSettings={globalSettings} />
 

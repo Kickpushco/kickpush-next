@@ -13,7 +13,7 @@ import {
 } from "services/contentful";
 import { fetchFromCache } from "services/cache";
 
-import Button from "components/Button/Button";
+import { CloseButton } from "components/Button/CloseButton";
 import Description from "components/Meta/Description";
 import LabelData from "components/Meta/LabelData";
 import { ContentfulFooter } from "components/Footer/Footer";
@@ -22,6 +22,7 @@ import { ContentfulProjectHero } from "components/ProjectPage/ProjectHero";
 import { ContentfulProjectCover } from "components/ProjectPage/ProjectCover";
 import { ContentfulProjectFooter } from "components/ProjectPage/ProjectFooter";
 import ProjectSlide from "components/ProjectPage/ProjectSlide";
+import { ContentfulMetaImage } from "components/Meta/MetaImage";
 
 import IconClose from "assets/icons/20-close.svg";
 
@@ -36,7 +37,8 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     rootMargin: "0% 0% -50% 0%",
   });
 
-  const { clientName, color, year, heroTitle, heroCopy } = pageFields;
+  const { metaImage, clientName, color, year, heroTitle, heroCopy } =
+    pageFields;
 
   const textColor = computeTextColor(pageFields.textColor);
 
@@ -61,6 +63,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     <>
       <Title shortTitle={clientName} longTitle={heroTitle} />
       <Description description={heroCopy} />
+      <ContentfulMetaImage image={metaImage} globalSettings={globalSettings} />
       <LabelData number="1" label="Client" data={clientName} />
       <LabelData number="2" label="Designed in" data={year} />
 
@@ -74,14 +77,9 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           className={clsx(styles.Close, footerInView && styles["Close-hidden"])}
         >
           <Link href={PROJECT_CLOSE_URL} passHref>
-            <Button
-              aria-label="Back to projects"
-              variant={textColor}
-              size="small"
-              iconOnly
-            >
+            <CloseButton aria-label="Back to projects" variant={textColor}>
               <IconClose role="presentation" />
-            </Button>
+            </CloseButton>
           </Link>
         </div>
 

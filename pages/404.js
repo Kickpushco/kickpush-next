@@ -7,28 +7,26 @@ import { ContentfulNav } from "components/Nav/Nav";
 import Hero from "components/Hero/Hero";
 import Heading from "components/Heading/Heading";
 import Title from "components/Meta/Title";
+import Description from "components/Meta/Description";
 import { ContentfulMetaImage } from "components/Meta/MetaImage";
 
 import styles from "sass/pages/404.module.scss";
 
-export default function PageNotFound({ globalSettings }) {
+export default function PageNotFound({ pageFields, globalSettings }) {
+  const { shortName, metaDescription, metaImage, heroTitle } = pageFields;
   return (
     <>
-      {/* TODO: Add to CMS */}
-      <Title shortTitle="Page not found" />
+      <Title shortTitle={shortName} longTitle={heroTitle} />
+      <Description description={metaDescription} />
+      <ContentfulMetaImage image={metaImage} globalSettings={globalSettings} />
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
-      <ContentfulMetaImage
-        image={globalSettings.metaDefaultImage}
-        card="summary"
-      />
 
       <ContentfulNav globalSettings={globalSettings} />
 
       <Hero className={styles.Hero}>
-        {/* TODO: Add to CMS */}
-        <Heading level="h1">Looks like you got lost.</Heading>
+        <Heading level="h1">{heroTitle}</Heading>
       </Hero>
     </>
   );
@@ -36,8 +34,8 @@ export default function PageNotFound({ globalSettings }) {
 
 export async function getStaticProps() {
   const props = await fetchFromCache(
-    "customPageHome",
-    async () => await fetchCustomPage("customPageHome", { include: 1 })
+    "customPage404",
+    async () => await fetchCustomPage("customPage404", { include: 1 })
   );
 
   return {

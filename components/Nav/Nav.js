@@ -2,12 +2,11 @@ import { useState, useEffect, forwardRef, useRef, useCallback } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 
-import Button from "components/Button/Button";
+import { CloseButton } from "components/Button/CloseButton";
 import Heading from "components/Heading/Heading";
 
 import Logo from "assets/images/logo.svg";
 import IconHamburger from "assets/icons/16-hamburger.svg";
-import IconClose from "assets/icons/20-close.svg";
 
 import useFocusTrap from "hooks/useFocusTrap";
 
@@ -45,8 +44,6 @@ function Nav({ labels, selected, ...props }) {
   const [isMobile, setIsMobile] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const closeRef = useRef(null);
-  const openRef = useRef(null);
   const menuRef = useRef(null);
 
   function toggleMobileOpen() {
@@ -77,11 +74,6 @@ function Nav({ labels, selected, ...props }) {
 
   useEffect(() => {
     document.documentElement.style.overflow = mobileOpen ? "hidden" : "auto";
-    if (mobileOpen) {
-      closeRef.current?.focus();
-    } else {
-      openRef.current?.focus();
-    }
   }, [mobileOpen]);
 
   const handleMobileClose = useCallback(() => {
@@ -102,20 +94,19 @@ function Nav({ labels, selected, ...props }) {
           </a>
         </Link>
 
-        {isMobile && (
-          <Button
-            ref={openRef}
-            className={styles.MobileToggle}
-            aria-label="Open menu"
-            onClick={toggleMobileOpen}
-            variant="ghost"
-            size="small"
-          >
-            <IconHamburger role="presentation" />
-          </Button>
-        )}
+        <div ref={menuRef}>
+          {isMobile && (
+            <CloseButton
+              className={clsx(
+                styles.Toggle,
+                !mobileOpen && styles["Toggle-closed"]
+              )}
+              aria-label={mobileOpen ? "Close Menu" : "Open Menu"}
+              onClick={toggleMobileOpen}
+              icon={!mobileOpen ? IconHamburger : undefined}
+            />
+          )}
 
-        <div className={styles.Menu} ref={menuRef}>
           <ul className={styles.Links}>
             <li>
               <Link href="/projects" passHref>
@@ -139,18 +130,6 @@ function Nav({ labels, selected, ...props }) {
               </Link>
             </li>
           </ul>
-
-          {isMobile && (
-            <Button
-              className={styles.MobileClose}
-              aria-label="Close menu"
-              onClick={toggleMobileOpen}
-              ref={closeRef}
-              iconOnly
-            >
-              <IconClose role="presentation" />
-            </Button>
-          )}
         </div>
       </div>
     </nav>

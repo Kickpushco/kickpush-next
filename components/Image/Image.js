@@ -101,7 +101,7 @@ function Image({
       style={style}
       ref={ref}
     >
-      {/* TODO: Check this works */}
+      {/* TODO: Fix the styling here */}
       <noscript>
         <img
           src={srcSet.legacy}
