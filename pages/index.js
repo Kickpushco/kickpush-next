@@ -94,8 +94,7 @@ export default function Home({ pageFields, globalSettings }) {
 export async function getStaticProps() {
   const props = await fetchFromCache(
     "customPageHome",
-    async () => await fetchCustomPage("customPageHome", { include: 2 }),
-    true
+    async () => await fetchCustomPage("customPageHome", { include: 2 })
   );
 
   return {

@@ -15,6 +15,8 @@ export async function fetchFromCache(cacheId, fetchData, bust = false) {
 
   const cachePath = path.join(CACHE_PATH, `${cacheId}.json`);
 
+  if (bust) cacheLog(`Cache ignored (if present) for ${cacheId}`);
+
   if (!bust) {
     let cachedData;
     try {
