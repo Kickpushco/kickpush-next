@@ -8,6 +8,8 @@ import LabelData from "components/Meta/LabelData";
 import Description from "components/Meta/Description";
 import { ContentfulMetaImage } from "components/Meta/MetaImage";
 
+import styles from "sass/pages/contact.module.scss";
+
 export default function Contact({ pageFields, globalSettings }) {
   const { metaDescription, metaImage } = pageFields;
   return (
@@ -22,7 +24,12 @@ export default function Contact({ pageFields, globalSettings }) {
 
       <ContentfulNav globalSettings={globalSettings} selected="contact" />
 
-      <ContentfulFooter globalSettings={globalSettings} isHero tag="main" />
+      <ContentfulFooter
+        className={styles.Hero}
+        globalSettings={globalSettings}
+        tag="main"
+        headingTag="h1"
+      />
     </>
   );
 }

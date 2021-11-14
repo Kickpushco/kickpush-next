@@ -29,9 +29,19 @@
   }
 }
 
+.ContactSlide {
+  @include max-width($bp-tablet) {
+    height: auto;
+  }
+}
 .Contact {
+  padding-bottom: 0;
+  position: relative;
   margin-top: auto;
   margin-bottom: auto;
-  padding-top: calc(var(--section-space) / 2);
-  padding-bottom: calc(var(--section-space) / 2);
+
+  @include min-width($bp-tablet) {
+    padding-top: calc(var(--section-space) / 2);
+    padding-bottom: calc(var(--section-space) / 2);
+  }
 }

@@ -1,31 +1,27 @@
 @import "../../sass/global";
 
 .Footer {
+  --hero-animation-state: paused;
+
   padding-bottom: var(--section-space);
 
-  &-hero {
-    margin: auto;
-    padding-top: calc(var(--section-space) / 2 - var(--nav-height));
-    padding-bottom: calc(var(--section-space) / 2);
+  &-inView {
+    --hero-animation-state: running;
   }
 }
 
 .Heading {
+  @include hero-animation("h1");
+
   max-width: 11em;
   margin-bottom: var(--gutter);
-
-  .Footer-hero & {
-    @include hero-animation("h1");
-  }
 }
 
 .Email {
+  @include hero-animation("copy");
+
   position: relative;
   width: fit-content;
-
-  .Footer-hero & {
-    @include hero-animation("copy");
-  }
 }
 .EmailLink {
   display: grid;

@@ -1,5 +1,3 @@
-import React, { useMemo } from "react";
-import clsx from "clsx";
 import Link from "next/link";
 
 import { computeTextColor } from "services/contentful";
@@ -7,7 +5,7 @@ import { computeTextColor } from "services/contentful";
 import ActionCard from "components/ActionCard/ActionCard";
 import Heading from "components/Heading/Heading";
 import Paragraph from "components/Paragraph/Paragraph";
-import { ContentfulImage } from "components/Image/Image";
+import { computeImageProps } from "components/Image/Image";
 
 import styles from "./ProjectCard.module.scss";
 
@@ -24,7 +22,7 @@ export function ContentfulProjectCard({ project, globalSettings, ...props }) {
       year={year}
       title={cardTitle}
       backgroundColor={cardColor}
-      backgroundImage={cardImage && <ContentfulImage image={cardImage} />}
+      backgroundImageProps={cardImage && computeImageProps(cardImage)}
       textColor={textColor}
       actionCta={globalSettings.projectCardAction}
       {...props}

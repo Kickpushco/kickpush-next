@@ -1,10 +1,28 @@
 @import "../../sass/global";
 
+.Slide {
+  --hero-animation-state: paused;
+
+  &-inView {
+    --hero-animation-state: running;
+  }
+
+  @include min-width($bp-tablet) {
+    position: sticky;
+    bottom: 0;
+  }
+
+  @include max-width($bp-tablet) {
+    height: auto;
+  }
+}
+
 .Content {
   margin-top: auto;
   margin-bottom: auto;
   max-width: rem(820);
   padding-bottom: var(--gutter);
+  position: relative;
 
   > :last-child {
     margin-bottom: 0;
@@ -12,14 +30,19 @@
 }
 .Title {
   @include hero-animation("h1");
+
+  @include max-width($bp-tablet) {
+    margin-top: 0.5em;
+  }
 }
 .Copy {
   @include hero-animation("copy");
 }
 .Footer {
   display: grid;
-  gap: var(--gutter);
+  gap: 1em;
   max-width: rem(1160);
+  margin-bottom: 0;
   font-size: rem(16);
   line-height: rem(20);
 
@@ -28,6 +51,7 @@
   }
 
   @include min-width($bp-mobile) {
+    gap: var(--gutter);
     grid-template-columns: 1fr 1fr;
   }
 

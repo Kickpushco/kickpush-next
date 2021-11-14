@@ -1,83 +1,101 @@
-import { cloneElement, useMemo } from "react";
 import clsx from "clsx";
+import Head from "next/head";
 
-import { ContentfulImage } from "components/Image/Image";
-import ProjectSlide from "./ProjectSlide";
+import { computeImagePosition } from "services/contentful";
+
+import Image, {
+  computeImageContentType,
+  computeImageProps,
+} from "components/Image/Image";
+import ProjectSlideItem from "./ProjectSlideItem";
 
 import styles from "./ProjectCover.module.scss";
 
-function computeAlignment(string = "Center Center") {
-  if (!string) return null;
-
-  let [alignItems, justifyContent] = string.toLowerCase().split(" ");
-
-  if (alignItems === "top") alignItems = "flex-start";
-  if (alignItems === "bottom") alignItems = "flex-end";
-
-  if (justifyContent === "left") justifyContent = "flex-start";
-  if (justifyContent === "right") justifyContent = "flex-end";
-
-  return {
-    alignItems,
-    justifyContent,
-  };
-}
-
 export function ContentfulProjectCover({ pageFields, ...props }) {
   const {
-    heroDesktopBackground: desktopBackground,
-    heroDesktopLogo: desktopLogo,
-    heroDesktopLogoPosition: desktopLogoPosition,
-    heroDesktopLogoWidth: desktopLogoWidth,
+    heroDesktopBackground,
+    heroDesktopLogo,
+    heroDesktopLogoWidth,
+    heroDesktopLogoPosition = "Center Center",
   } = pageFields;
 
-  const desktop = {
-    background: desktopBackground && (
-      <ContentfulImage image={desktopBackground} objectFit="cover" />
-    ),
-    logo: desktopLogo && <ContentfulImage image={desktopLogo} />,
-    logoPosition: desktopLogoPosition,
-    logoWidth: desktopLogoWidth,
-  };
-
+  const desktop = {};
   const mobile = {};
 
-  return <ProjectCover desktop={desktop} mobile={mobile} {...props} />;
-}
+  let desktopLogo = null;
+  let mobileLogo = null;
 
-function ProjectCover({ className, desktop, mobile, style = {}, ...props }) {
-  const desktopBackground = useMemo(() => {
-    if (!desktop.background) return null;
+  let desktopPreloadHref = null;
 
-    return cloneElement(desktop.background, {
-      className: styles.DesktopBackground,
-      variant: "ghost",
-    });
-  }, [desktop.background]);
+  if (heroDesktopBackground) {
+    desktop.backgroundProps = {
+      ...computeImageProps(heroDesktopBackground),
+      objectFit: "cover", // TODO: Make cover adjustable
+    };
+  }
 
-  const desktopLogo = useMemo(() => {
-    if (!desktop.logo) return null;
+  if (heroDesktopLogo) {
+    desktopLogo = {
+      props: computeImageProps(heroDesktopLogo, heroDesktopLogoWidth),
+      position: heroDesktopLogoPosition,
+      width: heroDesktopLogoWidth,
+    };
+    if (computeImageContentType(heroDesktopLogo) === "svg") {
+      desktopPreloadHref = desktopLogo.props.srcSet.legacy;
+      desktopLogo.props.blurSrc = undefined;
+    }
+  }
 
-    return cloneElement(desktop.logo, {
-      className: styles.DesktopLogo,
-      variant: "ghost",
-    });
-  }, [desktop.background]);
+  console.log(desktopPreloadHref);
 
   return (
-    <ProjectSlide
-      className={clsx(className, styles.Cover)}
-      style={{
-        ...computeAlignment(desktop.logoPosition),
-        "--desktop-logo-width": desktop.logoWidth,
-        "--mobile-logo-width": mobile.logoWidth,
-        ...style,
-      }}
-      {...props}
-    >
-      {desktopBackground}
-      {desktopLogo}
-    </ProjectSlide>
+    <>
+      {desktopPreloadHref && (
+        <Head>
+          <link
+            rel="preload"
+            href={desktopPreloadHref}
+            as="image"
+            crossOrigin
+          />
+        </Head>
+      )}
+
+      <ProjectCover
+        desktop={desktop}
+        mobile={mobile}
+        desktopLogo={desktopLogo}
+        mobileLogo={mobileLogo}
+        {...props}
+      />
+    </>
+  );
+}
+
+function ProjectCover({ className, desktopLogo, mobileLogo, ...props }) {
+  const [desktopLogoY, desktopLogoX] = computeImagePosition(
+    desktopLogo?.position
+  );
+  return (
+    <ProjectSlideItem className={clsx(className, styles.Slide)} {...props}>
+      {desktopLogo && (
+        <Image
+          className={clsx(
+            styles.Logo,
+            styles["Logo-desktop"],
+            desktopLogoX && styles[`Logo-${desktopLogoX}X`],
+            desktopLogoY && styles[`Logo-${desktopLogoY}Y`]
+          )}
+          variant="ghost"
+          alt="Project logo" // TODO: Make Project dynamic
+          style={{
+            "--logo-width": desktopLogo.width,
+          }}
+          {...desktopLogo.props}
+        />
+      )}
+      {desktopLogoX}
+    </ProjectSlideItem>
   );
 }
 

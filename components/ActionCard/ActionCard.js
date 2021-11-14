@@ -1,8 +1,9 @@
-import { cloneElement, forwardRef, useMemo } from "react";
+import { forwardRef } from "react";
 import clsx from "clsx";
 
 import Action from "components/Action/Action";
 import Card, { CARD_DEFAULT_SIZE } from "components/Card/Card";
+import Image from "components/Image/Image";
 
 import styles from "./ActionCard.module.scss";
 
@@ -12,23 +13,13 @@ const ActionCard = forwardRef(
       className,
       children,
       topChildren,
-      backgroundImage,
+      backgroundImageProps,
       size = CARD_DEFAULT_SIZE,
       actionCta,
       ...props
     },
     ref
   ) => {
-    const backgroundImageMemo = useMemo(() => {
-      if (!backgroundImage) return null;
-
-      return cloneElement(backgroundImage, {
-        className: styles.Background,
-        objectFit: "cover",
-        variant: "ghost",
-      });
-    }, [backgroundImage]);
-
     return (
       <Card
         className={clsx(className, styles.Card, styles[`Card-${size}`])}
@@ -36,7 +27,12 @@ const ActionCard = forwardRef(
         ref={ref}
         {...props}
       >
-        {backgroundImageMemo}
+        <Image
+          className={styles.Background}
+          objectFit="cover"
+          variant="ghost"
+          {...backgroundImageProps}
+        />
 
         <div className={styles.Content}>
           <Action ctaText={actionCta}>{topChildren}</Action>

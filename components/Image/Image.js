@@ -2,56 +2,88 @@ import { useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
 import { useInView } from "react-intersection-observer";
 
+import { computeImageUrl } from "services/contentful";
+
 import { useAppContext } from "context/state";
 
 import { loadImage } from "utils/image";
 
 import styles from "./Image.module.scss";
 
-function computeContentfulImageUrl(src, quality, format, width) {
-  let url = `https:${src}?q=${quality}`;
-  if (format) url += `&fm=${format}`;
-  if (width) url += `&w=${width}`;
-  return url;
+export function computeImageContentType(image) {
+  if (!image) return null;
+  const { contentType } = image.fields.file;
+  switch (contentType) {
+    case "image/jpeg":
+      return "jpg";
+    case "image/png":
+      return "png";
+    case "image/svg+xml":
+      return "svg";
+    default:
+      process.env.NODE_ENV === "development" &&
+        console.warn(`Unknown image contentType "${contentType}`);
+      return null;
+  }
 }
 
-export function ContentfulImage({ image, ...props }) {
-  const { url, contentType } = image.fields.file;
-  const { height, width } = image.fields.file.details.image;
+export function computeImageProps(image, overrideWidth) {
+  const { url } = image.fields.file;
 
-  const isJpeg = contentType === "image/jpeg";
-  const isPng = contentType === "image/png";
+  let { height, width } = image.fields.file.details.image;
+  if (overrideWidth) {
+    height = Math.ceil((overrideWidth / width) * height);
+    width = overrideWidth;
+  }
+
+  const contentType = computeImageContentType(image);
+
+  if (contentType === "svg") {
+    const svgUrl = computeImageUrl(url, 100);
+    return {
+      srcSet: {
+        legacy: svgUrl,
+      },
+      blurSrc: svgUrl,
+      width,
+      height,
+    };
+  }
+
+  const legacy = computeImageUrl(url, 75);
 
   const srcSet = {
-    legacy: computeContentfulImageUrl(url, 75),
-    avif: isJpeg && computeContentfulImageUrl(url, 85, "avif", width),
-    webp: isPng && computeContentfulImageUrl(url, 85, "webp", width),
+    legacy,
+    avif: contentType === "jpg" && computeImageUrl(url, 85, "avif", width),
+    webp: contentType === "png" && computeImageUrl(url, 85, "webp", width),
   };
 
   // WebP is very well supported so a good candidate for the blurSrc without
   // needing to wait for imageSupport checks to be made
-  const blurSrc = computeContentfulImageUrl(url, 5, "webp", width / 4);
+  const blurSrc = computeImageUrl(url, 5, "webp", Math.round(width / 4));
 
-  return (
-    <Image
-      srcSet={srcSet}
-      blurSrc={blurSrc}
-      height={height}
-      width={width}
-      {...props}
-    />
-  );
+  return {
+    srcSet,
+    blurSrc,
+    height,
+    width,
+  };
+}
+
+export function ContentfulImage({ image, ...props }) {
+  return <Image {...computeImageProps(image)} {...props} />;
 }
 
 function Image({
   className,
-  srcSet,
+  srcSet = {},
   blurSrc,
   alt = "",
   variant = "regular", // "regular" | "ghost"
-  objectFit,
-  style,
+  objectFit, // null | "cover" | "contain"
+  objectPosition = "center center", // "left top", "center top", "right top" etc…
   loading = "lazy", // "lazy" | "priority"
+  style,
   ...props
 }) {
   const { imageSupport } = useAppContext();
@@ -89,6 +121,14 @@ function Image({
     asyncLoadImage();
   }, [blurSrc, computedSrc, readyToLoad, loaded]);
 
+  const imageProps = {
+    ...props,
+    style: {
+      objectPosition: objectFit && objectPosition,
+      ...(props.style || {}),
+    },
+  };
+
   return (
     <div
       className={clsx(
@@ -107,7 +147,7 @@ function Image({
           src={srcSet.legacy}
           alt=""
           className={styles.NoScript}
-          {...props}
+          {...imageProps}
         />
       </noscript>
 
@@ -116,11 +156,16 @@ function Image({
           <>
             {srcSet.avif && <source srcSet={srcSet.avif} type="image/avif" />}
             {srcSet.webp && <source srcSet={srcSet.webp} type="image/webp" />}
-            <img src={srcSet.legacy} alt={alt} loading={loading} {...props} />
+            <img
+              src={srcSet.legacy}
+              alt={alt}
+              loading={loading}
+              {...imageProps}
+            />
           </>
         )}
         {blurSrc && (
-          <img src={loaded ? computedSrc : blurSrc} alt={alt} {...props} />
+          <img src={loaded ? computedSrc : blurSrc} alt={alt} {...imageProps} />
         )}
       </picture>
 

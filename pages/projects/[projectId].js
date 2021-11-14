@@ -21,6 +21,7 @@ import Title from "components/Meta/Title";
 import { ContentfulProjectHero } from "components/ProjectPage/ProjectHero";
 import { ContentfulProjectCover } from "components/ProjectPage/ProjectCover";
 import { ContentfulProjectFooter } from "components/ProjectPage/ProjectFooter";
+import { ContentfulProjectSlideItem } from "components/ProjectPage/ProjectSlideItem";
 import ProjectSlide from "components/ProjectPage/ProjectSlide";
 import { ContentfulMetaImage } from "components/Meta/MetaImage";
 
@@ -37,8 +38,15 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     rootMargin: "0% 0% -50% 0%",
   });
 
-  const { metaImage, clientName, color, year, heroTitle, heroCopy } =
-    pageFields;
+  const {
+    metaImage,
+    clientName,
+    color,
+    year,
+    heroTitle,
+    heroCopy,
+    slides = [],
+  } = pageFields;
 
   const textColor = computeTextColor(pageFields.textColor);
 
@@ -46,17 +54,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     router.push(PROJECT_CLOSE_URL);
   });
 
-  // Temporary example slides
-  const TEMP_SLIDES = [
-    {
-      backgroundColor: "dark",
-    },
-    {
-      backgroundColor: "light",
-    },
-  ];
-
-  const slidesLength = TEMP_SLIDES.length;
+  const slidesLength = slides.length;
   const FOOTER_SLIDES_COUNT = 2;
 
   return (
@@ -93,17 +91,15 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           index={slidesLength + 3}
         />
 
-        {TEMP_SLIDES.map((slide, slideIndex) => (
-          <ProjectSlide
+        {slides.map((slide, slideIndex) => (
+          <ContentfulProjectSlideItem
+            slide={slide}
             key={slideIndex}
-            backgroundColor={slide.backgroundColor}
             index={slidesLength - slideIndex + FOOTER_SLIDES_COUNT}
-          >
-            <div style={{ margin: "auto" }}>Example slide</div>
-          </ProjectSlide>
+          />
         ))}
 
-        <ProjectSlide index={2}>
+        <ProjectSlide className={styles.ContactSlide} index={2}>
           <ContentfulFooter
             className={styles.Contact}
             globalSettings={globalSettings}
@@ -111,7 +107,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           />
         </ProjectSlide>
 
-        <span className={styles.Trigger} ref={footerTriggerRef} />
+        <span ref={footerTriggerRef} />
 
         <ContentfulProjectFooter
           globalSettings={globalSettings}
@@ -129,6 +125,7 @@ export async function getStaticProps({ params }) {
   const projectFields = await fetchFromCache(
     `project-${projectId}`,
     async () => await fetchProject(projectId)
+    // true
   );
   const { pageFields, globalSettings } = await fetchFromCache(
     "customPageProject",

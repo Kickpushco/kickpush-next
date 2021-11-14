@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import clsx from "clsx";
+import { useInView } from "react-intersection-observer";
 
 import Action from "components/Action/Action";
 import Heading from "components/Heading/Heading";
@@ -26,13 +27,16 @@ function Footer({
   tag = "footer",
   actionCta,
   copiedTooltip,
-  isHero,
+  headingTag = "p",
   ...props
 }) {
+  const [footerRef, footerInView] = useInView({
+    triggerOnce: true,
+  });
+
   const [copied, setCopied] = useState(false);
   const copyTimeoutRef = useRef(null);
 
-  const headingTag = isHero ? "h1" : "p";
   const WrapperTag = tag;
 
   async function handleCopyEmail(e) {
@@ -54,8 +58,9 @@ function Footer({
         className,
         "container",
         styles.Footer,
-        isHero && styles["Footer-hero"]
+        footerInView && styles["Footer-inView"]
       )}
+      ref={footerRef}
       {...props}
     >
       <Heading className={styles.Heading} level="h1" tag={headingTag}>

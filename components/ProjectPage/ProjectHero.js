@@ -1,5 +1,7 @@
 import clsx from "clsx";
 
+import { useInView } from "react-intersection-observer";
+
 import Heading from "components/Heading/Heading";
 import Paragraph from "components/Paragraph/Paragraph";
 import ProjectSlide from "./ProjectSlide";
@@ -44,25 +46,40 @@ function ProjectHero({
   platform,
   ...props
 }) {
+  const [triggerRef, heroInView] = useInView({
+    triggerOnce: true,
+    rootMargin: "0% 0% -50% 0%",
+  });
+
   return (
-    <ProjectSlide className={clsx(className, styles.Hero)} {...props}>
-      <div className={clsx("container", styles.Content)}>
-        <Heading className={styles.Title} level="h1">
-          {title}
-        </Heading>
-        {copy && (
-          <Paragraph className={styles.Copy} level="huge">
-            {copy}
-          </Paragraph>
+    <>
+      <span ref={triggerRef} />
+      <ProjectSlide
+        className={clsx(
+          className,
+          styles.Slide,
+          heroInView && styles["Slide-inView"]
         )}
-      </div>
-      <dl className={clsx("container", styles.Footer)}>
-        <FooterElement title="Designed in" value={year} />
-        <FooterElement title="Designed by" value={designer} />
-        <FooterElement title="Deliverables" value={deliverables} />
-        <FooterElement title="Platform" value={platform} />
-      </dl>
-    </ProjectSlide>
+        {...props}
+      >
+        <div className={clsx("container", styles.Content)}>
+          <Heading className={styles.Title} level="h1">
+            {title}
+          </Heading>
+          {copy && (
+            <Paragraph className={styles.Copy} level="huge">
+              {copy}
+            </Paragraph>
+          )}
+        </div>
+        <Paragraph className={clsx("container", styles.Footer)} tag="dl">
+          <FooterElement title="Designed in" value={year} />
+          <FooterElement title="Designed by" value={designer} />
+          <FooterElement title="Deliverables" value={deliverables} />
+          <FooterElement title="Platform" value={platform} />
+        </Paragraph>
+      </ProjectSlide>
+    </>
   );
 }
 

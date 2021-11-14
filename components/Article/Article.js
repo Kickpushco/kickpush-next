@@ -6,7 +6,7 @@ import ActionCard from "components/ActionCard/ActionCard";
 import Button from "components/Button/Button";
 import Paragraph from "components/Paragraph/Paragraph";
 import Heading from "components/Heading/Heading";
-import { ContentfulImage } from "components/Image/Image";
+import { computeImageProps } from "components/Image/Image";
 
 import IconPlay from "assets/icons/18-play.svg";
 
@@ -23,8 +23,8 @@ export function ContentfulArticle({ article, ...props }) {
       link={fields.link}
       location={fields.location}
       backgroundColor={fields.backgroundColor}
-      backgroundImage={
-        backgroundImage && <ContentfulImage image={backgroundImage} />
+      backgroundImageProps={
+        backgroundImage && computeImageProps(backgroundImage)
       }
       isVideo={fields.isVideo}
       textColor={computeTextColor(fields.textColor)}
