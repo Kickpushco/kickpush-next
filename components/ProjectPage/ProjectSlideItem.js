@@ -3,54 +3,69 @@ import clsx from "clsx";
 
 import { computeObjectFit } from "services/contentful";
 
-import { computeImageProps } from "components/Image/Image";
+import Image, { computeImageProps } from "components/Image/Image";
 import ProjectSlide from "./ProjectSlide";
 
 import styles from "./ProjectSlideItem.module.scss";
 
 export function ContentfulProjectSlideItem({ slide, ...props }) {
-  const { desktop, mobile } = useMemo(() => {
-    const { desktopImage, desktopBackgroundColor, desktopImageSize } =
-      slide.fields;
+  const backgroundProps = useMemo(() => {
+    const { desktopImage, mobileImage } = slide.fields;
 
-    const backgroundProps = desktopImage && {
-      ...computeImageProps(desktopImage),
-      objectFit: computeObjectFit(desktopImageSize),
-    };
+    let desktop, mobile;
 
-    const desktop = {
-      backgroundColor: desktopBackgroundColor,
-      backgroundProps,
-    };
-    const mobile = {};
+    if (desktopImage) {
+      const desktopObjectFit = computeObjectFit(
+        slide.fields.desktopImageSize || "Cover"
+      );
+      desktop = {
+        ...computeImageProps(desktopImage),
+        objectFit: desktopObjectFit,
+      };
+
+      if (!mobileImage) {
+        mobile = {
+          ...computeImageProps(desktopImage, 700),
+          objectFit: desktopObjectFit,
+        };
+      }
+    }
 
     return {
       desktop,
       mobile,
     };
-  }, [slide]);
+  }, [slide.fields]);
 
-  return <ProjectSlideItem desktop={desktop} mobile={mobile} {...props} />;
+  return (
+    <ProjectSlideItem
+      backgroundColor={slide.fields.desktopBackgroundColor}
+      backgroundProps={backgroundProps}
+      {...props}
+    />
+  );
 }
 
 function ProjectSlideItem({
   className,
-  desktop,
-  mobile,
-  style = {},
+  backgroundProps = {},
   children,
   ...props
 }) {
   return (
-    <ProjectSlide
-      className={clsx(className, styles.Slide)}
-      style={{
-        "--desktop-background-color": desktop.backgroundColor,
-        ...style,
-      }}
-      desktopBackgroundProps={desktop.backgroundProps}
-      {...props}
-    >
+    <ProjectSlide className={clsx(className, styles.Slide)} {...props}>
+      {backgroundProps.desktop && (
+        <Image
+          className={clsx(styles.Background, styles["Background-desktop"])}
+          {...backgroundProps.desktop}
+        />
+      )}
+      {backgroundProps.mobile && (
+        <Image
+          className={clsx(styles.Background, styles["Background-mobile"])}
+          {...backgroundProps.mobile}
+        />
+      )}
       {children}
     </ProjectSlide>
   );

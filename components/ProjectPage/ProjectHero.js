@@ -1,7 +1,5 @@
 import clsx from "clsx";
 
-import { useInView } from "react-intersection-observer";
-
 import Heading from "components/Heading/Heading";
 import Paragraph from "components/Paragraph/Paragraph";
 import ProjectSlide from "./ProjectSlide";
@@ -9,77 +7,30 @@ import ProjectSlide from "./ProjectSlide";
 import styles from "./ProjectHero.module.scss";
 
 export function ContentfulProjectHero({ pageFields, ...props }) {
-  const { year, designer, platform, heroTitle, heroCopy, heroDeliverables } =
-    pageFields;
-
   return (
     <ProjectHero
-      title={heroTitle}
-      copy={heroCopy}
-      year={year}
-      designer={designer}
-      platform={platform}
-      deliverables={heroDeliverables}
+      title={pageFields.heroTitle}
+      copy={pageFields.heroCopy}
+      backgroundColor={pageFields.cardColor}
       {...props}
     />
   );
 }
 
-function FooterElement({ title, value }) {
-  if (!value) return null;
-
+function ProjectHero({ className, title, copy, ...props }) {
   return (
-    <div>
-      <dt>{title}</dt>
-      <dd>{value}</dd>
-    </div>
-  );
-}
-
-function ProjectHero({
-  className,
-  title,
-  copy,
-  year,
-  designer,
-  deliverables,
-  platform,
-  ...props
-}) {
-  const [triggerRef, heroInView] = useInView({
-    triggerOnce: true,
-    rootMargin: "0% 0% -50% 0%",
-  });
-
-  return (
-    <>
-      <span ref={triggerRef} />
-      <ProjectSlide
-        className={clsx(
-          className,
-          styles.Slide,
-          heroInView && styles["Slide-inView"]
+    <ProjectSlide className={clsx(className, styles.Slide)} {...props}>
+      <div className={clsx("container", styles.Content)}>
+        <Heading className={styles.Title} level="h1">
+          {title}
+        </Heading>
+        {copy && (
+          <Paragraph className={styles.Copy} level="huge">
+            {copy}
+          </Paragraph>
         )}
-        {...props}
-      >
-        <div className={clsx("container", styles.Content)}>
-          <Heading className={styles.Title} level="h1">
-            {title}
-          </Heading>
-          {copy && (
-            <Paragraph className={styles.Copy} level="huge">
-              {copy}
-            </Paragraph>
-          )}
-        </div>
-        <Paragraph className={clsx("container", styles.Footer)} tag="dl">
-          <FooterElement title="Designed in" value={year} />
-          <FooterElement title="Designed by" value={designer} />
-          <FooterElement title="Deliverables" value={deliverables} />
-          <FooterElement title="Platform" value={platform} />
-        </Paragraph>
-      </ProjectSlide>
-    </>
+      </div>
+    </ProjectSlide>
   );
 }
 

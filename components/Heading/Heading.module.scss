@@ -3,7 +3,7 @@
 .Heading {
   display: block;
   margin-bottom: 0.25em;
-  font-family: $font-family-heading;
+  font-family: $font-stack-heading;
   font-weight: $font-weight-heading;
 
   @include min-width($bp-tiny) {

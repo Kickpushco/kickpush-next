@@ -1,8 +1,9 @@
 import clsx from "clsx";
-import Image from "components/Image/Image";
 import { forwardRef } from "react";
 
 import styles from "./ProjectSlide.module.scss";
+
+const BACKGROUND_VARIANTS = ["dark", "light", "project"];
 
 const ProjectSlide = forwardRef(
   (
@@ -10,32 +11,29 @@ const ProjectSlide = forwardRef(
       className,
       textColor = "light",
       backgroundColor = "project", // "project" | "dark" | "light" | Valid CSS color
-      desktopBackgroundProps,
-      mobileBackground,
       style = {},
-      index,
       children,
       ...props
     },
     ref
   ) => {
+    const isVariant = BACKGROUND_VARIANTS.includes(backgroundColor);
+
     return (
       <section
         className={clsx(
           className,
           styles.Slide,
           styles[`Slide-${textColor}Text`],
-          styles[`Slide-${backgroundColor}Background`]
+          isVariant && styles[`Slide-${backgroundColor}Background`]
         )}
-        style={{ zIndex: index, ...style }}
+        style={{
+          backgroundColor: !isVariant ? backgroundColor : undefined,
+          ...style,
+        }}
         ref={ref}
         {...props}
       >
-        <Image
-          className={clsx(styles.Background, styles["Background-desktop"])}
-          variant="ghost"
-          {...desktopBackgroundProps}
-        />
         {children}
       </section>
     );

@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import clsx from "clsx";
@@ -19,10 +20,10 @@ import LabelData from "components/Meta/LabelData";
 import { ContentfulFooter } from "components/Footer/Footer";
 import Title from "components/Meta/Title";
 import { ContentfulProjectHero } from "components/ProjectPage/ProjectHero";
-import { ContentfulProjectCover } from "components/ProjectPage/ProjectCover";
 import { ContentfulProjectFooter } from "components/ProjectPage/ProjectFooter";
 import { ContentfulProjectSlideItem } from "components/ProjectPage/ProjectSlideItem";
 import ProjectSlide from "components/ProjectPage/ProjectSlide";
+import ProjectSpacer from "components/ProjectPage/ProjectSpacer";
 import { ContentfulMetaImage } from "components/Meta/MetaImage";
 
 import IconClose from "assets/icons/20-close.svg";
@@ -75,39 +76,34 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           className={clsx(styles.Close, footerInView && styles["Close-hidden"])}
         >
           <Link href={PROJECT_CLOSE_URL} passHref>
-            <CloseButton aria-label="Back to projects" variant={textColor}>
+            <CloseButton aria-label="Back to projects" variant="dark">
               <IconClose role="presentation" />
             </CloseButton>
           </Link>
         </div>
 
-        <ContentfulProjectCover
-          pageFields={pageFields}
-          index={slidesLength + 4}
-        />
+        <div className={styles.Layer}>
+          <ContentfulProjectHero pageFields={pageFields} />
 
-        <ContentfulProjectHero
-          pageFields={pageFields}
-          index={slidesLength + 3}
-        />
+          <ProjectSpacer />
 
-        {slides.map((slide, slideIndex) => (
-          <ContentfulProjectSlideItem
-            slide={slide}
-            key={slideIndex}
-            index={slidesLength - slideIndex + FOOTER_SLIDES_COUNT}
-          />
-        ))}
+          {slides.map((slide, slideIndex) => (
+            <Fragment key={slideIndex}>
+              <ContentfulProjectSlideItem slide={slide} />
+              <ProjectSpacer />
+            </Fragment>
+          ))}
 
-        <ProjectSlide className={styles.ContactSlide} index={2}>
-          <ContentfulFooter
-            className={styles.Contact}
-            globalSettings={globalSettings}
-            tag="div"
-          />
-        </ProjectSlide>
+          <ProjectSlide className={styles.ContactSlide}>
+            <ContentfulFooter
+              className={styles.Contact}
+              globalSettings={globalSettings}
+              tag="div"
+            />
+          </ProjectSlide>
 
-        <span ref={footerTriggerRef} />
+          <span ref={footerTriggerRef} />
+        </div>
 
         <ContentfulProjectFooter
           globalSettings={globalSettings}

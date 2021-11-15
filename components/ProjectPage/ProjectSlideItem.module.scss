@@ -2,6 +2,18 @@
 
 @import "../../sass/global";
 
-.Slide {
-  background: var(--desktop-background-color);
+.Background {
+  background-color: transparent;
+
+  &-desktop {
+    @include max-width($bp-mobile) {
+      display: none;
+    }
+  }
+
+  &-mobile {
+    @include min-width($bp-mobile) {
+      display: none;
+    }
+  }
 }

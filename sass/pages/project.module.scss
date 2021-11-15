@@ -29,6 +29,11 @@
   }
 }
 
+.Layer {
+  position: relative;
+  z-index: 2;
+}
+
 .ContactSlide {
   @include max-width($bp-tablet) {
     height: auto;
@@ -39,9 +44,4 @@
   position: relative;
   margin-top: auto;
   margin-bottom: auto;
-
-  @include min-width($bp-tablet) {
-    padding-top: calc(var(--section-space) / 2);
-    padding-bottom: calc(var(--section-space) / 2);
-  }
 }

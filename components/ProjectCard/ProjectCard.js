@@ -18,7 +18,7 @@ export function ContentfulProjectCard({ project, globalSettings, ...props }) {
   return (
     <ProjectCard
       slug={slug}
-      byline={clientName}
+      clientName={clientName}
       year={year}
       title={cardTitle}
       backgroundColor={cardColor}
@@ -33,7 +33,7 @@ export function ContentfulProjectCard({ project, globalSettings, ...props }) {
 function ProjectCard({
   className,
   slug,
-  byline,
+  clientName,
   year,
   title,
   size = "small",
@@ -47,7 +47,7 @@ function ProjectCard({
         topChildren={
           <p>
             <Heading className={styles.Byline} level="h5" tag="span">
-              {byline}
+              {clientName}
             </Heading>
             {year && (
               <Paragraph className={styles.Year} level="label" tag="span">
