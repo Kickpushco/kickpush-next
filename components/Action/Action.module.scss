@@ -25,8 +25,8 @@
   }
 
   @include can-hover {
-    a:not([data-disable-action]):hover &,
-    a:not([data-disable-action]):focus & {
+    a:not([data-disable-hover]):hover &,
+    a:not([data-disable-focus]):focus & {
       opacity: 1;
       transition-delay: $duration-card-action;
       transform: none;
@@ -43,8 +43,8 @@
   transition-delay: $duration-card-action;
 
   @include can-hover {
-    a:not([data-disable-action]):hover &,
-    a:not([data-disable-action]):focus & {
+    a:not([data-disable-hover]):hover &,
+    a:not([data-disable-focus]):focus & {
       opacity: 0;
       transform: translateX(#{rem(8)});
       transition-delay: 0ms;

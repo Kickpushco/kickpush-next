@@ -35,6 +35,8 @@ function Footer({
   });
 
   const [copied, setCopied] = useState(false);
+  const [disableHover, setDisableHover] = useState(false);
+  const [disableFocus, setDisableFocus] = useState(false);
   const copyTimeoutRef = useRef(null);
 
   const WrapperTag = tag;
@@ -46,6 +48,8 @@ function Footer({
     await navigator.clipboard.writeText(email);
 
     setCopied(true);
+    setDisableHover(true);
+    setDisableFocus(true);
 
     copyTimeoutRef.current = setTimeout(() => {
       setCopied(false);
@@ -72,6 +76,14 @@ function Footer({
           className={styles.EmailLink}
           href={`mailto:${email}`}
           onClick={handleCopyEmail}
+          data-disable-hover={disableHover ? "" : undefined}
+          data-disable-focus={disableFocus ? "" : undefined}
+          onMouseLeave={() => {
+            setDisableHover(false);
+          }}
+          onFocus={() => {
+            setDisableFocus(false);
+          }}
         >
           <Action ctaText={actionCta} ctaLevel="h4" infoTag="span">
             {email.split("@").map((chunk, chunkIndex) => (

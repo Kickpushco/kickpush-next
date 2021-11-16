@@ -31,7 +31,8 @@ const ActionCard = forwardRef(
         )}
         size={size}
         ref={ref}
-        data-disable-action={disabled ? "" : undefined}
+        data-disable-hover={disabled ? "" : undefined}
+        data-disable-focus={disabled ? "" : undefined}
         {...props}
       >
         {backgroundImageProps && (
