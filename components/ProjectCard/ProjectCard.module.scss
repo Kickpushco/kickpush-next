@@ -5,6 +5,9 @@
 .Wrapper {
   position: relative;
   transition: transform $duration-project-show-card ease-out;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   &-hidden {
     opacity: 0;
@@ -13,6 +16,10 @@
 }
 
 .Card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
   &-transitioning {
     box-shadow: transparent 0 0 0;
     border-radius: 0;

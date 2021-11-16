@@ -37,7 +37,7 @@ export default function Projects({ pageFields, globalSettings }) {
         </Hero>
 
         <section className="container">
-          <CardsWrapper className={"container"}>
+          <CardsWrapper>
             {projectsList.fields.projects.map((project) => (
               <ContentfulProjectCard
                 key={project.sys.id}
