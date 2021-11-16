@@ -10,6 +10,7 @@ import { ContentfulProjectCard } from "components/ProjectCard/ProjectCard";
 import Title from "components/Meta/Title";
 import Description from "components/Meta/Description";
 import { ContentfulMetaImage } from "components/Meta/MetaImage";
+import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
 export default function Projects({ pageFields, globalSettings }) {
   const {
@@ -49,6 +50,8 @@ export default function Projects({ pageFields, globalSettings }) {
       </main>
 
       <ContentfulFooter globalSettings={globalSettings} />
+
+      <PrivacyPolicy />
     </>
   );
 }

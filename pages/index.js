@@ -15,6 +15,7 @@ import Title from "components/Meta/Title";
 import Description from "components/Meta/Description";
 import LabelData from "components/Meta/LabelData";
 import { ContentfulMetaImage } from "components/Meta/MetaImage";
+import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
 import styles from "../sass/pages/index.module.scss";
 
@@ -87,6 +88,8 @@ export default function Home({ pageFields, globalSettings }) {
       </main>
 
       <ContentfulFooter globalSettings={globalSettings} />
+
+      <PrivacyPolicy />
     </>
   );
 }

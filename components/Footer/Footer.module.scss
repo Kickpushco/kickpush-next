@@ -4,6 +4,7 @@
   --hero-animation-state: paused;
 
   padding-bottom: var(--section-space);
+  position: relative;
 
   &-inView {
     --hero-animation-state: running;

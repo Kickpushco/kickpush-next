@@ -1,0 +1,25 @@
+@import "../../sass/global";
+
+.PrivacyPolicy {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: rem(24);
+  z-index: 4;
+
+  :global(.container) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em 1em;
+
+    @include min-width($bp-tablet) {
+      justify-content: flex-end;
+    }
+  }
+
+  a {
+    color: inherit;
+    padding: 0.125em 0.25em;
+    margin: -0.125em -0.25em;
+  }
+}

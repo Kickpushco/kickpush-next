@@ -1,6 +1,6 @@
 @import "../../sass/global";
 
-@value mobileNav: #{em($bp-hamburger-menu)};
+@value breakpointHamburgerMenu: #{em($bp-hamburger-menu)};
 
 .Nav {
   background: $color-kickpush-red;
@@ -9,14 +9,13 @@
   margin-top: var(--nav-offset);
   z-index: 99;
   transition: transform $duration-project-show-card / 2 ease-out;
-  // transition-property: opacity, transform;
 
-  a {
+  a,
+  button {
     scroll-margin-top: 0;
   }
 
   &-projectTransitioning {
-    // opacity: 0;
     transform: translateY(calc(-100% - #{var(--nav-offset)}));
   }
 }

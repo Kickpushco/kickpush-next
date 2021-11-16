@@ -6,7 +6,6 @@ import { fetchFromCache } from "services/cache";
 
 import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
 import { ContentfulArticle } from "components/Article/Article";
-import Button from "components/Button/Button";
 import Card, { CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
@@ -17,12 +16,11 @@ import { ContentfulNav } from "components/Nav/Nav";
 import Manifesto from "components/Manifesto/Manifesto";
 import Title from "components/Meta/Title";
 import { ContentfulMetaImage } from "components/Meta/MetaImage";
+import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
 import styles from "../sass/pages/about.module.scss";
 
 export default function About({ pageFields, globalSettings }) {
-  const [showAllPhotos, setShowAllPhotos] = useState(false);
-
   const {
     shortName,
     metaDescription,
@@ -35,10 +33,6 @@ export default function About({ pageFields, globalSettings }) {
     articlesTitle,
     articlesItems,
   } = pageFields;
-
-  const handleShowMorePhotos = () => {
-    setShowAllPhotos(true);
-  };
 
   return (
     <>
@@ -62,12 +56,7 @@ export default function About({ pageFields, globalSettings }) {
               </Heading>
             )}
 
-            <div
-              className={clsx(
-                styles.PhotosGrid,
-                showAllPhotos && styles["PhotosGridCell-show"]
-              )}
-            >
+            <div className={styles.PhotosGrid}>
               {photosGrid.map((photo, photoIndex) => (
                 <Card className={styles.PhotosGridCell} key={photoIndex}>
                   {photo.fields.title && (
@@ -79,15 +68,6 @@ export default function About({ pageFields, globalSettings }) {
                 </Card>
               ))}
             </div>
-            {!showAllPhotos && (
-              <Button
-                className={styles.PhotosGridShowMore}
-                onClick={handleShowMorePhotos}
-                block
-              >
-                Load more
-              </Button>
-            )}
           </section>
         )}
 
@@ -105,7 +85,9 @@ export default function About({ pageFields, globalSettings }) {
         )}
 
         <div className="container">
-          <ContentfulActionCardProjects globalSettings={globalSettings} />
+          <CardsWrapper columns={false}>
+            <ContentfulActionCardProjects globalSettings={globalSettings} />
+          </CardsWrapper>
 
           {!!articlesItems.length && (
             <>
@@ -126,6 +108,8 @@ export default function About({ pageFields, globalSettings }) {
       </main>
 
       <ContentfulFooter globalSettings={globalSettings} />
+
+      <PrivacyPolicy />
     </>
   );
 }

@@ -9,6 +9,7 @@ import Description from "components/Meta/Description";
 import { ContentfulMetaImage } from "components/Meta/MetaImage";
 
 import styles from "sass/pages/contact.module.scss";
+import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
 export default function Contact({ pageFields, globalSettings }) {
   const { metaDescription, metaImage } = pageFields;
@@ -30,6 +31,8 @@ export default function Contact({ pageFields, globalSettings }) {
         tag="main"
         headingTag="h1"
       />
+
+      <PrivacyPolicy />
     </>
   );
 }

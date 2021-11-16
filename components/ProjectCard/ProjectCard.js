@@ -44,6 +44,7 @@ function ProjectCard({
   size = "small",
   actionCta = "See project",
   onClick,
+  onClickEnd,
   style = {},
   ...props
 }) {
@@ -65,9 +66,14 @@ function ProjectCard({
       if (projectTransitioning) return;
 
       const wrapperEl = wrapperRef.current;
+      const cardEl = e.currentTarget;
+
       const wrapperBounds = wrapperEl.getBoundingClientRect();
       const wrapperWidth = wrapperEl.clientWidth;
       const wrapperHeight = wrapperEl.clientHeight;
+
+      const cardWidth = cardEl.clientWidth;
+      const cardHeight = cardEl.clientHeight;
 
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
@@ -77,8 +83,8 @@ function ProjectCard({
       const wrapperTranslateY =
         wrapperBounds.top * -1 + windowHeight / 2 - wrapperHeight / 2;
 
-      const cardScaleX = Math.ceil((windowWidth / wrapperWidth) * 100) / 100;
-      const cardScaleY = Math.ceil((windowHeight / wrapperHeight) * 100) / 100;
+      const cardScaleX = Math.ceil((windowWidth / cardWidth) * 100) / 100;
+      const cardScaleY = Math.ceil((windowHeight / cardHeight) * 100) / 100;
 
       const inverseX = 1 / cardScaleX;
       const inverseY = 1 / cardScaleY;
@@ -105,8 +111,10 @@ function ProjectCard({
         "--card-background-scale": cardBackgroundScale,
         transform: `scale(${cardScaleX}, ${cardScaleY})`,
       });
+
+      onClick?.();
     },
-    [projectTransitioning, slug, router]
+    [projectTransitioning, slug, router, onClick]
   );
 
   const handleTransitionEnd = useCallback(
@@ -117,11 +125,9 @@ function ProjectCard({
       await router.push(projectHref);
 
       setProjectTransitioning(false);
-      setWrapperStyle(null);
-      setCardStyle(null);
-      onClick?.(e);
+      onClickEnd?.(e);
     },
-    [router, projectTransitioning, slug, onClick]
+    [router, projectTransitioning, slug, onClickEnd]
   );
 
   return (

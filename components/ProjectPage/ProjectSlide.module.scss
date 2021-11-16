@@ -8,6 +8,7 @@
   padding: calc(var(--section-space) / 2) 0;
   position: relative;
   min-height: math.div(635, 375) * 100vw;
+  overflow: hidden;
 
   @include min-width($bp-mobile) {
     min-height: 100vw;
@@ -19,10 +20,6 @@
 
   @include min-width($bp-desktop) {
     min-height: 100vh;
-  }
-
-  &-projectBackground {
-    background: var(--project-background-color);
   }
 
   &-darkBackground {

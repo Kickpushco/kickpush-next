@@ -5,13 +5,30 @@
 
   justify-content: center;
   z-index: 1;
+  position: sticky;
+  bottom: 0;
 
-  @include min-width($bp-tablet) {
-    position: sticky;
-    bottom: 0;
+  @include max-width($bp-desktop) {
+    overflow: visible;
+    position: relative;
+    z-index: 3;
   }
 
   @include max-width($bp-mobile) {
     min-height: 0;
   }
 }
+
+// Privacy Policy code kept in case required at a later date
+// .Container {
+//   @include max-width($bp-desktop) {
+//     margin-bottom: rem(24);
+//   }
+// }
+
+// .PrivacyPolicy {
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   width: 100%;
+// }

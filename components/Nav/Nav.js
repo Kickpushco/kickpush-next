@@ -1,6 +1,7 @@
 import { useState, useEffect, forwardRef, useRef, useCallback } from "react";
 import clsx from "clsx";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { useAppContext } from "context/state";
 
@@ -43,6 +44,7 @@ export function ContentfulNav({ globalSettings, ...props }) {
 }
 
 function Nav({ labels, selected, ...props }) {
+  const { pathname } = useRouter();
   const { projectTransitioning, mobileOpen, setMobileOpen } = useAppContext();
 
   const [isMobile, setIsMobile] = useState(false);
@@ -54,7 +56,13 @@ function Nav({ labels, selected, ...props }) {
   }
 
   useEffect(() => {
-    const mediaQueryList = matchMedia(`(min-width: ${styles.mobileNav})`);
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const mediaQueryList = matchMedia(
+      `(min-width: ${styles.breakpointHamburgerMenu})`
+    );
 
     function handleMQLChange(e) {
       const isNotMobile = e.matches;

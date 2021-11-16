@@ -20,14 +20,6 @@
   position: relative;
   padding: 0;
 
-  &:nth-of-type(n + 4) {
-    display: none;
-  }
-
-  .PhotosGridCell-show & {
-    display: block;
-  }
-
   @include min-width($bp-mobile) {
     display: block !important;
     grid-row: span 2;

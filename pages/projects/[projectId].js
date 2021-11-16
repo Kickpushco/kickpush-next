@@ -61,6 +61,15 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     router.push(PROJECT_CLOSE_URL);
   });
 
+  function handleScrollFooter() {
+    if (!matchMedia(`(min-width: ${styles.breakpointDesktop})`).matches) return;
+
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
+  }
+
   return (
     <>
       <Title shortTitle={clientName} longTitle={heroTitle} />
@@ -70,12 +79,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
       <LabelData number="2" label="Designed in" data={year} />
       <ThemeColor color={styles.kickpushBlack} />
 
-      <main
-        className={clsx(styles.Main, styles[`Main-${textColor}`])}
-        style={{
-          "--project-background-color": color,
-        }}
-      >
+      <main className={clsx(styles.Main, styles[`Main-${textColor}`])}>
         <div
           className={clsx(
             styles.Close,
@@ -89,7 +93,13 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           </Link>
         </div>
 
-        <div className={styles.Layer} key={slug}>
+        <div
+          className={styles.Layer}
+          key={`layer-${slug}`}
+          style={{
+            backgroundColor: color,
+          }}
+        >
           <ContentfulProjectHero pageFields={pageFields} />
 
           <ProjectSpacer />
@@ -113,8 +123,10 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
         </div>
 
         <ContentfulProjectFooter
+          key={`footer-${slug}`}
           globalSettings={globalSettings}
           nextProject={nextProject}
+          onClick={handleScrollFooter}
         />
       </main>
     </>
