@@ -1,5 +1,7 @@
 @import "../global";
 
+@value kickpushBlack: #{$color-kickpush-black};
+
 .Close {
   position: fixed;
   top: rem(24);

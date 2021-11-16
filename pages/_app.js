@@ -2,6 +2,8 @@ import Head from "next/head";
 
 import { AppContextProvider } from "context/state";
 
+import ThemeColor from "components/Meta/ThemeColor";
+
 import "sass/pages/_app.scss";
 import styles from "sass/pages/_app.module.scss";
 
@@ -54,11 +56,10 @@ function App({ Component, pageProps }) {
         <meta name="msapplication-TileColor" content={styles.kickpushRed} />
         <meta name="msapplication-TileImage" content="/logo-144.png" />
 
-        <meta name="theme-color" content={styles.kickpushRed} />
-
         {/* TODO: Config */}
         <meta name="twitter:site" content="@kickpush" />
       </Head>
+      <ThemeColor color={styles.kickpushRed} />
 
       <Component {...pageProps} />
     </AppContextProvider>

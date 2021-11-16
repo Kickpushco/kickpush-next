@@ -8,12 +8,12 @@
 
 .Paragraph {
   &-huge {
-    font-size: rem(16);
-    line-height: rem(22);
+    font-size: rem(20);
+    line-height: rem(28);
 
     @include min-width($bp-mobile) {
-      font-size: rem(20);
-      line-height: rem(28);
+      font-size: rem(22);
+      line-height: rem(32);
     }
 
     @include min-width($bp-tablet) {

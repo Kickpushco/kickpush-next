@@ -17,6 +17,7 @@ import { fetchFromCache } from "services/cache";
 import { CloseButton } from "components/Button/CloseButton";
 import Description from "components/Meta/Description";
 import LabelData from "components/Meta/LabelData";
+import ThemeColor from "components/Meta/ThemeColor";
 import { ContentfulFooter } from "components/Footer/Footer";
 import Title from "components/Meta/Title";
 import { ContentfulProjectHero } from "components/ProjectPage/ProjectHero";
@@ -55,9 +56,6 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     router.push(PROJECT_CLOSE_URL);
   });
 
-  const slidesLength = slides.length;
-  const FOOTER_SLIDES_COUNT = 2;
-
   return (
     <>
       <Title shortTitle={clientName} longTitle={heroTitle} />
@@ -65,6 +63,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
       <ContentfulMetaImage image={metaImage} globalSettings={globalSettings} />
       <LabelData number="1" label="Client" data={clientName} />
       <LabelData number="2" label="Designed in" data={year} />
+      <ThemeColor color={styles.kickpushBlack} />
 
       <main
         className={clsx(styles.Main, styles[`Main-${textColor}`])}
