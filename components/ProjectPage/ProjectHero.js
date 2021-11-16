@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useAppContext } from "context/state";
 
 import Heading from "components/Heading/Heading";
-import Paragraph from "components/Paragraph/Paragraph";
+import { HeroCopy } from "components/Hero/Hero";
 import ProjectSlide from "./ProjectSlide";
 
 import styles from "./ProjectHero.module.scss";
@@ -35,11 +35,7 @@ function ProjectHero({ className, title, copy, ...props }) {
         <Heading className={styles.Title} level="h1">
           {title}
         </Heading>
-        {copy && (
-          <Paragraph className={styles.Copy} level="huge">
-            {copy}
-          </Paragraph>
-        )}
+        {copy && <HeroCopy>{copy}</HeroCopy>}
       </div>
     </ProjectSlide>
   );
