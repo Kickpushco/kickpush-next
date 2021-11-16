@@ -6,6 +6,8 @@ import { useInView } from "react-intersection-observer";
 
 import useEscKey from "hooks/useEscKey";
 
+import { useAppContext } from "context/state";
+
 import {
   computeTextColor,
   fetchCustomPage,
@@ -36,11 +38,14 @@ const PROJECT_CLOSE_URL = "/projects";
 export default function Project({ pageFields, nextProject, globalSettings }) {
   const router = useRouter();
 
+  const { projectTransitioning } = useAppContext();
+
   const [footerTriggerRef, footerInView] = useInView({
     rootMargin: "0% 0% -50% 0%",
   });
 
   const {
+    slug,
     metaImage,
     clientName,
     color,
@@ -72,7 +77,10 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
         }}
       >
         <div
-          className={clsx(styles.Close, footerInView && styles["Close-hidden"])}
+          className={clsx(
+            styles.Close,
+            (footerInView || projectTransitioning) && styles["Close-hidden"]
+          )}
         >
           <Link href={PROJECT_CLOSE_URL} passHref>
             <CloseButton aria-label="Back to projects" variant="dark">
@@ -81,7 +89,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           </Link>
         </div>
 
-        <div className={styles.Layer}>
+        <div className={styles.Layer} key={slug}>
           <ContentfulProjectHero pageFields={pageFields} />
 
           <ProjectSpacer />

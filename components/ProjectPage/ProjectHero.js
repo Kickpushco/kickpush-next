@@ -1,5 +1,7 @@
 import clsx from "clsx";
 
+import { useAppContext } from "context/state";
+
 import Heading from "components/Heading/Heading";
 import Paragraph from "components/Paragraph/Paragraph";
 import ProjectSlide from "./ProjectSlide";
@@ -18,8 +20,17 @@ export function ContentfulProjectHero({ pageFields, ...props }) {
 }
 
 function ProjectHero({ className, title, copy, ...props }) {
+  const { projectTransitioning } = useAppContext();
+
   return (
-    <ProjectSlide className={clsx(className, styles.Slide)} {...props}>
+    <ProjectSlide
+      className={clsx(
+        className,
+        styles.Slide,
+        !projectTransitioning && styles["Slide-inView"]
+      )}
+      {...props}
+    >
       <div className={clsx("container", styles.Content)}>
         <Heading className={styles.Title} level="h1">
           {title}

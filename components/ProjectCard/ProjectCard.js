@@ -65,12 +65,7 @@ function ProjectCard({
 
       e.preventDefault();
 
-      if (projectTransitioning) {
-        setProjectTransitioning(false);
-        setWrapperStyle(null);
-        setCardStyle(null);
-        return;
-      }
+      if (projectTransitioning) return;
 
       const wrapperEl = wrapperRef.current;
       const wrapperBounds = wrapperEl.getBoundingClientRect();
@@ -92,11 +87,8 @@ function ProjectCard({
 
       setWrapperStyle({
         transform: `translate3d(${wrapperTranslateX}px, ${wrapperTranslateY}px, 0)`,
-        // TODO: Move all of this to a class
-        zIndex: 98,
-        position: "relative",
-        transition: "transform 400ms ease-out",
         willChange: "transform",
+        zIndex: styles.wrapperIndex,
       });
       setCardStyle({
         transform: `scale(${cardScaleX}, ${cardScaleY})`,
@@ -107,25 +99,36 @@ function ProjectCard({
 
   const handleTransitionEnd = useCallback(
     async (e) => {
-      if (e.target !== wrapperRef.current) return;
+      if (e.target !== wrapperRef.current || projectTransitioning !== slug)
+        return;
+
       await router.push(projectHref);
 
       setProjectTransitioning(false);
+      setWrapperStyle(null);
+      setCardStyle(null);
     },
-    [router]
+    [router, projectTransitioning, slug]
   );
 
   return (
     <div
-      className={styles.Wrapper}
+      className={clsx(
+        styles.Wrapper,
+        projectTransitioning &&
+          projectTransitioning !== slug &&
+          styles["Wrapper-hidden"]
+      )}
       ref={wrapperRef}
       style={wrapperStyle}
       onTransitionEnd={handleTransitionEnd}
+      key={slug}
     >
       <Link href={projectHref} passHref>
         <ActionCard
           className={clsx(
             className,
+            styles.Card,
             projectTransitioning === slug && styles["Card-transitioning"]
           )}
           disabled={projectTransitioning}
