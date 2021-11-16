@@ -43,7 +43,6 @@ function ProjectCard({
   title,
   size = "small",
   actionCta = "See project",
-  backgroundImageProps,
   onClick,
   style = {},
   ...props
@@ -61,8 +60,6 @@ function ProjectCard({
 
   const handleClick = useCallback(
     (e) => {
-      onClick?.(e);
-
       e.preventDefault();
 
       if (projectTransitioning) return;
@@ -83,6 +80,19 @@ function ProjectCard({
       const cardScaleX = Math.ceil((windowWidth / wrapperWidth) * 100) / 100;
       const cardScaleY = Math.ceil((windowHeight / wrapperHeight) * 100) / 100;
 
+      const inverseX = 1 / cardScaleX;
+      const inverseY = 1 / cardScaleY;
+
+      const cardContentScale =
+        cardScaleX > cardScaleY
+          ? `scale(${inverseX * cardScaleY}, ${inverseY * cardScaleY})`
+          : `scale(${inverseX * cardScaleX}, ${inverseY * cardScaleX})`;
+
+      const cardBackgroundScale =
+        cardScaleX > cardScaleY
+          ? `scale(${inverseX * cardScaleX}, ${inverseY * cardScaleX})`
+          : `scale(${inverseX * cardScaleY}, ${inverseY * cardScaleY})`;
+
       setProjectTransitioning(slug);
 
       setWrapperStyle({
@@ -91,10 +101,12 @@ function ProjectCard({
         zIndex: styles.wrapperIndex,
       });
       setCardStyle({
+        "--card-content-scale": cardContentScale,
+        "--card-background-scale": cardBackgroundScale,
         transform: `scale(${cardScaleX}, ${cardScaleY})`,
       });
     },
-    [onClick, projectTransitioning, slug, router]
+    [projectTransitioning, slug, router]
   );
 
   const handleTransitionEnd = useCallback(
@@ -107,8 +119,9 @@ function ProjectCard({
       setProjectTransitioning(false);
       setWrapperStyle(null);
       setCardStyle(null);
+      onClick?.(e);
     },
-    [router, projectTransitioning, slug]
+    [router, projectTransitioning, slug, onClick]
   );
 
   return (
@@ -143,12 +156,6 @@ function ProjectCard({
                 </Paragraph>
               )}
             </p>
-          }
-          backgroundImageProps={
-            backgroundImageProps && {
-              ...backgroundImageProps,
-              className: styles.Background,
-            }
           }
           actionCta={actionCta}
           size={size}
