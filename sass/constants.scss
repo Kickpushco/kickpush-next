@@ -26,4 +26,9 @@ $duration-card-action: 200ms;
 $duration-card-image-out: 400ms;
 $duration-card-image-in: 2000ms;
 
+$duration-project-show-card: 500ms;
+$duration-project-hide-other: 100ms;
+
+$ease-in-back: cubic-bezier(0.2, 0, 0.66, -0.56);
+
 $border-radius-small: rem(4);

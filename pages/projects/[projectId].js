@@ -107,7 +107,6 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
         <ContentfulProjectFooter
           globalSettings={globalSettings}
           nextProject={nextProject}
-          index={1}
         />
       </main>
     </>

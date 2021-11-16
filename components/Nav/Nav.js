@@ -2,6 +2,8 @@ import { useState, useEffect, forwardRef, useRef, useCallback } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 
+import { useAppContext } from "context/state";
+
 import { CloseButton } from "components/Button/CloseButton";
 import Heading from "components/Heading/Heading";
 
@@ -41,8 +43,9 @@ export function ContentfulNav({ globalSettings, ...props }) {
 }
 
 function Nav({ labels, selected, ...props }) {
+  const { projectTransitioning, mobileOpen, setMobileOpen } = useAppContext();
+
   const [isMobile, setIsMobile] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   const menuRef = useRef(null);
 
@@ -70,11 +73,7 @@ function Nav({ labels, selected, ...props }) {
     return () => {
       mediaQueryList.removeListener(handleMQLChange);
     };
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.style.overflow = mobileOpen ? "hidden" : "auto";
-  }, [mobileOpen]);
+  }, [setMobileOpen]);
 
   const handleMobileClose = useCallback(() => {
     setMobileOpen(false);
@@ -84,10 +83,14 @@ function Nav({ labels, selected, ...props }) {
 
   return (
     <nav
-      className={clsx(styles.Nav, mobileOpen && styles["Nav-mobileOpen"])}
+      className={clsx(
+        styles.Nav,
+        mobileOpen && styles["Nav-mobileOpen"],
+        projectTransitioning && styles["Nav-projectTransitioning"]
+      )}
       {...props}
     >
-      <div className="container">
+      <div className={clsx(styles.Container, "container")}>
         <Link href="/">
           <a className={styles.Logo}>
             <Logo aria-label="Kickpush" />

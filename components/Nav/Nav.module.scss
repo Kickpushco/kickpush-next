@@ -8,18 +8,25 @@
   top: 0;
   margin-top: var(--nav-offset);
   z-index: 99;
-
-  :global(.container) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: rem(1170);
-    height: var(--nav-height);
-  }
+  transition: transform $duration-project-show-card / 2 ease-out;
+  // transition-property: opacity, transform;
 
   a {
     scroll-margin-top: 0;
   }
+
+  &-projectTransitioning {
+    // opacity: 0;
+    transform: translateY(calc(-100% - #{var(--nav-offset)}));
+  }
+}
+
+.Container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: rem(1170);
+  height: var(--nav-height);
 }
 
 .Logo {

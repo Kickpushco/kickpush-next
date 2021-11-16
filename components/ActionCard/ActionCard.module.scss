@@ -10,18 +10,23 @@
   text-decoration: none;
   transition: $duration-card-action ease-in-out;
   transition-property: box-shadow, transform;
+  cursor: default;
 
   @include can-hover {
-    &:hover {
-      @include card-shadow("hover");
+    &-enabled {
+      cursor: pointer;
 
-      transform: scale(var(--card-scale));
-    }
+      &:hover {
+        @include card-shadow("hover");
 
-    &:active {
-      @include card-shadow("active");
+        transform: scale(var(--card-scale));
+      }
 
-      transform: scale(var(--card-scale)) translateY(#{rem(4)});
+      &:active {
+        @include card-shadow("active");
+
+        transform: scale(var(--card-scale)) translateY(#{rem(4)});
+      }
     }
   }
 
@@ -64,9 +69,11 @@
     }
   }
 
-  .Card:hover &,
-  .Card:focus & {
-    transform: scale(var(--project-card-hover-scale, 1.05));
-    transition: transform $duration-card-image-in ease-out;
+  @include can-hover {
+    .Card-enabled:hover &,
+    .Card-enabled:focus & {
+      transform: scale(var(--project-card-hover-scale, 1.05));
+      transition: transform $duration-card-image-in ease-out;
+    }
   }
 }

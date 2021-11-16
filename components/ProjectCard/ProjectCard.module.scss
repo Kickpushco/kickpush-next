@@ -1,6 +1,32 @@
 @import "../../sass/global";
 
+.Card {
+  &-transitioning {
+    box-shadow: transparent 0 0 0;
+    border-radius: 0;
+    transition: transform $duration-project-show-card $ease-in-back,
+      border-radius 0ms $duration-project-show-card,
+      box-shadow $duration-project-hide-other ease-out;
+
+    .Action,
+    .Title,
+    > span {
+      transition: opacity $duration-project-hide-other ease-out;
+      opacity: 0;
+    }
+  }
+}
+
 .Title {
   margin-top: auto;
   margin-bottom: -0.1em;
+}
+
+.Background {
+  transition: $duration-project-hide-other ease-out;
+
+  .Card-transitioning & {
+    opacity: 0;
+    transform: scale(1);
+  }
 }

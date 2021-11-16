@@ -15,6 +15,7 @@ const ActionCard = forwardRef(
       topChildren,
       backgroundImageProps,
       size = CARD_DEFAULT_SIZE,
+      disabled,
       actionCta,
       ...props
     },
@@ -22,20 +23,30 @@ const ActionCard = forwardRef(
   ) => {
     return (
       <Card
-        className={clsx(className, styles.Card, styles[`Card-${size}`])}
+        className={clsx(
+          className,
+          styles.Card,
+          styles[`Card-${size}`],
+          !disabled && styles["Card-enabled"]
+        )}
         size={size}
         ref={ref}
+        data-disable-action={disabled ? "" : undefined}
         {...props}
       >
-        <Image
-          className={styles.Background}
-          objectFit="cover"
-          variant="ghost"
-          {...backgroundImageProps}
-        />
+        {backgroundImageProps && (
+          <Image
+            objectFit="cover"
+            variant="ghost"
+            {...backgroundImageProps}
+            className={clsx(styles.Background, backgroundImageProps.className)}
+          />
+        )}
 
         <div className={styles.Content}>
-          <Action ctaText={actionCta}>{topChildren}</Action>
+          <Action ctaText={actionCta} disabled={disabled}>
+            {topChildren}
+          </Action>
 
           {children}
         </div>
