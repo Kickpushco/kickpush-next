@@ -6,7 +6,7 @@ import { fetchFromCache } from "services/cache";
 
 import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
 import { ContentfulArticle } from "components/Article/Article";
-import Card, { CardsWrapper } from "components/Card/Card";
+import Card, { CardReveal, CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
 import Hero, { HeroCopy } from "components/Hero/Hero";
@@ -58,14 +58,20 @@ export default function About({ pageFields, globalSettings }) {
 
             <div className={styles.PhotosGrid}>
               {photosGrid.map((photo, photoIndex) => (
-                <Card className={styles.PhotosGridCell} key={photoIndex}>
-                  {photo.fields.title && (
-                    <Heading level="h6" tag="span">
-                      {photo.fields.title}
-                    </Heading>
-                  )}
-                  <ContentfulImage image={photo} objectFit="cover" />
-                </Card>
+                <CardReveal className={styles.PhotosGridCell} key={photoIndex}>
+                  <Card className={styles.PhotosGridCard}>
+                    {photo.fields.title && (
+                      <Heading
+                        className={styles.PhotosGridYear}
+                        level="h6"
+                        tag="span"
+                      >
+                        {photo.fields.title}
+                      </Heading>
+                    )}
+                    <ContentfulImage image={photo} objectFit="cover" />
+                  </Card>
+                </CardReveal>
               ))}
             </div>
           </section>
@@ -86,7 +92,9 @@ export default function About({ pageFields, globalSettings }) {
 
         <div className="container">
           <CardsWrapper columns={false}>
-            <ContentfulActionCardProjects globalSettings={globalSettings} />
+            <CardReveal>
+              <ContentfulActionCardProjects globalSettings={globalSettings} />
+            </CardReveal>
           </CardsWrapper>
 
           {!!articlesItems.length && (
@@ -99,7 +107,9 @@ export default function About({ pageFields, globalSettings }) {
 
               <CardsWrapper columns={false}>
                 {articlesItems.map((article, articleIndex) => (
-                  <ContentfulArticle key={articleIndex} article={article} />
+                  <CardReveal key={articleIndex}>
+                    <ContentfulArticle article={article} />
+                  </CardReveal>
                 ))}
               </CardsWrapper>
             </>

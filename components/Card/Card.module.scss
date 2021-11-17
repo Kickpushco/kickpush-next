@@ -45,6 +45,18 @@
   }
 }
 
+.Reveal {
+  opacity: 0;
+  transform: translateY(var(--gutter));
+
+  &-inView {
+    transform: none;
+    opacity: 1;
+    transition: opacity $duration-card-enter var(--card-delay, 0ms) ease-out,
+      transform $duration-card-enter var(--card-delay, 0ms) $ease-out-back;
+  }
+}
+
 .CardsWrapper {
   align-items: stretch;
   display: grid;
@@ -62,6 +74,10 @@
       margin: 0;
       grid-template-columns: 1fr 1fr;
       width: 100%;
+
+      > :nth-of-type(2n) {
+        --card-delay: #{math.div($duration-card-enter, 2)};
+      }
     }
   }
 }

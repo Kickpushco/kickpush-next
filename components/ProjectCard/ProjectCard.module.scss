@@ -4,14 +4,17 @@
 
 .Wrapper {
   position: relative;
-  transition: transform $duration-project-show-card ease-out;
   display: flex;
   flex-direction: column;
   height: 100%;
 
+  &-transitioning {
+    transition: transform $duration-project-show-card ease-out !important;
+  }
+
   &-hidden {
     opacity: 0;
-    transition: opacity $duration-project-hide-other ease-out;
+    transition: opacity $duration-project-hide-other ease-out !important;
   }
 }
 

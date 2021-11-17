@@ -4,7 +4,7 @@ import { fetchFromCache } from "services/cache";
 
 import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
 import { ContentfulActionAboutCard } from "components/ActionCard/ActionCardAbout";
-import { CardsWrapper } from "components/Card/Card";
+import { CardReveal, CardsWrapper } from "components/Card/Card";
 import { ContentfulNav } from "components/Nav/Nav";
 import { ContentfulFooter } from "components/Footer/Footer";
 import Hero, { HeroCopy } from "components/Hero/Hero";
@@ -61,10 +61,9 @@ export default function Home({ pageFields, globalSettings }) {
                 globalSettings={globalSettings}
               />
             ))}
-            <ContentfulActionCardProjects
-              globalSettings={globalSettings}
-              className={styles.AllProjects}
-            />
+            <CardReveal className={styles.AllProjects}>
+              <ContentfulActionCardProjects globalSettings={globalSettings} />
+            </CardReveal>
           </CardsWrapper>
         </section>
 
@@ -82,7 +81,9 @@ export default function Home({ pageFields, globalSettings }) {
 
         <section className="container">
           <CardsWrapper columns={false}>
-            <ContentfulActionAboutCard globalSettings={globalSettings} />
+            <CardReveal>
+              <ContentfulActionAboutCard globalSettings={globalSettings} />
+            </CardReveal>
           </CardsWrapper>
         </section>
       </main>

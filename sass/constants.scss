@@ -22,13 +22,15 @@ $bp-unstack-cards: 600;
 $bp-hamburger-menu: 600;
 $bp-project-cover-change: 600;
 
+$duration-card-enter: 500ms;
 $duration-card-action: 200ms;
 $duration-card-image-out: 400ms;
 $duration-card-image-in: 2000ms;
 
-$duration-project-show-card: 500ms;
+$duration-project-show-card: 400ms;
 $duration-project-hide-other: 200ms;
 
 $ease-in-back: cubic-bezier(0.2, 0, 0.66, -0.56);
+$ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
 
 $border-radius-small: rem(4);

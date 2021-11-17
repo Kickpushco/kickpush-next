@@ -11,6 +11,7 @@ import ActionCard from "components/ActionCard/ActionCard";
 import Heading from "components/Heading/Heading";
 import Paragraph from "components/Paragraph/Paragraph";
 import { computeImageProps } from "components/Image/Image";
+import { CardReveal } from "components/Card/Card";
 
 import styles from "./ProjectCard.module.scss";
 
@@ -48,11 +49,11 @@ function ProjectCard({
   style = {},
   ...props
 }) {
+  const wrapperRef = useRef();
+
   const projectHref = `/projects/${slug}`;
 
   const router = useRouter();
-
-  const wrapperRef = useRef(null);
 
   const { projectTransitioning, setProjectTransitioning } = useAppContext();
 
@@ -131,12 +132,13 @@ function ProjectCard({
   );
 
   return (
-    <div
+    <CardReveal
       className={clsx(
         styles.Wrapper,
         projectTransitioning &&
-          projectTransitioning !== slug &&
-          styles["Wrapper-hidden"]
+          (projectTransitioning === slug
+            ? styles["Wrapper-transitioning"]
+            : styles["Wrapper-hidden"])
       )}
       ref={wrapperRef}
       style={wrapperStyle}
@@ -177,7 +179,7 @@ function ProjectCard({
           </Heading>
         </ActionCard>
       </Link>
-    </div>
+    </CardReveal>
   );
 }
 
