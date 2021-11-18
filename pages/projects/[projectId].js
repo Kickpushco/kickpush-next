@@ -121,7 +121,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
             />
           </ProjectSlide>
 
-          <ProjectSpacer />
+          <ProjectSpacer className={styles.FooterSpacer} />
 
           <span ref={footerTriggerRef} />
         </div>

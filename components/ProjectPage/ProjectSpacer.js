@@ -1,9 +1,12 @@
 import { forwardRef } from "react";
+import clsx from "clsx";
 
 import styles from "./ProjectSpacer.module.scss";
 
-const ProjectSpacer = forwardRef(({}, ref) => {
-  return <span className={styles.Spacer} ref={ref} />;
+const ProjectSpacer = forwardRef(({ className, ...props }, ref) => {
+  return (
+    <span className={clsx(className, styles.Spacer)} ref={ref} {...props} />
+  );
 });
 
 ProjectSpacer.displayName = "ProjectSpacer";

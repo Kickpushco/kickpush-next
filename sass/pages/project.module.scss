@@ -48,3 +48,9 @@
   margin-top: auto;
   margin-bottom: auto;
 }
+
+.FooterSpacer {
+  @include min-width($bp-desktop) {
+    display: none;
+  }
+}
