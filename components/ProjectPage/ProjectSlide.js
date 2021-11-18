@@ -3,32 +3,23 @@ import { forwardRef } from "react";
 
 import styles from "./ProjectSlide.module.scss";
 
-const BACKGROUND_VARIANTS = ["dark", "light", "project"];
-
 const ProjectSlide = forwardRef(
   (
     {
       className,
-      textColor = "light",
-      backgroundColor = "project", // "project" | "dark" | "light" | Valid CSS color
+      backgroundColor,
+      variant = "light", // "light" | "dark"
       style = {},
       children,
       ...props
     },
     ref
   ) => {
-    const isVariant = BACKGROUND_VARIANTS.includes(backgroundColor);
-
     return (
       <section
-        className={clsx(
-          className,
-          styles.Slide,
-          styles[`Slide-${textColor}Text`],
-          isVariant && styles[`Slide-${backgroundColor}Background`]
-        )}
+        className={clsx(className, styles.Slide, styles[`Slide-${variant}`])}
         style={{
-          backgroundColor: !isVariant ? backgroundColor : undefined,
+          backgroundColor,
           ...style,
         }}
         ref={ref}

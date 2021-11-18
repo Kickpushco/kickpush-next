@@ -24,17 +24,6 @@
 
 .Main {
   margin-bottom: 0;
-
-  &-light {
-    --focus-ring: #{rgba($color-kickpush-white, 0.6)};
-
-    color: $color-kickpush-white;
-  }
-  &-dark {
-    color: $color-kickpush-black;
-
-    --focus-ring: #{rgba($color-kickpush-black, 0.6)};
-  }
 }
 
 .Layer {
@@ -42,11 +31,6 @@
   z-index: 2;
 }
 
-.ContactSlide {
-  @include max-width($bp-tablet) {
-    height: auto;
-  }
-}
 .Contact {
   padding-bottom: 0;
   position: relative;

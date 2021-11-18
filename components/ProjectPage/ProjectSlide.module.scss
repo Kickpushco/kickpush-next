@@ -12,6 +12,7 @@
 
   @include min-width($bp-mobile) {
     min-height: 100vw;
+    padding: var(--section-space) 0;
   }
 
   @include min-width($bp-tablet) {
@@ -22,12 +23,16 @@
     min-height: 100vh;
   }
 
-  &-darkBackground {
+  &-light {
+    --focus-ring: #{$color-kickpush-white-focus-ring};
+
     background: $color-kickpush-black;
     color: $color-kickpush-white;
   }
 
-  &-lightBackground {
+  &-dark {
+    --focus-ring: #{$color-kickpush-black-focus-ring};
+
     background: $color-kickpush-white;
     color: $color-kickpush-black;
   }

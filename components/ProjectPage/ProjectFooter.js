@@ -17,7 +17,7 @@ export function ContentfulProjectFooter({
 }) {
   return (
     <ProjectFooter
-      textColor={computeTextColor(nextProject.fields.cardTextColor)}
+      variant={computeTextColor(nextProject.fields.cardTextColor)}
       {...props}
     >
       <ContentfulProjectCard
@@ -31,13 +31,9 @@ export function ContentfulProjectFooter({
   );
 }
 
-function ProjectFooter({ className, textColor, children, ...props }) {
+function ProjectFooter({ className, children, ...props }) {
   return (
-    <ProjectSlide
-      className={styles.Footer}
-      backgroundColor={textColor}
-      {...props}
-    >
+    <ProjectSlide className={styles.Footer} {...props}>
       <div className={clsx(styles.Container, "container")}>
         <CardsWrapper columns={false}>
           {/* TODO: Fix scroll to on focus */}

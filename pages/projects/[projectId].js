@@ -48,7 +48,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     slug,
     metaImage,
     clientName,
-    color,
+    color: backgroundColor,
     year,
     heroTitle,
     heroCopy,
@@ -79,7 +79,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
       <LabelData number="2" label="Designed in" data={year} />
       <ThemeColor color={styles.kickpushBlack} />
 
-      <main className={clsx(styles.Main, styles[`Main-${textColor}`])}>
+      <main className={styles.Main}>
         <div
           className={clsx(
             styles.Close,
@@ -96,9 +96,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
         <div
           className={styles.Layer}
           key={`layer-${slug}`}
-          style={{
-            backgroundColor: color,
-          }}
+          style={{ backgroundColor }}
         >
           <ContentfulProjectHero pageFields={pageFields} />
 
@@ -111,7 +109,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
             </Fragment>
           ))}
 
-          <ProjectSlide className={styles.ContactSlide}>
+          <ProjectSlide variant={textColor} backgroundColor={backgroundColor}>
             <ContentfulFooter
               className={styles.Contact}
               globalSettings={globalSettings}
