@@ -41,7 +41,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
   const { projectTransitioning } = useAppContext();
 
   const [footerTriggerRef, footerInView] = useInView({
-    rootMargin: "0% 0% -50% 0%",
+    rootMargin: "100% 0% -50% 0%",
   });
 
   const {
@@ -116,6 +116,8 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
               tag="div"
             />
           </ProjectSlide>
+
+          <ProjectSpacer />
 
           <span ref={footerTriggerRef} />
         </div>

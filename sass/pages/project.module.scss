@@ -14,7 +14,7 @@
     right: rem(24);
   }
 
-  @include min-width($bp-desktop) {
+  @include min-width($bp-tablet) {
     transition: 200ms ease-in-out;
     transition-property: opacity, transform;
 
