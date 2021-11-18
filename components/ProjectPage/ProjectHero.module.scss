@@ -6,10 +6,7 @@
   &-inView {
     --hero-animation-state: running;
   }
-
-  @include max-width($bp-tablet) {
-    height: auto;
-  }
+  min-height: 100vh;
 }
 
 .Content {

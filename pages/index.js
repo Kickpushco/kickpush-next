@@ -43,7 +43,9 @@ export default function Home({ pageFields, globalSettings }) {
       <main>
         <Hero>
           <Heading level="h1">{heroTitle}</Heading>
-          {heroCopy && <HeroCopy>{heroCopy}</HeroCopy>}
+          {heroCopy && (
+            <HeroCopy className={styles.HeroCopy}>{heroCopy}</HeroCopy>
+          )}
         </Hero>
 
         <section className={clsx("container", styles.Projects)}>
