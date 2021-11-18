@@ -15,6 +15,16 @@ import useFocusTrap from "hooks/useFocusTrap";
 
 import styles from "./Nav.module.scss";
 
+export function computeNavProps(globalSettings) {
+  const labels = {
+    projects: globalSettings.navWork,
+    about: globalSettings.navAbout,
+    contact: globalSettings.navContact,
+  };
+
+  return { labels };
+}
+
 const NavLink = forwardRef(
   ({ className, isMobile, children, selected, ...props }, ref) => {
     const NavLinkTag = isMobile ? Heading : "a";
@@ -33,15 +43,6 @@ const NavLink = forwardRef(
     );
   }
 );
-
-export function ContentfulNav({ globalSettings, ...props }) {
-  const labels = {
-    projects: globalSettings.navWork,
-    about: globalSettings.navAbout,
-    contact: globalSettings.navContact,
-  };
-  return <Nav labels={labels} {...props} />;
-}
 
 function Nav({ labels, selected, ...props }) {
   const { pathname } = useRouter();

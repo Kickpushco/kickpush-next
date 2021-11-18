@@ -8,19 +8,17 @@ import Paragraph from "components/Paragraph/Paragraph";
 
 import styles from "./ActionCardAbout.module.scss";
 
-export function ContentfulActionAboutCard({ globalSettings, ...props }) {
-  return (
-    <ActionAboutCard
-      heading={globalSettings.aboutCardTitle}
-      subtitle={globalSettings.aboutCardSubtitle}
-      actionCta={globalSettings.aboutCardAction}
-      photosProps={globalSettings.aboutCardPhotos.map((image) => ({
-        ...computeImageProps(image),
-        objectFit: "cover",
-      }))}
-      {...props}
-    />
-  );
+export function computeActionAboutCardProps(globalSettings) {
+  const photosProps = globalSettings.aboutCardPhotos.map((image) => {
+    return computeImageProps(image);
+  });
+
+  return {
+    heading: globalSettings.aboutCardTitle,
+    subtitle: globalSettings.aboutCardSubtitle,
+    actionCta: globalSettings.aboutCardAction,
+    photosProps,
+  };
 }
 
 function ActionAboutCard({
@@ -54,7 +52,11 @@ function ActionAboutCard({
         <div className={styles.Photos}>
           {photosProps.map((photoProps, photoIndex) => (
             <div className={styles.PhotosLayer} key={photoIndex}>
-              <Image className={styles.Photo} {...photoProps} />
+              <Image
+                className={styles.Photo}
+                {...photoProps}
+                objectFit="cover"
+              />
             </div>
           ))}
         </div>

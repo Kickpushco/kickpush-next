@@ -20,18 +20,24 @@ import { CloseButton } from "components/Button/CloseButton";
 import Description from "components/Meta/Description";
 import LabelData from "components/Meta/LabelData";
 import ThemeColor from "components/Meta/ThemeColor";
-import { ContentfulFooter } from "components/Footer/Footer";
+import Footer, { computeFooterProps } from "components/Footer/Footer";
 import Title from "components/Meta/Title";
-import { ContentfulProjectHero } from "components/ProjectPage/ProjectHero";
-import { ContentfulProjectFooter } from "components/ProjectPage/ProjectFooter";
-import { ContentfulProjectSlideItem } from "components/ProjectPage/ProjectSlideItem";
+import ProjectHero from "components/ProjectPage/ProjectHero";
+import ProjectSlideItem, {
+  computeProjectSlideItemProps,
+} from "components/ProjectPage/ProjectSlideItem";
 import ProjectSlide from "components/ProjectPage/ProjectSlide";
 import ProjectSpacer from "components/ProjectPage/ProjectSpacer";
-import { ContentfulMetaImage } from "components/Meta/MetaImage";
+import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 
 import IconClose from "assets/icons/20-close.svg";
 
 import styles from "sass/pages/project.module.scss";
+import ProjectCard, {
+  computeProjectCardProps,
+} from "components/ProjectCard/ProjectCard";
+import { CardsWrapper } from "components/Card/Card";
+import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
 const PROJECT_CLOSE_URL = "/projects";
 
@@ -48,14 +54,16 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     slug,
     metaImage,
     clientName,
-    color: backgroundColor,
     year,
     heroTitle,
     heroCopy,
     slides = [],
   } = pageFields;
 
-  const textColor = computeTextColor(pageFields.textColor);
+  const backgroundColor = pageFields.cardColor;
+  const textColor = computeTextColor(pageFields.cardTextColor);
+
+  const nextProjectProps = computeProjectCardProps(nextProject, globalSettings);
 
   useEscKey(() => {
     router.push(PROJECT_CLOSE_URL);
@@ -74,7 +82,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     <>
       <Title shortTitle={clientName} longTitle={heroTitle} />
       <Description description={heroCopy} />
-      <ContentfulMetaImage image={metaImage} globalSettings={globalSettings} />
+      <MetaImage {...computeMetaImageProps(metaImage, globalSettings)} />
       <LabelData number="1" label="Client" data={clientName} />
       <LabelData number="2" label="Designed in" data={year} />
       <ThemeColor color={styles.kickpushBlack} />
@@ -98,13 +106,18 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           key={`layer-${slug}`}
           style={{ backgroundColor }}
         >
-          <ContentfulProjectHero pageFields={pageFields} />
+          <ProjectHero
+            variant={textColor}
+            title={pageFields.heroTitle}
+            copy={pageFields.heroCopy}
+            backgroundColor={backgroundColor}
+          />
 
           <ProjectSpacer />
 
           {slides.map((slide, slideIndex) => (
             <Fragment key={slideIndex}>
-              <ContentfulProjectSlideItem slide={slide} />
+              <ProjectSlideItem {...computeProjectSlideItemProps(slide)} />
               <ProjectSpacer />
             </Fragment>
           ))}
@@ -114,9 +127,9 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
             variant={textColor}
             backgroundColor={backgroundColor}
           >
-            <ContentfulFooter
+            <Footer
               className={styles.Contact}
-              globalSettings={globalSettings}
+              {...computeFooterProps(globalSettings)}
               tag="div"
             />
           </ProjectSlide>
@@ -126,12 +139,25 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           <span ref={footerTriggerRef} />
         </div>
 
-        <ContentfulProjectFooter
+        <ProjectSlide
+          className={styles.Footer}
           key={`footer-${slug}`}
-          globalSettings={globalSettings}
-          nextProject={nextProject}
-          onClick={handleScrollFooter}
-        />
+          variant={nextProjectProps.textColor}
+        >
+          <div className={clsx(styles.Container, "container")}>
+            <CardsWrapper columns={false}>
+              {/* TODO: Fix scroll to on focus */}
+              <ProjectCard
+                className={styles.FooterCard}
+                size="large"
+                {...nextProjectProps}
+                onClick={handleScrollFooter}
+              />
+            </CardsWrapper>
+          </div>
+
+          <PrivacyPolicy className={styles.PrivacyPolicy} />
+        </ProjectSlide>
       </main>
     </>
   );

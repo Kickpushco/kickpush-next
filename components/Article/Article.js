@@ -12,26 +12,33 @@ import IconPlay from "assets/icons/18-play.svg";
 
 import styles from "./Article.module.scss";
 
-export function ContentfulArticle({ article, ...props }) {
-  const { fields } = article;
-  const { backgroundImage } = fields;
+export function computeArticleProps({ fields }) {
+  const {
+    title,
+    type,
+    link,
+    location,
+    backgroundColor,
+    isVideo,
+    textColor,
+    date,
+  } = fields;
 
-  return (
-    <Article
-      title={fields.title}
-      type={fields.type}
-      link={fields.link}
-      location={fields.location}
-      backgroundColor={fields.backgroundColor}
-      backgroundImageProps={
-        backgroundImage && computeImageProps(backgroundImage)
-      }
-      isVideo={fields.isVideo}
-      textColor={computeTextColor(fields.textColor)}
-      date={fields.date}
-      {...props}
-    />
-  );
+  const textColor = computeTextColor(fields.textColor);
+  const backgroundImageProps =
+    fields.backgroundImage && computeImageProps(fields.backgroundImage);
+
+  return {
+    title,
+    type,
+    link,
+    location,
+    backgroundColor,
+    backgroundImageProps,
+    isVideo,
+    textColor,
+    date,
+  };
 }
 
 function Article({

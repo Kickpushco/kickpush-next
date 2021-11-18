@@ -15,25 +15,21 @@ import { CardReveal } from "components/Card/Card";
 
 import styles from "./ProjectCard.module.scss";
 
-export function ContentfulProjectCard({ project, globalSettings, ...props }) {
-  const { slug, clientName, year, cardTitle, cardColor, cardImage } =
-    project.fields;
+export function computeProjectCardProps({ fields }, globalSettings) {
+  const textColor = computeTextColor(fields.cardTextColor);
+  const backgroundImageProps =
+    fields.cardImage && computeImageProps(fields.cardImage);
 
-  const textColor = computeTextColor(project.fields.cardTextColor);
-
-  return (
-    <ProjectCard
-      slug={slug}
-      clientName={clientName}
-      year={year}
-      title={cardTitle}
-      backgroundColor={cardColor}
-      backgroundImageProps={cardImage && computeImageProps(cardImage)}
-      textColor={textColor}
-      actionCta={globalSettings.projectCardAction}
-      {...props}
-    />
-  );
+  return {
+    slug: fields.slug,
+    clientName: fields.clientName,
+    year: fields.year,
+    title: fields.cardTitle,
+    backgroundColor: fields.cardColor,
+    backgroundImageProps,
+    textColor,
+    actionCta: globalSettings.projectCardAction,
+  };
 }
 
 function ProjectCard({

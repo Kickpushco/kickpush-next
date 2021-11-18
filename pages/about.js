@@ -3,18 +3,20 @@ import clsx from "clsx";
 import { fetchCustomPage } from "services/contentful";
 import { fetchFromCache } from "services/cache";
 
-import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
-import { ContentfulArticle } from "components/Article/Article";
+import ActionCardProjects, {
+  computeActionCardProjectsProps,
+} from "components/ActionCard/ActionCardProjects";
+import Article, { computeArticleProps } from "components/Article/Article";
 import Card, { CardReveal, CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
 import Hero, { HeroCopy } from "components/Hero/Hero";
 import Image, { computeImageProps } from "components/Image/Image";
-import { ContentfulFooter } from "components/Footer/Footer";
-import { ContentfulNav } from "components/Nav/Nav";
+import Footer, { computeFooterProps } from "components/Footer/Footer";
+import Nav, { computeNavProps } from "components/Nav/Nav";
 import Manifesto from "components/Manifesto/Manifesto";
 import Title from "components/Meta/Title";
-import { ContentfulMetaImage } from "components/Meta/MetaImage";
+import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
 import styles from "../sass/pages/about.module.scss";
@@ -37,9 +39,9 @@ export default function About({ pageFields, globalSettings }) {
     <>
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
-      <ContentfulMetaImage image={metaImage} globalSettings={globalSettings} />
+      <MetaImage {...computeMetaImageProps(metaImage, globalSettings)} />
 
-      <ContentfulNav globalSettings={globalSettings} selected="about" />
+      <Nav {...computeNavProps(globalSettings)} selected="about" />
 
       <main>
         <Hero>
@@ -92,7 +94,9 @@ export default function About({ pageFields, globalSettings }) {
         <div className="container">
           <CardsWrapper columns={false}>
             <CardReveal>
-              <ContentfulActionCardProjects globalSettings={globalSettings} />
+              <ActionCardProjects
+                {...computeActionCardProjectsProps(globalSettings)}
+              />
             </CardReveal>
           </CardsWrapper>
 
@@ -107,7 +111,7 @@ export default function About({ pageFields, globalSettings }) {
               <CardsWrapper columns={false}>
                 {articlesItems.map((article, articleIndex) => (
                   <CardReveal key={articleIndex}>
-                    <ContentfulArticle article={article} />
+                    <Article {...computeArticleProps(article)} />
                   </CardReveal>
                 ))}
               </CardsWrapper>
@@ -116,7 +120,7 @@ export default function About({ pageFields, globalSettings }) {
         </div>
       </main>
 
-      <ContentfulFooter globalSettings={globalSettings} />
+      <Footer {...computeFooterProps(globalSettings)} />
 
       <PrivacyPolicy />
     </>

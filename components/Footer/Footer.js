@@ -8,16 +8,13 @@ import Paragraph from "components/Paragraph/Paragraph";
 
 import styles from "./Footer.module.scss";
 
-export function ContentfulFooter({ globalSettings, ...props }) {
-  return (
-    <Footer
-      title={globalSettings.footerTitle}
-      actionCta={globalSettings.footerCta}
-      email={globalSettings.contactEmail}
-      copiedTooltip={globalSettings.footerCopiedTooltip}
-      {...props}
-    />
-  );
+export function computeFooterProps(globalSettings) {
+  return {
+    title: globalSettings.footerTitle,
+    actionCta: globalSettings.footerCta,
+    email: globalSettings.contactEmail,
+    copiedTooltip: globalSettings.footerCopiedTooltip,
+  };
 }
 
 function Footer({

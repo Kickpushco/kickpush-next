@@ -2,19 +2,25 @@ import clsx from "clsx";
 import { fetchCustomPage } from "services/contentful";
 import { fetchFromCache } from "services/cache";
 
-import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
-import { ContentfulActionAboutCard } from "components/ActionCard/ActionCardAbout";
+import ActionCardProjects, {
+  computeActionCardProjectsProps,
+} from "components/ActionCard/ActionCardProjects";
+import ActionAboutCard, {
+  computeActionAboutCardProps,
+} from "components/ActionCard/ActionCardAbout";
 import { CardReveal, CardsWrapper } from "components/Card/Card";
-import { ContentfulNav } from "components/Nav/Nav";
-import { ContentfulFooter } from "components/Footer/Footer";
+import Nav, { computeNavProps } from "components/Nav/Nav";
+import Footer, { computeFooterProps } from "components/Footer/Footer";
 import Hero, { HeroCopy } from "components/Hero/Hero";
 import Heading from "components/Heading/Heading";
 import Manifesto from "components/Manifesto/Manifesto";
-import { ContentfulProjectCard } from "components/ProjectCard/ProjectCard";
+import ProjectCard, {
+  computeProjectCardProps,
+} from "components/ProjectCard/ProjectCard";
 import Title from "components/Meta/Title";
 import Description from "components/Meta/Description";
 import LabelData from "components/Meta/LabelData";
-import { ContentfulMetaImage } from "components/Meta/MetaImage";
+import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
 import styles from "../sass/pages/index.module.scss";
@@ -36,9 +42,9 @@ export default function Home({ pageFields, globalSettings }) {
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
       <LabelData number="1" label="Email" data={globalSettings.contactEmail} />
-      <ContentfulMetaImage image={metaImage} globalSettings={globalSettings} />
+      <MetaImage {...computeMetaImageProps(metaImage, globalSettings)} />
 
-      <ContentfulNav globalSettings={globalSettings} />
+      <Nav {...computeNavProps(globalSettings)} />
 
       <main>
         <Hero>
@@ -57,14 +63,15 @@ export default function Home({ pageFields, globalSettings }) {
 
           <CardsWrapper className={styles.ProjectsList}>
             {projectsList.fields.projects.map((project) => (
-              <ContentfulProjectCard
+              <ProjectCard
                 key={project.sys.id}
-                project={project}
-                globalSettings={globalSettings}
+                {...computeProjectCardProps(project, globalSettings)}
               />
             ))}
             <CardReveal className={styles.AllProjects}>
-              <ContentfulActionCardProjects globalSettings={globalSettings} />
+              <ActionCardProjects
+                {...computeActionCardProjectsProps(globalSettings)}
+              />
             </CardReveal>
           </CardsWrapper>
         </section>
@@ -84,13 +91,15 @@ export default function Home({ pageFields, globalSettings }) {
         <section className="container">
           <CardsWrapper columns={false}>
             <CardReveal>
-              <ContentfulActionAboutCard globalSettings={globalSettings} />
+              <ActionAboutCard
+                {...computeActionAboutCardProps(globalSettings)}
+              />
             </CardReveal>
           </CardsWrapper>
         </section>
       </main>
 
-      <ContentfulFooter globalSettings={globalSettings} />
+      <Footer {...computeFooterProps(globalSettings)} />
 
       <PrivacyPolicy />
     </>

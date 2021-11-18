@@ -8,42 +8,35 @@ import ProjectSlide from "./ProjectSlide";
 
 import styles from "./ProjectSlideItem.module.scss";
 
-export function ContentfulProjectSlideItem({ slide, ...props }) {
-  const backgroundProps = useMemo(() => {
-    const { desktopImage, mobileImage } = slide.fields;
+export function computeProjectSlideItemProps({ fields }) {
+  const { desktopImage, mobileImage } = fields;
 
-    let desktop, mobile;
+  let desktop, mobile;
 
-    if (desktopImage) {
-      const desktopObjectFit = computeObjectFit(
-        slide.fields.desktopImageSize || "Cover"
-      );
-      desktop = {
-        ...computeImageProps(desktopImage),
+  if (desktopImage) {
+    const desktopObjectFit = computeObjectFit(
+      fields.desktopImageSize || "Cover"
+    );
+    desktop = {
+      ...computeImageProps(desktopImage),
+      objectFit: desktopObjectFit,
+    };
+
+    if (!mobileImage) {
+      mobile = {
+        ...computeImageProps(desktopImage, 700),
         objectFit: desktopObjectFit,
       };
-
-      if (!mobileImage) {
-        mobile = {
-          ...computeImageProps(desktopImage, 700),
-          objectFit: desktopObjectFit,
-        };
-      }
     }
+  }
 
-    return {
+  return {
+    backgroundColor: fields.desktopBackgroundColor,
+    backgroundProps: {
       desktop,
       mobile,
-    };
-  }, [slide.fields]);
-
-  return (
-    <ProjectSlideItem
-      backgroundColor={slide.fields.desktopBackgroundColor}
-      backgroundProps={backgroundProps}
-      {...props}
-    />
-  );
+    },
+  };
 }
 
 function ProjectSlideItem({

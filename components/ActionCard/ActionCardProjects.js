@@ -13,29 +13,12 @@ import workRow2Webp from "assets/images/work-row-2.webp";
 
 import styles from "./ActionCardProjects.module.scss";
 
-function computeRowProps(pngSrc, webpSrc) {
-  const { width, height } = pngSrc;
+export function computeActionCardProjectsProps(globalSettings) {
   return {
-    className: styles.Row,
-    srcSet: {
-      legacy: pngSrc.src,
-      webp: webpSrc.src,
-    },
-    variant: "ghost",
-    width,
-    height,
+    heading: globalSettings.projectsCardTitle,
+    subtitle: globalSettings.projectsCardSubtitle,
+    actionCta: globalSettings.projectsCardAction,
   };
-}
-
-export function ContentfulActionCardProjects({ globalSettings, ...props }) {
-  return (
-    <ActionCardProjects
-      heading={globalSettings.projectsCardTitle}
-      subtitle={globalSettings.projectsCardSubtitle}
-      actionCta={globalSettings.projectsCardAction}
-      {...props}
-    />
-  );
 }
 
 function Row({ png, webp }) {
