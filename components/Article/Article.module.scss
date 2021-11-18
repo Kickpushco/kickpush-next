@@ -53,17 +53,17 @@
   }
 
   @include min-width($bp-unstack-cards) {
-    --button-size: #{rem(72)};
+    --button-size: 72;
     --button-icon-size: #{rem(23)};
 
     position: absolute;
     left: 75%;
     top: 50%;
-    margin: calc(var(--button-size) / -2);
+    margin: calc(var(--button-size) * #{rem(-0.5)});
   }
 
   @include min-width($bp-desktop) {
-    --button-size: #{rem(88)};
+    --button-size: 88;
     --button-icon-size: #{rem(28)};
   }
 }

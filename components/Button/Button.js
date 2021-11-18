@@ -12,6 +12,7 @@ const Button = forwardRef(
       tag,
       size = "medium",
       iconOnly,
+      fauxHover,
       variant = "default", // "default" | "ghost" | "dark" | "light"
       ...props
     },
@@ -27,12 +28,13 @@ const Button = forwardRef(
           styles[`Button-${size}`],
           styles[`Button-${variant}`],
           block && styles.BlockButton,
-          iconOnly && styles.IconButton
+          iconOnly && styles.IconButton,
+          fauxHover && styles[`Button-fauxHover`]
         )}
         ref={ref}
         {...props}
       >
-        {children}
+        <span className={styles.Children}>{children}</span>
       </ButtonTag>
     );
   }

@@ -80,6 +80,7 @@ function Article({
           className={styles.Play}
           aria-hidden="true"
           tag="span"
+          fauxHover
           iconOnly
           variant={textColor}
         >

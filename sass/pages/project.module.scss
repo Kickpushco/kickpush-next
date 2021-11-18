@@ -8,17 +8,20 @@
   top: rem(6);
   right: rem(12);
   z-index: 102;
-  transition: 200ms ease-in-out;
-  transition-property: opacity, transform;
 
   @include min-width($bp-mobile) {
     top: rem(24);
     right: rem(24);
   }
 
-  &-hidden {
-    opacity: 0;
-    transform: scale(0.8);
+  @include min-width($bp-desktop) {
+    transition: 200ms ease-in-out;
+    transition-property: opacity, transform;
+
+    &-hidden {
+      opacity: 0;
+      transform: scale(0.8);
+    }
   }
 }
 

@@ -17,6 +17,11 @@
   @include max-width($bp-mobile) {
     min-height: 0;
   }
+
+  @include min-width($bp-mobile) {
+    padding-top: calc(var(--section-space) / 2);
+    padding-bottom: calc(var(--section-space) / 2);
+  }
 }
 
 // Privacy Policy code kept in case required at a later date
