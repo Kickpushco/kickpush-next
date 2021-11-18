@@ -1,4 +1,3 @@
-import { useState } from "react";
 import clsx from "clsx";
 
 import { fetchCustomPage } from "services/contentful";
@@ -10,7 +9,7 @@ import Card, { CardReveal, CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
 import Hero, { HeroCopy } from "components/Hero/Hero";
-import { ContentfulImage } from "components/Image/Image";
+import Image, { computeImageProps } from "components/Image/Image";
 import { ContentfulFooter } from "components/Footer/Footer";
 import { ContentfulNav } from "components/Nav/Nav";
 import Manifesto from "components/Manifesto/Manifesto";
@@ -69,7 +68,7 @@ export default function About({ pageFields, globalSettings }) {
                         {photo.fields.title}
                       </Heading>
                     )}
-                    <ContentfulImage image={photo} objectFit="cover" />
+                    <Image objectFit="cover" {...computeImageProps(photo)} />
                   </Card>
                 </CardReveal>
               ))}

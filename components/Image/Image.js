@@ -70,10 +70,6 @@ export function computeImageProps(image, overrideWidth) {
   };
 }
 
-export function ContentfulImage({ image, ...props }) {
-  return <Image {...computeImageProps(image)} {...props} />;
-}
-
 function Image({
   className,
   srcSet = {},
