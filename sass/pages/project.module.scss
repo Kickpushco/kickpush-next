@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import "../global";
 
 @value kickpushBlack: #{$color-kickpush-black};
@@ -34,6 +36,12 @@
   z-index: 2;
 }
 
+.ContactSlide {
+  @include min-max-width($bp-tablet, $bp-desktop) {
+    // Bumps it up slightly to give it more space
+    min-height: math.div(900, 1440) * 100vw;
+  }
+}
 .Contact {
   padding-bottom: 0;
   position: relative;

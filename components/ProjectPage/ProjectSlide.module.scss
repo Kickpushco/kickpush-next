@@ -16,7 +16,6 @@
 
   @include min-width($bp-tablet) {
     min-height: math.div(800, 1440) * 100vw;
-    padding: var(--section-space) 0;
   }
 
   @include min-width($bp-desktop) {

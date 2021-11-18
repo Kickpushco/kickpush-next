@@ -109,7 +109,11 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
             </Fragment>
           ))}
 
-          <ProjectSlide variant={textColor} backgroundColor={backgroundColor}>
+          <ProjectSlide
+            className={styles.ContactSlide}
+            variant={textColor}
+            backgroundColor={backgroundColor}
+          >
             <ContentfulFooter
               className={styles.Contact}
               globalSettings={globalSettings}
