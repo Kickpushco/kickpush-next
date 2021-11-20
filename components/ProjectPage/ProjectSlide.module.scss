@@ -1,24 +1,29 @@
+@use "sass:math";
+
 @import "../../sass/global";
 
 .Slide {
-  height: 100vh;
-  min-height: stretch;
   display: flex;
   flex-direction: column;
-  padding: var(--gutter) 0;
-  position: sticky;
-  bottom: 0;
+  padding: calc(var(--section-space) / 2) 0;
+  position: relative;
+  min-height: math.div(635, 375) * 100vw;
+  overflow: hidden;
 
-  &-projectBackground {
-    background: var(--project-background-color);
+  @include min-width($bp-project-mobile-slide) {
+    min-height: math.div(800, 1440) * 100vw;
   }
 
-  &-darkBackground {
+  &-light {
+    --focus-ring: #{$color-kickpush-white-focus-ring};
+
     background: $color-kickpush-black;
     color: $color-kickpush-white;
   }
 
-  &-lightBackground {
+  &-dark {
+    --focus-ring: #{$color-kickpush-black-focus-ring};
+
     background: $color-kickpush-white;
     color: $color-kickpush-black;
   }

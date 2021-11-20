@@ -1,47 +1,28 @@
 @import "../../sass/global";
 
+.Slide {
+  --hero-animation-state: paused;
+
+  min-height: 100vh;
+
+  &-inView {
+    --hero-animation-state: running;
+  }
+}
+
 .Content {
   margin-top: auto;
   margin-bottom: auto;
-  max-width: rem(820);
-  padding-bottom: var(--gutter);
 
   > :last-child {
     margin-bottom: 0;
   }
 }
+
 .Title {
   @include hero-animation("h1");
 }
+
 .Copy {
   @include hero-animation("copy");
-}
-.Footer {
-  display: grid;
-  gap: var(--gutter);
-  max-width: rem(1160);
-  font-size: rem(16);
-  line-height: rem(20);
-
-  div {
-    width: 100%;
-  }
-
-  @include min-width($bp-mobile) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @include min-width($bp-tablet) {
-    display: flex;
-    justify-content: space-between;
-
-    div {
-      width: auto;
-    }
-  }
-
-  dt {
-    font-weight: $font-weight-bold;
-    margin-bottom: rem(5);
-  }
 }

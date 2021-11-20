@@ -45,6 +45,18 @@
   }
 }
 
+.Reveal {
+  opacity: 0;
+  transform: scale(0.975);
+
+  &-inView {
+    transform: none;
+    opacity: 1;
+    transition: opacity math.div($duration-card-enter, 2) ease-out,
+      transform $duration-card-enter $ease-out-back;
+  }
+}
+
 .CardsWrapper {
   align-items: stretch;
   display: grid;
@@ -57,11 +69,14 @@
     width: calc(100% + #{rem(32)});
   }
 
+  @include min-width($bp-unstack-cards) {
+    width: 100%;
+    margin: 0;
+  }
+
   &-columns {
     @include min-width($bp-unstack-cards) {
-      margin: 0;
       grid-template-columns: 1fr 1fr;
-      width: 100%;
     }
   }
 }

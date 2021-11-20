@@ -3,23 +3,22 @@ import clsx from "clsx";
 
 import ActionCard from "./ActionCard";
 import Heading from "components/Heading/Heading";
-import { ContentfulImage } from "components/Image/Image";
+import Image, { computeImageProps } from "components/Image/Image";
 import Paragraph from "components/Paragraph/Paragraph";
 
 import styles from "./ActionCardAbout.module.scss";
 
-export function ContentfulActionAboutCard({ globalSettings, ...props }) {
-  return (
-    <ActionAboutCard
-      heading={globalSettings.aboutCardTitle}
-      subtitle={globalSettings.aboutCardSubtitle}
-      actionCta={globalSettings.aboutCardAction}
-      photos={globalSettings.aboutCardPhotos.map((image) => (
-        <ContentfulImage image={image} objectFit="cover" />
-      ))}
-      {...props}
-    />
-  );
+export function computeActionAboutCardProps(globalSettings) {
+  const photosProps = globalSettings.aboutCardPhotos.map((image) => {
+    return computeImageProps(image);
+  });
+
+  return {
+    heading: globalSettings.aboutCardTitle,
+    subtitle: globalSettings.aboutCardSubtitle,
+    actionCta: globalSettings.aboutCardAction,
+    photosProps,
+  };
 }
 
 function ActionAboutCard({
@@ -27,7 +26,7 @@ function ActionAboutCard({
   heading,
   subtitle,
   actionCta = "Read more",
-  photos,
+  photosProps,
   ...props
 }) {
   return (
@@ -51,9 +50,13 @@ function ActionAboutCard({
         {...props}
       >
         <div className={styles.Photos}>
-          {photos.map((photo, photoIndex) => (
+          {photosProps.map((photoProps, photoIndex) => (
             <div className={styles.PhotosLayer} key={photoIndex}>
-              {photo}
+              <Image
+                className={styles.Photo}
+                {...photoProps}
+                objectFit="cover"
+              />
             </div>
           ))}
         </div>

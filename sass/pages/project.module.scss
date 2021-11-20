@@ -1,37 +1,90 @@
+@use "sass:math";
+
 @import "../global";
+
+@value kickpushBlack: #{$color-kickpush-black};
+@value breakpointDesktop: #{em($bp-desktop)};
 
 .Close {
   position: fixed;
-  top: rem(24);
-  right: rem(24);
+  top: rem(6);
+  right: rem(12);
   z-index: 102;
-  transition: 200ms ease-in-out;
-  transition-property: opacity, transform;
 
-  &-hidden {
-    opacity: 0;
-    transform: scale(0.8);
+  @include min-width($bp-mobile) {
+    top: rem(24);
+    right: rem(24);
+  }
+
+  @include min-width($bp-tablet) {
+    transition: 200ms ease-in-out;
+    transition-property: opacity, transform;
+
+    &-hidden {
+      opacity: 0;
+      transform: scale(0.8);
+    }
   }
 }
 
 .Main {
   margin-bottom: 0;
-
-  &-light {
-    --focus-ring: #{rgba($color-kickpush-white, 0.6)};
-
-    color: $color-kickpush-white;
-  }
-  &-dark {
-    color: $color-kickpush-black;
-
-    --focus-ring: #{rgba($color-kickpush-black, 0.6)};
-  }
 }
 
+.Layer {
+  position: relative;
+  z-index: 2;
+}
+
+.ContactSlide {
+  @include max-width($bp-project-mobile-slide) {
+    min-height: min(#{math.div(635, 375) * 100vw}, 100vh);
+  }
+}
 .Contact {
+  padding-bottom: 0;
+  position: relative;
   margin-top: auto;
   margin-bottom: auto;
-  padding-top: calc(var(--section-space) / 2);
-  padding-bottom: calc(var(--section-space) / 2);
 }
+
+.FooterSpacer {
+  @include min-width($bp-desktop) {
+    display: none;
+  }
+}
+
+.Footer {
+  --card-shadow-color: #{rgba(black, 0.1)};
+
+  justify-content: center;
+  position: relative;
+  bottom: 0;
+  z-index: 3;
+  min-height: 0;
+  overflow: visible;
+  padding-top: var(--gutter);
+  padding-bottom: var(--gutter);
+
+  @include min-width($bp-desktop) {
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: 100vh;
+    z-index: 1;
+    position: sticky;
+    overflow: hidden;
+  }
+}
+// Privacy Policy code kept in case required at a later date
+// .Container {
+//   @include max-width($bp-desktop) {
+//     margin-bottom: rem(24);
+//   }
+// }
+
+// .PrivacyPolicy {
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   width: 100%;
+// }

@@ -1,5 +1,7 @@
-import { forwardRef } from "react";
+import { forwardRef, useCallback, useEffect } from "react";
 import clsx from "clsx";
+
+import { useInView } from "react-intersection-observer";
 
 import styles from "./Card.module.scss";
 
@@ -18,6 +20,33 @@ export function CardsWrapper({ className, columns = true, ...props }) {
   );
 }
 
+export const CardReveal = forwardRef(({ className, ...props }, ref) => {
+  const [inViewRef, inView] = useInView({
+    triggerOnce: true,
+  });
+
+  // See https://github.com/thebuilder/react-intersection-observer#how-can-i-assign-multiple-refs-to-a-component
+  const setRefs = useCallback(
+    (node) => {
+      if (ref) ref.current = node;
+      inViewRef(node);
+    },
+    [inViewRef, ref]
+  );
+
+  return (
+    <div
+      className={clsx(
+        className,
+        styles.Reveal,
+        inView && styles["Reveal-inView"]
+      )}
+      ref={setRefs}
+      {...props}
+    />
+  );
+});
+
 const Card = forwardRef(
   (
     {
@@ -27,6 +56,7 @@ const Card = forwardRef(
       textColor = "light",
       backgroundColor,
       style = {},
+      reveal = true,
       ...props
     },
     ref

@@ -1,8 +1,14 @@
 @import "../../sass/global";
 
 .Wrapper {
+  --hero-animation-state: paused;
+
   text-align: center;
   margin-top: rem(80);
+
+  &-inView {
+    --hero-animation-state: running;
+  }
 
   @include min-width($bp-mobile) {
     margin-top: rem(120);
@@ -13,8 +19,12 @@
   }
 }
 .Short {
+  @include hero-animation("copy");
+
   color: $color-kickpush-dark-red;
 }
 .Long {
+  @include hero-animation("h1");
+
   margin-bottom: 0;
 }

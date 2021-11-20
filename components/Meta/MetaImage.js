@@ -1,11 +1,15 @@
 import Head from "next/head";
 
-export function ContentfulMetaImage({ image, globalSettings, ...props }) {
-  if (!image && !globalSettings) return null;
+export function computeMetaImageProps(image, globalSettings) {
+  if (!image && !globalSettings) return {};
 
   const { fields } = image || globalSettings.metaDefaultImage;
   const card = !image ? "summary_image" : undefined;
-  return <MetaImage url={`https:${fields.file.url}`} card={card} {...props} />;
+
+  return {
+    url: `https:${fields.file.url}`,
+    card,
+  };
 }
 
 function MetaImage({ url, card = "summary_large_image" }) {

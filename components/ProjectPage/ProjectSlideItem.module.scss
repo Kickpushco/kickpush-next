@@ -1,0 +1,31 @@
+@use "sass:math";
+
+@import "../../sass/global";
+
+@value breakpointMobileSlide: #{em($bp-project-mobile-slide)};
+
+.Slide {
+  padding: 0;
+
+  &-mobileContain {
+    @include max-width($bp-project-mobile-slide) {
+      height: calc(var(--mobile-aspect-ratio) * 100vw);
+    }
+  }
+}
+
+.Background {
+  background-color: transparent;
+
+  &-desktop {
+    @include max-width($bp-mobile) {
+      display: none;
+    }
+  }
+
+  &-mobile {
+    @include min-width($bp-mobile) {
+      display: none;
+    }
+  }
+}

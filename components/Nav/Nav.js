@@ -1,6 +1,9 @@
 import { useState, useEffect, forwardRef, useRef, useCallback } from "react";
 import clsx from "clsx";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
+import { useAppContext } from "context/state";
 
 import { CloseButton } from "components/Button/CloseButton";
 import Heading from "components/Heading/Heading";
@@ -11,6 +14,16 @@ import IconHamburger from "assets/icons/16-hamburger.svg";
 import useFocusTrap from "hooks/useFocusTrap";
 
 import styles from "./Nav.module.scss";
+
+export function computeNavProps(globalSettings) {
+  const labels = {
+    projects: globalSettings.navWork,
+    about: globalSettings.navAbout,
+    contact: globalSettings.navContact,
+  };
+
+  return { labels };
+}
 
 const NavLink = forwardRef(
   ({ className, isMobile, children, selected, ...props }, ref) => {
@@ -31,18 +44,11 @@ const NavLink = forwardRef(
   }
 );
 
-export function ContentfulNav({ globalSettings, ...props }) {
-  const labels = {
-    projects: globalSettings.navWork,
-    about: globalSettings.navAbout,
-    contact: globalSettings.navContact,
-  };
-  return <Nav labels={labels} {...props} />;
-}
-
 function Nav({ labels, selected, ...props }) {
+  const { pathname } = useRouter();
+  const { projectTransitioning, mobileOpen, setMobileOpen } = useAppContext();
+
   const [isMobile, setIsMobile] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   const menuRef = useRef(null);
 
@@ -51,7 +57,13 @@ function Nav({ labels, selected, ...props }) {
   }
 
   useEffect(() => {
-    const mediaQueryList = matchMedia(`(min-width: ${styles.mobileNav})`);
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const mediaQueryList = matchMedia(
+      `(min-width: ${styles.breakpointHamburgerMenu})`
+    );
 
     function handleMQLChange(e) {
       const isNotMobile = e.matches;
@@ -66,15 +78,10 @@ function Nav({ labels, selected, ...props }) {
     handleMQLChange(mediaQueryList);
 
     mediaQueryList.addListener(handleMQLChange);
-
     return () => {
       mediaQueryList.removeListener(handleMQLChange);
     };
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.style.overflow = mobileOpen ? "hidden" : "auto";
-  }, [mobileOpen]);
+  }, [setMobileOpen]);
 
   const handleMobileClose = useCallback(() => {
     setMobileOpen(false);
@@ -84,10 +91,14 @@ function Nav({ labels, selected, ...props }) {
 
   return (
     <nav
-      className={clsx(styles.Nav, mobileOpen && styles["Nav-mobileOpen"])}
+      className={clsx(
+        styles.Nav,
+        mobileOpen && styles["Nav-mobileOpen"],
+        projectTransitioning && styles["Nav-projectTransitioning"]
+      )}
       {...props}
     >
-      <div className="container">
+      <div className={clsx(styles.Container, "container")}>
         <Link href="/">
           <a className={styles.Logo}>
             <Logo aria-label="Kickpush" />

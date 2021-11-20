@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import clsx from "clsx";
+import { useInView } from "react-intersection-observer";
 
 import Action from "components/Action/Action";
 import Heading from "components/Heading/Heading";
@@ -7,16 +8,13 @@ import Paragraph from "components/Paragraph/Paragraph";
 
 import styles from "./Footer.module.scss";
 
-export function ContentfulFooter({ globalSettings, ...props }) {
-  return (
-    <Footer
-      title={globalSettings.footerTitle}
-      actionCta={globalSettings.footerCta}
-      email={globalSettings.contactEmail}
-      copiedTooltip={globalSettings.footerCopiedTooltip}
-      {...props}
-    />
-  );
+export function computeFooterProps(globalSettings) {
+  return {
+    title: globalSettings.footerTitle,
+    actionCta: globalSettings.footerCta,
+    email: globalSettings.contactEmail,
+    copiedTooltip: globalSettings.footerCopiedTooltip,
+  };
 }
 
 function Footer({
@@ -26,13 +24,18 @@ function Footer({
   tag = "footer",
   actionCta,
   copiedTooltip,
-  isHero,
+  headingTag = "p",
   ...props
 }) {
+  const [footerRef, footerInView] = useInView({
+    triggerOnce: true,
+  });
+
   const [copied, setCopied] = useState(false);
+  const [disableHover, setDisableHover] = useState(false);
+  const [disableFocus, setDisableFocus] = useState(false);
   const copyTimeoutRef = useRef(null);
 
-  const headingTag = isHero ? "h1" : "p";
   const WrapperTag = tag;
 
   async function handleCopyEmail(e) {
@@ -42,6 +45,8 @@ function Footer({
     await navigator.clipboard.writeText(email);
 
     setCopied(true);
+    setDisableHover(true);
+    setDisableFocus(true);
 
     copyTimeoutRef.current = setTimeout(() => {
       setCopied(false);
@@ -54,8 +59,9 @@ function Footer({
         className,
         "container",
         styles.Footer,
-        isHero && styles["Footer-hero"]
+        footerInView && styles["Footer-inView"]
       )}
+      ref={footerRef}
       {...props}
     >
       <Heading className={styles.Heading} level="h1" tag={headingTag}>
@@ -67,6 +73,14 @@ function Footer({
           className={styles.EmailLink}
           href={`mailto:${email}`}
           onClick={handleCopyEmail}
+          data-disable-hover={disableHover ? "" : undefined}
+          data-disable-focus={disableFocus ? "" : undefined}
+          onMouseLeave={() => {
+            setDisableHover(false);
+          }}
+          onFocus={() => {
+            setDisableFocus(false);
+          }}
         >
           <Action ctaText={actionCta} ctaLevel="h4" infoTag="span">
             {email.split("@").map((chunk, chunkIndex) => (

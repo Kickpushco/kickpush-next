@@ -1,6 +1,8 @@
+@use "sass:math";
+
 @import "../../sass/global";
 
-@value mobileNav: #{em($bp-hamburger-menu)};
+@value breakpointHamburgerMenu: #{em($bp-hamburger-menu)};
 
 .Nav {
   background: $color-kickpush-red;
@@ -8,18 +10,24 @@
   top: 0;
   margin-top: var(--nav-offset);
   z-index: 99;
+  transition: transform math.div($duration-project-show-card, 2) ease-out;
 
-  :global(.container) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: rem(1170);
-    height: var(--nav-height);
-  }
-
-  a {
+  a,
+  button {
     scroll-margin-top: 0;
   }
+
+  &-projectTransitioning {
+    transform: translateY(calc(-100% - #{var(--nav-offset)}));
+  }
+}
+
+.Container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: rem(1170);
+  height: var(--nav-height);
 }
 
 .Logo {
@@ -60,6 +68,7 @@ $nav-menu-duration: 200ms;
     justify-content: center;
     opacity: 0;
     transform: scale(1.1);
+    gap: rem(24);
     transition-property: opacity, transform;
     position: fixed;
     top: 0;
@@ -95,6 +104,8 @@ $nav-menu-duration: 200ms;
     width: fit-content;
     padding: 0.34em 0.75em;
     margin: 0 auto;
+    font-size: rem(32);
+    line-height: rem(40);
   }
 
   > span {
@@ -135,7 +146,10 @@ $nav-menu-duration: 200ms;
   &-closed {
     --button-icon-size: #{rem(16)};
 
-    background: none;
     padding-top: rem(2); // Optically balances the hamburger
+
+    &::before {
+      opacity: 0;
+    }
   }
 }

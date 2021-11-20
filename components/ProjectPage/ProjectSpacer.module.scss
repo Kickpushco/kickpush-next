@@ -1,0 +1,10 @@
+@import "../../sass/global";
+
+.Spacer {
+  display: block;
+  height: rem(8);
+  width: 100%;
+  background: $color-kickpush-black;
+  position: relative;
+  z-index: 2;
+}

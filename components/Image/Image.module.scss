@@ -21,7 +21,8 @@ $image-blur-duration: 100ms;
     }
   }
 
-  &-cover {
+  &-cover,
+  &-contain {
     position: absolute;
     top: 0;
     left: 0;
@@ -32,6 +33,12 @@ $image-blur-duration: 100ms;
     img {
       height: 100%;
       object-fit: cover;
+    }
+  }
+
+  &-contain {
+    img {
+      object-fit: contain;
     }
   }
 

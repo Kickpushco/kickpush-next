@@ -20,14 +20,6 @@
   position: relative;
   padding: 0;
 
-  &:nth-of-type(n + 4) {
-    display: none;
-  }
-
-  .PhotosGridCell-show & {
-    display: block;
-  }
-
   @include min-width($bp-mobile) {
     display: block !important;
     grid-row: span 2;
@@ -45,17 +37,14 @@
   @include min-width($bp-tablet) {
     aspect-ratio: 440 / 320;
   }
-
-  > span {
-    position: absolute;
-    top: 1em;
-    right: 1em;
-    z-index: 2;
-  }
 }
 .PhotosGridYear {
-  font-size: rem(16);
+  top: 1em;
+  right: 1em;
+  position: absolute;
+  z-index: 2;
 }
+.PhotosGridCard,
 .PhotosGridImage {
   border-radius: inherit;
   position: absolute;
@@ -64,15 +53,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-.PhotosGridShowMore {
-  margin-top: var(--gutter);
-  z-index: 2;
-  position: relative;
-
-  @include min-width($bp-mobile) {
-    display: none;
-  }
 }
 
 .Manifesto {

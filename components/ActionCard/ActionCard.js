@@ -1,8 +1,9 @@
-import { cloneElement, forwardRef, useMemo } from "react";
+import { forwardRef } from "react";
 import clsx from "clsx";
 
 import Action from "components/Action/Action";
 import Card, { CARD_DEFAULT_SIZE } from "components/Card/Card";
+import Image from "components/Image/Image";
 
 import styles from "./ActionCard.module.scss";
 
@@ -12,34 +13,41 @@ const ActionCard = forwardRef(
       className,
       children,
       topChildren,
-      backgroundImage,
+      backgroundImageProps,
       size = CARD_DEFAULT_SIZE,
+      disabled,
       actionCta,
       ...props
     },
     ref
   ) => {
-    const backgroundImageMemo = useMemo(() => {
-      if (!backgroundImage) return null;
-
-      return cloneElement(backgroundImage, {
-        className: styles.Background,
-        objectFit: "cover",
-        variant: "ghost",
-      });
-    }, [backgroundImage]);
-
     return (
       <Card
-        className={clsx(className, styles.Card, styles[`Card-${size}`])}
+        className={clsx(
+          className,
+          styles.Card,
+          styles[`Card-${size}`],
+          !disabled && styles["Card-enabled"]
+        )}
         size={size}
         ref={ref}
+        data-disable-hover={disabled ? "" : undefined}
+        data-disable-focus={disabled ? "" : undefined}
         {...props}
       >
-        {backgroundImageMemo}
+        {backgroundImageProps && (
+          <Image
+            objectFit="cover"
+            variant="ghost"
+            {...backgroundImageProps}
+            className={clsx(styles.Background, backgroundImageProps.className)}
+          />
+        )}
 
         <div className={styles.Content}>
-          <Action ctaText={actionCta}>{topChildren}</Action>
+          <Action ctaText={actionCta} disabled={disabled}>
+            {topChildren}
+          </Action>
 
           {children}
         </div>

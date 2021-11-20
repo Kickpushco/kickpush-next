@@ -77,3 +77,28 @@ export function computeTextColor(string, invert = false) {
 
   return textColor === "dark" ? "light" : "dark";
 }
+
+export function computeObjectFit(stringFromContentful) {
+  switch (stringFromContentful) {
+    case "Cover":
+      return "cover";
+    case "Fit":
+      return "contain";
+    default:
+      return;
+  }
+}
+
+export function computeImageUrl(src, quality, format, width) {
+  let url = `https:${src}?q=${quality}`;
+  if (format) url += `&fm=${format}`;
+  if (width) url += `&w=${width}`;
+  return url;
+}
+
+export function computeImagePosition(string) {
+  if (!string) return [];
+
+  const [y, x] = string.split(" ");
+  return [y.toLowerCase(), x.toLowerCase()];
+}

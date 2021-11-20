@@ -1,28 +1,27 @@
-import { useState } from "react";
 import clsx from "clsx";
 
 import { fetchCustomPage } from "services/contentful";
 import { fetchFromCache } from "services/cache";
 
-import { ContentfulActionCardProjects } from "components/ActionCard/ActionCardProjects";
-import { ContentfulArticle } from "components/Article/Article";
-import Button from "components/Button/Button";
-import Card, { CardsWrapper } from "components/Card/Card";
+import ActionCardProjects, {
+  computeActionCardProjectsProps,
+} from "components/ActionCard/ActionCardProjects";
+import Article, { computeArticleProps } from "components/Article/Article";
+import Card, { CardReveal, CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
 import Hero, { HeroCopy } from "components/Hero/Hero";
-import { ContentfulImage } from "components/Image/Image";
-import { ContentfulFooter } from "components/Footer/Footer";
-import { ContentfulNav } from "components/Nav/Nav";
+import Image, { computeImageProps } from "components/Image/Image";
+import Footer, { computeFooterProps } from "components/Footer/Footer";
+import Nav, { computeNavProps } from "components/Nav/Nav";
 import Manifesto from "components/Manifesto/Manifesto";
 import Title from "components/Meta/Title";
-import { ContentfulMetaImage } from "components/Meta/MetaImage";
+import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
+import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
 import styles from "../sass/pages/about.module.scss";
 
 export default function About({ pageFields, globalSettings }) {
-  const [showAllPhotos, setShowAllPhotos] = useState(false);
-
   const {
     shortName,
     metaDescription,
@@ -36,17 +35,13 @@ export default function About({ pageFields, globalSettings }) {
     articlesItems,
   } = pageFields;
 
-  const handleShowMorePhotos = () => {
-    setShowAllPhotos(true);
-  };
-
   return (
     <>
       <Title shortTitle={shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
-      <ContentfulMetaImage image={metaImage} globalSettings={globalSettings} />
+      <MetaImage {...computeMetaImageProps(metaImage, globalSettings)} />
 
-      <ContentfulNav globalSettings={globalSettings} selected="about" />
+      <Nav {...computeNavProps(globalSettings)} selected="about" />
 
       <main>
         <Hero>
@@ -62,32 +57,24 @@ export default function About({ pageFields, globalSettings }) {
               </Heading>
             )}
 
-            <div
-              className={clsx(
-                styles.PhotosGrid,
-                showAllPhotos && styles["PhotosGridCell-show"]
-              )}
-            >
+            <div className={styles.PhotosGrid}>
               {photosGrid.map((photo, photoIndex) => (
-                <Card className={styles.PhotosGridCell} key={photoIndex}>
-                  {photo.fields.title && (
-                    <Heading level="h6" tag="span">
-                      {photo.fields.title}
-                    </Heading>
-                  )}
-                  <ContentfulImage image={photo} objectFit="cover" />
-                </Card>
+                <CardReveal className={styles.PhotosGridCell} key={photoIndex}>
+                  <Card className={styles.PhotosGridCard}>
+                    {photo.fields.title && (
+                      <Heading
+                        className={styles.PhotosGridYear}
+                        level="h6"
+                        tag="span"
+                      >
+                        {photo.fields.title}
+                      </Heading>
+                    )}
+                    <Image objectFit="cover" {...computeImageProps(photo)} />
+                  </Card>
+                </CardReveal>
               ))}
             </div>
-            {!showAllPhotos && (
-              <Button
-                className={styles.PhotosGridShowMore}
-                onClick={handleShowMorePhotos}
-                block
-              >
-                Load more
-              </Button>
-            )}
           </section>
         )}
 
@@ -105,7 +92,13 @@ export default function About({ pageFields, globalSettings }) {
         )}
 
         <div className="container">
-          <ContentfulActionCardProjects globalSettings={globalSettings} />
+          <CardsWrapper columns={false}>
+            <CardReveal>
+              <ActionCardProjects
+                {...computeActionCardProjectsProps(globalSettings)}
+              />
+            </CardReveal>
+          </CardsWrapper>
 
           {!!articlesItems.length && (
             <>
@@ -117,7 +110,9 @@ export default function About({ pageFields, globalSettings }) {
 
               <CardsWrapper columns={false}>
                 {articlesItems.map((article, articleIndex) => (
-                  <ContentfulArticle key={articleIndex} article={article} />
+                  <CardReveal key={articleIndex}>
+                    <Article {...computeArticleProps(article)} />
+                  </CardReveal>
                 ))}
               </CardsWrapper>
             </>
@@ -125,7 +120,9 @@ export default function About({ pageFields, globalSettings }) {
         </div>
       </main>
 
-      <ContentfulFooter globalSettings={globalSettings} />
+      <Footer {...computeFooterProps(globalSettings)} />
+
+      <PrivacyPolicy />
     </>
   );
 }

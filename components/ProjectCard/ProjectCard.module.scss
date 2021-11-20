@@ -1,5 +1,51 @@
 @import "../../sass/global";
 
+@value wrapperIndex: 98;
+
+.Wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &-transitioning {
+    transition: transform $duration-project-show-card ease-out !important;
+  }
+
+  &-hidden {
+    opacity: 0;
+    transition: opacity $duration-project-hide-other ease-out !important;
+  }
+}
+
+.Card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &-transitioning {
+    box-shadow: transparent 0 0 0;
+    border-radius: 0;
+    transition: transform $duration-project-show-card $ease-in-back,
+      border-radius 0ms $duration-project-show-card ease-out,
+      box-shadow $duration-project-hide-other ease-out;
+
+    > * {
+      opacity: 0;
+      transition: transform $duration-project-show-card $ease-in-back,
+        opacity $duration-project-hide-other ease-out;
+    }
+
+    > :last-child {
+      transform: var(--card-content-scale);
+    }
+
+    > :first-child {
+      transform: var(--card-background-scale);
+    }
+  }
+}
+
 .Title {
   margin-top: auto;
   margin-bottom: -0.1em;

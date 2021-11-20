@@ -1,6 +1,9 @@
+import { useEffect } from "react";
 import Head from "next/head";
 
-import { AppContextProvider } from "context/state";
+import { AppContextProvider, useAppContext } from "context/state";
+
+import ThemeColor from "components/Meta/ThemeColor";
 
 import "sass/pages/_app.scss";
 import styles from "sass/pages/_app.module.scss";
@@ -14,9 +17,23 @@ const FAVICON_SIZES = [16, 32, 96];
 const APPLE_ICON_SIZES = [57, 60, 72, 76, 114, 120, 144, 152, 180, 192];
 const ANDROID_ICON_SIZE = 192;
 
+function BodyScrollObserver() {
+  const { mobileOpen, projectTransitioning } = useAppContext();
+
+  useEffect(() => {
+    const blockScroll = mobileOpen || projectTransitioning;
+
+    document.documentElement.style.overflow = blockScroll ? "hidden" : "auto";
+  }, [mobileOpen, projectTransitioning]);
+
+  return null;
+}
+
 function App({ Component, pageProps }) {
   return (
     <AppContextProvider>
+      <BodyScrollObserver />
+
       <Head>
         {FAVICON_SIZES.map((size) => (
           <link
@@ -54,11 +71,10 @@ function App({ Component, pageProps }) {
         <meta name="msapplication-TileColor" content={styles.kickpushRed} />
         <meta name="msapplication-TileImage" content="/logo-144.png" />
 
-        <meta name="theme-color" content={styles.kickpushRed} />
-
         {/* TODO: Config */}
         <meta name="twitter:site" content="@kickpush" />
       </Head>
+      <ThemeColor color={styles.kickpushRed} />
 
       <Component {...pageProps} />
     </AppContextProvider>

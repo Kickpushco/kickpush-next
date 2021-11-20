@@ -6,32 +6,31 @@ import ActionCard from "components/ActionCard/ActionCard";
 import Button from "components/Button/Button";
 import Paragraph from "components/Paragraph/Paragraph";
 import Heading from "components/Heading/Heading";
-import { ContentfulImage } from "components/Image/Image";
+import { computeImageProps } from "components/Image/Image";
 
 import IconPlay from "assets/icons/18-play.svg";
 
 import styles from "./Article.module.scss";
 
-export function ContentfulArticle({ article, ...props }) {
-  const { fields } = article;
-  const { backgroundImage } = fields;
+export function computeArticleProps({ fields }) {
+  const { title, type, link, location, backgroundColor, isVideo, date } =
+    fields;
 
-  return (
-    <Article
-      title={fields.title}
-      type={fields.type}
-      link={fields.link}
-      location={fields.location}
-      backgroundColor={fields.backgroundColor}
-      backgroundImage={
-        backgroundImage && <ContentfulImage image={backgroundImage} />
-      }
-      isVideo={fields.isVideo}
-      textColor={computeTextColor(fields.textColor)}
-      date={fields.date}
-      {...props}
-    />
-  );
+  const textColor = computeTextColor(fields.textColor);
+  const backgroundImageProps =
+    fields.backgroundImage && computeImageProps(fields.backgroundImage);
+
+  return {
+    title,
+    type,
+    link,
+    location,
+    backgroundColor,
+    backgroundImageProps,
+    isVideo,
+    textColor,
+    date,
+  };
 }
 
 function Article({
@@ -48,7 +47,7 @@ function Article({
 }) {
   return (
     <ActionCard
-      className={clsx(className, styles.Article)}
+      className={clsx(className, styles.Card)}
       href={link}
       backgroundColor={backgroundColor}
       textColor={textColor}
@@ -80,6 +79,7 @@ function Article({
           className={styles.Play}
           aria-hidden="true"
           tag="span"
+          fauxHover
           iconOnly
           variant={textColor}
         >
