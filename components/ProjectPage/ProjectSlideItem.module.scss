@@ -2,13 +2,15 @@
 
 @import "../../sass/global";
 
-@value breakpointMobileSlide: #{em($bp-tablet)};
+@value breakpointMobileSlide: #{em($bp-project-mobile-slide)};
 
 .Slide {
   padding: 0;
 
   &-mobileContain {
-    height: calc(var(--mobile-aspect-ratio) * 100vw);
+    @include max-width($bp-project-mobile-slide) {
+      height: calc(var(--mobile-aspect-ratio) * 100vw);
+    }
   }
 }
 

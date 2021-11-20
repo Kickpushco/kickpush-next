@@ -37,9 +37,8 @@
 }
 
 .ContactSlide {
-  @include min-max-width($bp-tablet, $bp-desktop) {
-    // Bumps it up slightly to give it more space
-    min-height: math.div(900, 1440) * 100vw;
+  @include max-width($bp-project-mobile-slide) {
+    min-height: min(#{math.div(635, 375) * 100vw}, 100vh);
   }
 }
 .Contact {
@@ -64,11 +63,8 @@
   z-index: 3;
   min-height: 0;
   overflow: visible;
-
-  @include min-width($bp-mobile) {
-    padding-top: var(--gutter);
-    padding-bottom: var(--gutter);
-  }
+  padding-top: var(--gutter);
+  padding-bottom: var(--gutter);
 
   @include min-width($bp-desktop) {
     padding-top: 0;

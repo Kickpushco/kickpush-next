@@ -12,30 +12,29 @@ export function computeProjectSlideItemProps({ fields }) {
   const {
     desktopBackgroundColor: backgroundColor,
     desktopImage,
-    desktopImageSize = "Cover",
-    desktopImagePosition = "Center Center",
+    desktopImageSize,
+    desktopImagePosition,
     mobileImage,
-    mobileImageFit = "Cover", // Note: Different to ImageSize from desktop
-    mobileImagePosition = "Center Center",
+    mobileImageFit, // Note: Different to ImageSize from desktop
+    mobileImagePosition,
   } = fields;
 
-  let desktop, mobile;
+  if (!desktopImage && !mobileImage) return null;
 
-  if (desktopImage) {
-    desktop = {
-      ...computeImageProps(desktopImage),
-      objectFit: computeObjectFit(desktopImageSize || "Cover"),
-      objectPosition: desktopImagePosition.toLowerCase(),
-    };
-  }
+  const desktop = {
+    ...computeImageProps(desktopImage),
+    objectFit: computeObjectFit(desktopImageSize || "Cover"),
+    objectPosition: (desktopImagePosition || "Center Center").toLowerCase(),
+  };
 
-  if (mobileImage) {
-    mobile = {
-      ...computeImageProps(mobileImage),
-      objectFit: computeObjectFit(mobileImageFit || "Cover"),
-      objectPosition: mobileImagePosition.toLowerCase(),
-    };
-  }
+  const mobile = {
+    ...computeImageProps(mobileImage || desktopImage, 2000),
+    objectFit: desktop.objectFit,
+    objectPosition: desktop.objectPosition,
+  };
+
+  if (mobileImageFit) mobile.objectFit = computeObjectFit(mobileImageFit);
+  if (mobileImagePosition) mobile.objectPosition.toLowerCase();
 
   return {
     backgroundColor,
@@ -48,7 +47,7 @@ export function computeProjectSlideItemProps({ fields }) {
 
 function ProjectSlideItem({
   className,
-  backgroundProps = {},
+  backgroundProps,
   style = {},
   ...props
 }) {
@@ -70,12 +69,12 @@ function ProjectSlideItem({
     };
   }, []);
 
+  if (!backgroundProps) return null;
+
   const isUsingMobileSlide = isMobile && !!backgroundProps.mobile;
   const backgroundPropsComputed = isUsingMobileSlide
     ? backgroundProps.mobile
     : backgroundProps.desktop;
-
-  if (!backgroundPropsComputed) return null;
 
   const { height, width } = backgroundPropsComputed;
   const mobileAspectRatio =

@@ -10,16 +10,8 @@
   min-height: math.div(635, 375) * 100vw;
   overflow: hidden;
 
-  @include min-width($bp-mobile) {
-    min-height: 100vw;
-  }
-
-  @include min-width($bp-tablet) {
+  @include min-width($bp-project-mobile-slide) {
     min-height: math.div(800, 1440) * 100vw;
-  }
-
-  @include min-width($bp-desktop) {
-    min-height: 100vh;
   }
 
   &-light {

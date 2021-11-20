@@ -3,10 +3,11 @@
 .Slide {
   --hero-animation-state: paused;
 
+  min-height: 100vh;
+
   &-inView {
     --hero-animation-state: running;
   }
-  min-height: 100vh;
 }
 
 .Content {
