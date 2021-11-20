@@ -47,7 +47,7 @@ function Article({
 }) {
   return (
     <ActionCard
-      className={clsx(className, styles.Article)}
+      className={clsx(className, styles.Card)}
       href={link}
       backgroundColor={backgroundColor}
       textColor={textColor}

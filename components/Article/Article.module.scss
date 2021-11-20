@@ -1,5 +1,11 @@
 @import "../../sass/global";
 
+.Card {
+  @include min-max-width($bp-unstack-cards, $bp-tablet) {
+    aspect-ratio: auto;
+  }
+}
+
 .Title,
 .Subtitle {
   @include min-width($bp-unstack-cards) {
@@ -33,8 +39,7 @@
 .Subtitle {
   @include min-width($bp-tiny) {
     > span {
-      display: inline-block;
-      vertical-align: top;
+      display: block;
     }
   }
 }
