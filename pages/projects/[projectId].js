@@ -64,6 +64,10 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
   const textColor = computeTextColor(pageFields.cardTextColor);
 
   const nextProjectProps = computeProjectCardProps(nextProject, globalSettings);
+  const nextProjectVariant = computeTextColor(
+    nextProject.fields.cardTextColor,
+    true
+  );
 
   useEscKey(() => {
     router.push(PROJECT_CLOSE_URL);
@@ -142,7 +146,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
         <ProjectSlide
           className={styles.Footer}
           key={`footer-${slug}`}
-          variant={nextProjectProps.textColor}
+          variant={nextProjectVariant}
         >
           <div className={clsx(styles.Container, "container")}>
             <CardsWrapper columns={false}>
