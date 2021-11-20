@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import "../../sass/global";
 
 @value breakpointHamburgerMenu: #{em($bp-hamburger-menu)};
@@ -8,7 +10,7 @@
   top: 0;
   margin-top: var(--nav-offset);
   z-index: 99;
-  transition: transform $duration-project-show-card / 2 ease-out;
+  transition: transform math.div($duration-project-show-card, 2) ease-out;
 
   a,
   button {
