@@ -13,16 +13,8 @@ import IconPlay from "assets/icons/18-play.svg";
 import styles from "./Article.module.scss";
 
 export function computeArticleProps({ fields }) {
-  const {
-    title,
-    type,
-    link,
-    location,
-    backgroundColor,
-    isVideo,
-    textColor,
-    date,
-  } = fields;
+  const { title, type, link, location, backgroundColor, isVideo, date } =
+    fields;
 
   const textColor = computeTextColor(fields.textColor);
   const backgroundImageProps =
