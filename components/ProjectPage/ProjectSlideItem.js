@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
 
 import { computeObjectFit } from "services/contentful";
@@ -9,29 +9,36 @@ import ProjectSlide from "./ProjectSlide";
 import styles from "./ProjectSlideItem.module.scss";
 
 export function computeProjectSlideItemProps({ fields }) {
-  const { desktopImage, mobileImage } = fields;
+  const {
+    desktopBackgroundColor: backgroundColor,
+    desktopImage,
+    desktopImageSize = "Cover",
+    desktopImagePosition = "Center Center",
+    mobileImage,
+    mobileImageFit = "Cover", // Note: Different to ImageSize from desktop
+    mobileImagePosition = "Center Center",
+  } = fields;
 
   let desktop, mobile;
 
   if (desktopImage) {
-    const desktopObjectFit = computeObjectFit(
-      fields.desktopImageSize || "Cover"
-    );
     desktop = {
       ...computeImageProps(desktopImage),
-      objectFit: desktopObjectFit,
+      objectFit: computeObjectFit(desktopImageSize || "Cover"),
+      objectPosition: desktopImagePosition.toLowerCase(),
     };
+  }
 
-    if (!mobileImage) {
-      mobile = {
-        ...computeImageProps(desktopImage, 700),
-        objectFit: desktopObjectFit,
-      };
-    }
+  if (mobileImage) {
+    mobile = {
+      ...computeImageProps(mobileImage),
+      objectFit: computeObjectFit(mobileImageFit || "Cover"),
+      objectPosition: mobileImagePosition.toLowerCase(),
+    };
   }
 
   return {
-    backgroundColor: fields.desktopBackgroundColor,
+    backgroundColor,
     backgroundProps: {
       desktop,
       mobile,
@@ -42,24 +49,54 @@ export function computeProjectSlideItemProps({ fields }) {
 function ProjectSlideItem({
   className,
   backgroundProps = {},
-  children,
+  style = {},
   ...props
 }) {
+  const [isMobile, setIsMobile] = useState(null);
+  useEffect(() => {
+    const mediaQueryList = matchMedia(
+      `(min-width: ${styles.breakpointMobileSlide})`
+    );
+
+    function handleMQLChange(e) {
+      setIsMobile(!e.matches);
+    }
+
+    handleMQLChange(mediaQueryList);
+
+    mediaQueryList.addListener(handleMQLChange);
+    return () => {
+      mediaQueryList.removeListener(handleMQLChange);
+    };
+  }, []);
+
+  const isUsingMobileSlide = isMobile && !!backgroundProps.mobile;
+  const backgroundPropsComputed = isUsingMobileSlide
+    ? backgroundProps.mobile
+    : backgroundProps.desktop;
+
+  if (!backgroundPropsComputed) return null;
+
+  const { height, width } = backgroundPropsComputed;
+  const mobileAspectRatio =
+    isUsingMobileSlide &&
+    backgroundProps.mobile.objectFit === "contain" &&
+    height / width;
+
   return (
-    <ProjectSlide className={clsx(className, styles.Slide)} {...props}>
-      {backgroundProps.desktop && (
-        <Image
-          className={clsx(styles.Background, styles["Background-desktop"])}
-          {...backgroundProps.desktop}
-        />
+    <ProjectSlide
+      className={clsx(
+        className,
+        styles.Slide,
+        mobileAspectRatio && styles["Slide-mobileContain"]
       )}
-      {backgroundProps.mobile && (
-        <Image
-          className={clsx(styles.Background, styles["Background-mobile"])}
-          {...backgroundProps.mobile}
-        />
-      )}
-      {children}
+      style={{
+        ...style,
+        "--mobile-aspect-ratio": mobileAspectRatio,
+      }}
+      {...props}
+    >
+      <Image className={styles.Background} {...backgroundPropsComputed} />
     </ProjectSlide>
   );
 }

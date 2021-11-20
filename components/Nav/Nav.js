@@ -78,7 +78,6 @@ function Nav({ labels, selected, ...props }) {
     handleMQLChange(mediaQueryList);
 
     mediaQueryList.addListener(handleMQLChange);
-
     return () => {
       mediaQueryList.removeListener(handleMQLChange);
     };

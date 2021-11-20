@@ -2,6 +2,16 @@
 
 @import "../../sass/global";
 
+@value breakpointMobileSlide: #{em($bp-tablet)};
+
+.Slide {
+  padding: 0;
+
+  &-mobileContain {
+    height: calc(var(--mobile-aspect-ratio) * 100vw);
+  }
+}
+
 .Background {
   background-color: transparent;
 
