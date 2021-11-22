@@ -9,6 +9,10 @@
   @include min-width($bp-tiny) {
     white-space: pre-wrap;
   }
+
+  @include max-width($bp-nuclear) {
+    word-break: break-word;
+  }
 }
 
 .Heading {

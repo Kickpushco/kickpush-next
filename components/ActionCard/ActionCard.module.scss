@@ -35,6 +35,10 @@
       --card-scale: #{math.div(920, 940)};
     }
   }
+
+  @include no-motion {
+    --card-scale: 1;
+  }
 }
 
 .Content {
@@ -57,8 +61,12 @@
   z-index: 1;
   transition: transform $duration-card-image-out ease-in-out;
 
+  @include max-width($bp-nuclear) {
+    display: none;
+  }
+
   .Card-large & {
-    --project-card-hover-scale: 1.025;
+    --card-background-hover-scale: 1.025;
 
     @include min-width($bp-unstack-cards) {
       border-bottom-left-radius: 0;
@@ -72,8 +80,12 @@
   @include can-hover {
     .Card-enabled:hover &,
     .Card-enabled:focus & {
-      transform: scale(var(--project-card-hover-scale, 1.05));
+      transform: scale(var(--card-background-hover-scale, 1.05));
       transition: transform $duration-card-image-in ease-out;
     }
+  }
+
+  @include no-motion {
+    --card-background-hover-scale: 1 !important;
   }
 }

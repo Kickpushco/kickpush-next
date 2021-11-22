@@ -21,6 +21,10 @@
 
   @if ($animation-name == "h1") {
     animation: hero-h1-reveal 1s ease-out;
+
+    @include no-motion {
+      animation-name: hero-copy-reveal;
+    }
   }
 
   @if ($animation-name == "copy") {

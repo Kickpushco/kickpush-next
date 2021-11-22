@@ -51,13 +51,20 @@ function ProjectCard({
 
   const router = useRouter();
 
-  const { projectTransitioning, setProjectTransitioning } = useAppContext();
+  const { noMotion, projectTransitioning, setProjectTransitioning } =
+    useAppContext();
 
   const [wrapperStyle, setWrapperStyle] = useState(null);
   const [cardStyle, setCardStyle] = useState(null);
 
   const handleClick = useCallback(
     (e) => {
+      if (noMotion) {
+        onClick?.();
+
+        return false;
+      }
+
       e.preventDefault();
 
       if (projectTransitioning) return;
@@ -111,7 +118,7 @@ function ProjectCard({
 
       onClick?.();
     },
-    [projectTransitioning, slug, router, onClick]
+    [noMotion, projectTransitioning, slug, router, onClick]
   );
 
   const handleTransitionEnd = useCallback(

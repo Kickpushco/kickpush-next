@@ -51,3 +51,11 @@
     }
   }
 }
+
+.Info,
+.Action,
+.Action svg {
+  @include no-motion {
+    transform: none !important;
+  }
+}

@@ -99,7 +99,11 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           )}
         >
           <Link href={PROJECT_CLOSE_URL} passHref>
-            <CloseButton aria-label="Back to projects" variant="dark">
+            <CloseButton
+              className={styles.CloseButton}
+              aria-label="Back to projects"
+              variant="dark"
+            >
               <IconClose role="presentation" />
             </CloseButton>
           </Link>

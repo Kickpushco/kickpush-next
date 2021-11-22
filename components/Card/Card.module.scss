@@ -5,9 +5,8 @@
 .Card {
   @include card-shadow();
 
-  --card-padding: #{rem(24)};
+  --card-padding: #{rem(16)};
 
-  aspect-ratio: 440 / 496;
   color: $color-kickpush-white;
   border-radius: rem(10);
   display: block;
@@ -22,6 +21,12 @@
   }
   &-dark {
     color: $color-kickpush-black;
+  }
+
+  @include min-width($bp-nuclear) {
+    --card-padding: #{rem(24)};
+
+    aspect-ratio: 440 / 496;
   }
 
   @include min-width($bp-mobile) {
@@ -55,6 +60,10 @@
     transition: opacity math.div($duration-card-enter, 2) ease-out,
       transform $duration-card-enter $ease-out-back;
   }
+
+  @include no-motion {
+    transform: none;
+  }
 }
 
 .CardsWrapper {
@@ -63,6 +72,7 @@
   gap: var(--gutter);
   margin: 0 rem(-8);
   width: calc(100% + #{rem(16)});
+  grid-template-columns: 100%;
 
   @include min-width($bp-tiny) {
     margin: 0 rem(-16);
