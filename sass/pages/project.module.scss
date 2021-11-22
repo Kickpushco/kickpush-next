@@ -15,8 +15,8 @@
   display: flex;
 
   @include min-width($bp-hamburger-menu) {
-    top: var(--gutter);
-    right: var(--gutter);
+    top: rem(24);
+    right: rem(24);
     height: auto;
   }
 

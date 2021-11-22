@@ -30,7 +30,7 @@ function ActionAboutCard({
   ...props
 }) {
   return (
-    <Link href="/projects" passHref>
+    <Link href="/about" passHref>
       <ActionCard
         className={clsx(className, styles.Card)}
         size="large"
