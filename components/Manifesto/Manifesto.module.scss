@@ -22,6 +22,10 @@
   @include hero-animation("copy");
 
   color: $color-kickpush-dark-red;
+
+  @include high-contrast {
+    color: $color-kickpush-dark-red-high-contrast;
+  }
 }
 .Long {
   @include hero-animation("h1");

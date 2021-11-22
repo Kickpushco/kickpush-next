@@ -45,6 +45,12 @@
   }
 }
 
+@mixin high-contrast {
+  @media (prefers-contrast: more) {
+    @content;
+  }
+}
+
 @mixin card-shadow($card-shadow-state: "idle") {
   // Darkened to compensate for smaller shadows (required to avoid overlaps)
   $card-default-shadow: darken($color-kickpush-dark-red, 15%);

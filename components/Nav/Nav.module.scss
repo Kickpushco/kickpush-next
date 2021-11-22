@@ -132,6 +132,10 @@ $nav-menu-duration: 200ms;
     transform: scale(0, 1);
     transform-origin: center right;
     transition: transform 200ms ease-in-out;
+
+    @include high-contrast {
+      background-color: $color-kickpush-dark-red-high-contrast;
+    }
   }
 
   &[aria-current],

@@ -22,6 +22,10 @@
     color: $color-kickpush-dark-red;
     margin-bottom: 1.25em;
 
+    @include high-contrast {
+      color: $color-kickpush-dark-red-high-contrast;
+    }
+
     @include min-width($bp-tiny) {
       font-size: rem(56);
       line-height: rem(60);
