@@ -105,7 +105,7 @@ function Nav({ labels, selected, ...props }) {
           </a>
         </Link>
 
-        <div ref={menuRef}>
+        <div className={styles.Menu} ref={menuRef}>
           {isMobile && (
             <CloseButton
               className={clsx(

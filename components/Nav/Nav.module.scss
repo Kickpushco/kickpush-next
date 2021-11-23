@@ -56,6 +56,20 @@
 
 $nav-menu-duration: 200ms;
 
+.Menu {
+  @keyframes menu-visibility {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @include max-width($bp-hamburger-menu) {
+    animation: menu-visibility 200ms $nav-menu-duration ease-in-out both;
+  }
+}
+
 .Links {
   list-style: none;
   display: flex;
