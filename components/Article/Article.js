@@ -69,7 +69,7 @@ function Article({
           )}
         </>
       }
-      actionCta={`View ${type}`}
+      actionCta={`Read ${type}`}
       target="_blank"
       rel="noopener"
       {...props}

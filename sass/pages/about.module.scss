@@ -3,7 +3,16 @@
 @import "../../sass/global";
 
 .Photos {
+  --reveal-animation-state: paused;
+
   margin-bottom: var(--section-space);
+
+  &-inView {
+    --reveal-animation-state: running;
+  }
+}
+.PhotosTitle {
+  @include reveal-animation("heading");
 }
 .PhotosGrid {
   display: grid;

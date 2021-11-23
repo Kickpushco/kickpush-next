@@ -59,7 +59,7 @@ export default function Projects({ pageFields, globalSettings }) {
 
 export async function getStaticProps() {
   const props = await fetchFromCache(
-    "customPageProjects",
+    "page-projects",
     async () => await fetchCustomPage("customPageProjects", { include: 2 })
   );
 

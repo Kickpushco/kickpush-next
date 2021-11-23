@@ -39,7 +39,8 @@
 .Subtitle {
   @include min-width($bp-tiny) {
     > span {
-      display: block;
+      display: inline-block;
+      vertical-align: top;
     }
   }
 }

@@ -9,17 +9,17 @@
   }
 
   h1 {
-    @include hero-animation("h1");
+    @include reveal-animation("heading");
 
-    @include min-max-width(320, $bp-mobile) {
-      font-size: rem(56);
-      line-height: rem(60);
+    @include min-max-width($bp-tiny, $bp-mobile) {
+      font-size: rem(52);
+      line-height: rem(56);
     }
   }
 }
 
 .Copy {
-  @include hero-animation("copy");
+  @include reveal-animation("copy");
 
   margin-top: 1em;
 }

@@ -1,5 +1,8 @@
 @import "../../sass/global";
 
+.HeroTitle {
+  margin-bottom: 0;
+}
 .HeroCopy {
   @include min-width($bp-tiny) {
     font-size: rem(24);
@@ -8,8 +11,16 @@
 }
 
 .Projects {
-  margin-bottom: rem(150);
+  --reveal-animation-state: paused;
+
   margin-bottom: var(--section-space);
+
+  &-inView {
+    --reveal-animation-state: running;
+  }
+}
+.ProjectsTitle {
+  @include reveal-animation("heading");
 }
 .ProjectsList {
   @include max-width($bp-unstack-cards) {

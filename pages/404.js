@@ -34,7 +34,7 @@ export default function PageNotFound({ pageFields, globalSettings }) {
 
 export async function getStaticProps() {
   const props = await fetchFromCache(
-    "customPage404",
+    "page-404",
     async () => await fetchCustomPage("customPage404", { include: 1 })
   );
 

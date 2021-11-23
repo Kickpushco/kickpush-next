@@ -180,7 +180,7 @@ export async function getStaticProps({ params }) {
     // true
   );
   const { pageFields, globalSettings } = await fetchFromCache(
-    "customPageProject",
+    "page-project",
     async () => await fetchCustomPage("customPageProject", { include: 2 })
   );
 
@@ -205,7 +205,7 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const projects = await fetchFromCache(
-    "projectIds",
+    "global-projects",
     async () => await fetchProjectIds()
   );
 

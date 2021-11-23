@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { fetchCustomPage } from "services/contentful";
 import { fetchFromCache } from "services/cache";
+import { useInView } from "react-intersection-observer";
 
 import ActionCardProjects, {
   computeActionCardProjectsProps,
@@ -26,6 +27,10 @@ import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 import styles from "../sass/pages/index.module.scss";
 
 export default function Home({ pageFields, globalSettings }) {
+  const [projectsWrappeRef, projectsInView] = useInView({
+    triggerOnce: true,
+  });
+
   const {
     shortName,
     metaDescription,
@@ -48,15 +53,24 @@ export default function Home({ pageFields, globalSettings }) {
 
       <main>
         <Hero>
-          <Heading level="h1">{heroTitle}</Heading>
+          <Heading className={styles.HeroTitle} level="h1">
+            {heroTitle}
+          </Heading>
           {heroCopy && (
             <HeroCopy className={styles.HeroCopy}>{heroCopy}</HeroCopy>
           )}
         </Hero>
 
-        <section className={clsx("container", styles.Projects)}>
+        <section
+          ref={projectsWrappeRef}
+          className={clsx(
+            "container",
+            styles.Projects,
+            projectsInView && styles["Projects-inView"]
+          )}
+        >
           {projectsTitle && (
-            <Heading level="h0" tag="h2">
+            <Heading className={styles.ProjectsTitle} level="h0" tag="h2">
               {projectsTitle}
             </Heading>
           )}
@@ -108,7 +122,7 @@ export default function Home({ pageFields, globalSettings }) {
 
 export async function getStaticProps() {
   const props = await fetchFromCache(
-    "customPageHome",
+    "page-home",
     async () => await fetchCustomPage("customPageHome", { include: 2 })
   );
 

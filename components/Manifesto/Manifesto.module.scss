@@ -1,13 +1,13 @@
 @import "../../sass/global";
 
 .Wrapper {
-  --hero-animation-state: paused;
+  --reveal-animation-state: paused;
 
   text-align: center;
   margin-top: rem(80);
 
   &-inView {
-    --hero-animation-state: running;
+    --reveal-animation-state: running;
   }
 
   @include min-width($bp-mobile) {
@@ -19,16 +19,17 @@
   }
 }
 .Short {
-  @include hero-animation("copy");
+  @include reveal-animation("copy");
 
   color: $color-kickpush-dark-red;
+  animation-delay: 0ms;
 
   @include high-contrast {
     color: $color-kickpush-dark-red-high-contrast;
   }
 }
 .Long {
-  @include hero-animation("h1");
+  @include reveal-animation("heading");
 
   margin-bottom: 0;
 }

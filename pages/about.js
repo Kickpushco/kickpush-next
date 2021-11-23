@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useInView } from "react-intersection-observer";
 
 import { fetchCustomPage } from "services/contentful";
 import { fetchFromCache } from "services/cache";
@@ -22,6 +23,10 @@ import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 import styles from "../sass/pages/about.module.scss";
 
 export default function About({ pageFields, globalSettings }) {
+  const [photosWrappeRef, photosInView] = useInView({
+    triggerOnce: true,
+  });
+
   const {
     shortName,
     metaDescription,
@@ -31,7 +36,6 @@ export default function About({ pageFields, globalSettings }) {
     photosTitle,
     photosGrid,
     manifestoItems,
-    articlesTitle,
     articlesItems,
   } = pageFields;
 
@@ -47,12 +51,28 @@ export default function About({ pageFields, globalSettings }) {
         <Hero>
           <Heading level="h1">{heroTitle}</Heading>
           {heroCopy && <HeroCopy>{heroCopy}</HeroCopy>}
+          {!!articlesItems.length && (
+            <CardsWrapper columns={false}>
+              {articlesItems.map((article, articleIndex) => (
+                <CardReveal key={articleIndex}>
+                  <Article {...computeArticleProps(article)} />
+                </CardReveal>
+              ))}
+            </CardsWrapper>
+          )}
         </Hero>
 
         {!!photosGrid.length && (
-          <section className={clsx("container", styles.Photos)}>
+          <section
+            ref={photosWrappeRef}
+            className={clsx(
+              "container",
+              styles.Photos,
+              photosInView && styles["Photos-inView"]
+            )}
+          >
             {photosTitle && (
-              <Heading level="h0" tag="h2">
+              <Heading className={styles.PhotosTitle} level="h0" tag="h2">
                 {photosTitle}
               </Heading>
             )}
@@ -99,24 +119,6 @@ export default function About({ pageFields, globalSettings }) {
               />
             </CardReveal>
           </CardsWrapper>
-
-          {!!articlesItems.length && (
-            <>
-              {articlesTitle && (
-                <Heading className={styles.ArticlesTitle} level="h1" tag="h2">
-                  {articlesTitle}
-                </Heading>
-              )}
-
-              <CardsWrapper columns={false}>
-                {articlesItems.map((article, articleIndex) => (
-                  <CardReveal key={articleIndex}>
-                    <Article {...computeArticleProps(article)} />
-                  </CardReveal>
-                ))}
-              </CardsWrapper>
-            </>
-          )}
         </div>
       </main>
 
@@ -129,7 +131,7 @@ export default function About({ pageFields, globalSettings }) {
 
 export async function getStaticProps() {
   const props = await fetchFromCache(
-    "customPagePeople",
+    "page-about",
     async () => await fetchCustomPage("customPagePeople")
   );
 

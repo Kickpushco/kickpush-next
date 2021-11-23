@@ -6,21 +6,25 @@
   font-family: $font-stack-heading;
   font-weight: $font-weight-heading;
 
-  @include min-width($bp-tiny) {
+  @include min-width($bp-tablet) {
     white-space: pre-wrap;
   }
 
   @include max-width($bp-nuclear) {
     word-break: break-word;
+    hyphens: auto;
   }
 }
 
 .Heading {
+  &-h0,
+  &-h1 {
+    margin-bottom: calc(var(--section-space) / 2);
+  }
   &-h0 {
     font-size: calc((100vw - var(--gutter)) * 0.18);
     line-height: 1.1;
     color: $color-kickpush-dark-red;
-    margin-bottom: 1.25em;
 
     @include high-contrast {
       color: $color-kickpush-dark-red-high-contrast;
