@@ -24,10 +24,10 @@
 
   @include max-width($bp-unstack-cards) {
     &::before {
-      mask: linear-gradient(rgba(black, 0), black);
+      mask: linear-gradient(rgba(black, 0), rgba(black, 0.7) 33.3%, black);
       content: "";
       position: absolute;
-      top: calc(var(--card-padding) * -1);
+      top: calc(var(--card-padding) * -2);
       left: calc(var(--card-padding) * -1);
       right: calc(var(--card-padding) * -1);
       bottom: calc(var(--card-padding) * -1);
@@ -39,6 +39,7 @@
 .Subtitle {
   @include min-width($bp-tiny) {
     > span {
+      white-space: pre;
       display: inline-block;
       vertical-align: top;
     }
