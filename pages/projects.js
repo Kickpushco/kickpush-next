@@ -4,7 +4,7 @@ import { fetchFromCache } from "services/cache";
 import { CardsWrapper } from "components/Card/Card";
 import Nav, { computeNavProps } from "components/Nav/Nav";
 import Footer, { computeFooterProps } from "components/Footer/Footer";
-import Hero, { HeroCopy } from "components/Hero/Hero";
+import Hero from "components/Hero/Hero";
 import Heading from "components/Heading/Heading";
 import ProjectCard, {
   computeProjectCardProps,
@@ -15,18 +15,11 @@ import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
 export default function Projects({ pageFields, globalSettings }) {
-  const {
-    shortName,
-    metaDescription,
-    metaImage,
-    heroTitle,
-    heroCopy,
-    projectsList,
-  } = pageFields;
+  const { metaDescription, metaImage, heroTitle, projectsList } = pageFields;
 
   return (
     <>
-      <Title shortTitle={shortName} longTitle={heroTitle} />
+      <Title shortTitle={pageFields.shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
       <MetaImage {...computeMetaImageProps(metaImage, globalSettings)} />
 
@@ -35,10 +28,9 @@ export default function Projects({ pageFields, globalSettings }) {
       <main>
         <Hero>
           <Heading level="h1">{heroTitle}</Heading>
-          {heroCopy && <HeroCopy>{heroCopy}</HeroCopy>}
         </Hero>
 
-        <section className="container">
+        <div className="container">
           <CardsWrapper>
             {projectsList.fields.projects.map((project) => (
               <ProjectCard
@@ -47,7 +39,7 @@ export default function Projects({ pageFields, globalSettings }) {
               />
             ))}
           </CardsWrapper>
-        </section>
+        </div>
       </main>
 
       <Footer {...computeFooterProps(globalSettings)} />

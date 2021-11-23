@@ -154,12 +154,12 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
         >
           <div className={clsx(styles.Container, "container")}>
             <CardsWrapper columns={false}>
-              {/* TODO: Fix scroll to on focus */}
               <ProjectCard
                 className={styles.FooterCard}
                 size="large"
                 {...nextProjectProps}
                 onClick={handleScrollFooter}
+                onFocus={handleScrollFooter}
               />
             </CardsWrapper>
           </div>

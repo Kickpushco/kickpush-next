@@ -1,8 +1,6 @@
 @import "../../sass/global";
 
 .Slide {
-  --reveal-animation-state: paused;
-
   min-height: 100vh;
 
   &-inView {

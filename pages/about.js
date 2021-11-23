@@ -11,7 +11,7 @@ import Article, { computeArticleProps } from "components/Article/Article";
 import Card, { CardReveal, CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
-import Hero, { HeroCopy } from "components/Hero/Hero";
+import Hero from "components/Hero/Hero";
 import Image, { computeImageProps } from "components/Image/Image";
 import Footer, { computeFooterProps } from "components/Footer/Footer";
 import Nav, { computeNavProps } from "components/Nav/Nav";
@@ -23,26 +23,17 @@ import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 import styles from "../sass/pages/about.module.scss";
 
 export default function About({ pageFields, globalSettings }) {
-  const [photosWrappeRef, photosInView] = useInView({
+  const [contentRef, contentInView] = useInView({
     triggerOnce: true,
   });
 
-  const {
-    shortName,
-    metaDescription,
-    metaImage,
-    heroTitle,
-    heroCopy,
-    photosTitle,
-    photosGrid,
-    manifestoItems,
-    articlesItems,
-  } = pageFields;
+  const { metaImage, heroTitle, photosTitle, photosGrid, articlesItems } =
+    pageFields;
 
   return (
     <>
-      <Title shortTitle={shortName} longTitle={heroTitle} />
-      <Description description={metaDescription} />
+      <Title shortTitle={pageFields.shortName} longTitle={heroTitle} />
+      <Description description={pageFields.metaDescription} />
       <MetaImage {...computeMetaImageProps(metaImage, globalSettings)} />
 
       <Nav {...computeNavProps(globalSettings)} selected="about" />
@@ -50,7 +41,6 @@ export default function About({ pageFields, globalSettings }) {
       <main>
         <Hero>
           <Heading level="h1">{heroTitle}</Heading>
-          {heroCopy && <HeroCopy>{heroCopy}</HeroCopy>}
           {!!articlesItems.length && (
             <CardsWrapper columns={false}>
               {articlesItems.map((article, articleIndex) => (
@@ -62,21 +52,20 @@ export default function About({ pageFields, globalSettings }) {
           )}
         </Hero>
 
-        {!!photosGrid.length && (
-          <section
-            ref={photosWrappeRef}
-            className={clsx(
-              "container",
-              styles.Photos,
-              photosInView && styles["Photos-inView"]
-            )}
-          >
-            {photosTitle && (
-              <Heading className={styles.PhotosTitle} level="h0" tag="h2">
-                {photosTitle}
-              </Heading>
-            )}
+        <div
+          ref={contentRef}
+          className={clsx(
+            "container",
+            contentInView && styles["Content-inView"]
+          )}
+        >
+          {photosTitle && (
+            <Heading className={styles.LargeTitle} level="h0" tag="h2">
+              {photosTitle}
+            </Heading>
+          )}
 
+          {!!photosGrid.length && (
             <div className={styles.PhotosGrid}>
               {photosGrid.map((photo, photoIndex) => (
                 <CardReveal className={styles.PhotosGridCell} key={photoIndex}>
@@ -95,23 +84,16 @@ export default function About({ pageFields, globalSettings }) {
                 </CardReveal>
               ))}
             </div>
-          </section>
-        )}
+          )}
 
-        {!!manifestoItems.length && (
-          <section className={clsx("container", styles.Manifesto)}>
-            {manifestoItems.map((item) => (
-              <Manifesto
-                className={styles.ManifestoItem}
-                key={item.sys.id}
-                short={item.fields.shortText}
-                long={item.fields.longText}
-              />
-            ))}
-          </section>
-        )}
+          {pageFields.manifestoItems.map(({ fields, sys }) => (
+            <Manifesto
+              key={sys.id}
+              short={fields.shortText}
+              long={fields.longText}
+            />
+          ))}
 
-        <div className="container">
           <CardsWrapper columns={false}>
             <CardReveal>
               <ActionCardProjects

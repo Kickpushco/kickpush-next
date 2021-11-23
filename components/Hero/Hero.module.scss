@@ -1,6 +1,8 @@
 @import "../../sass/global";
 
 .Hero {
+  --reveal-animation-state: running;
+
   margin: calc(var(--section-space) / 2) 0 var(--section-space);
   width: 100%;
 

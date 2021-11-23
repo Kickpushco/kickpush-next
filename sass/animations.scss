@@ -31,5 +31,5 @@
     animation: hero-copy-reveal 500ms 500ms ease-out both;
   }
 
-  animation-play-state: var(--reveal-animation-state, running);
+  animation-play-state: var(--reveal-animation-state, paused);
 }

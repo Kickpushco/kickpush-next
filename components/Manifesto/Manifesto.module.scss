@@ -1,10 +1,9 @@
 @import "../../sass/global";
 
 .Wrapper {
-  --reveal-animation-state: paused;
-
   text-align: center;
-  margin-top: rem(80);
+  margin-top: var(--section-space);
+  margin-bottom: var(--section-space);
 
   &-inView {
     --reveal-animation-state: running;

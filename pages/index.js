@@ -27,25 +27,17 @@ import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 import styles from "../sass/pages/index.module.scss";
 
 export default function Home({ pageFields, globalSettings }) {
-  const [projectsWrappeRef, projectsInView] = useInView({
+  const [contentRef, contentInView] = useInView({
     triggerOnce: true,
   });
 
-  const {
-    shortName,
-    metaDescription,
-    metaImage,
-    heroTitle,
-    projectsTitle,
-    manifestoItems,
-    heroCopy,
-    projectsList,
-  } = pageFields;
+  const { metaImage, heroTitle, projectsTitle, heroCopy, projectsList } =
+    pageFields;
 
   return (
     <>
-      <Title shortTitle={shortName} longTitle={heroTitle} />
-      <Description description={metaDescription} />
+      <Title shortTitle={pageFields.shortName} longTitle={heroTitle} />
+      <Description description={pageFields.metaDescription} />
       <LabelData number="1" label="Email" data={globalSettings.contactEmail} />
       <MetaImage {...computeMetaImageProps(metaImage, globalSettings)} />
 
@@ -61,16 +53,15 @@ export default function Home({ pageFields, globalSettings }) {
           )}
         </Hero>
 
-        <section
-          ref={projectsWrappeRef}
+        <div
+          ref={contentRef}
           className={clsx(
             "container",
-            styles.Projects,
-            projectsInView && styles["Projects-inView"]
+            contentInView && styles["Content-inView"]
           )}
         >
           {projectsTitle && (
-            <Heading className={styles.ProjectsTitle} level="h0" tag="h2">
+            <Heading className={styles.LargeTitle} level="h0" tag="h2">
               {projectsTitle}
             </Heading>
           )}
@@ -88,21 +79,15 @@ export default function Home({ pageFields, globalSettings }) {
               />
             </CardReveal>
           </CardsWrapper>
-        </section>
 
-        {!!manifestoItems.length && (
-          <section className={clsx("container", styles.Manifesto)}>
-            {manifestoItems.map(({ sys, fields }) => (
-              <Manifesto
-                key={sys.id}
-                short={fields.shortText}
-                long={fields.longText}
-              />
-            ))}
-          </section>
-        )}
+          {pageFields.manifestoItems.map(({ sys, fields }) => (
+            <Manifesto
+              key={sys.id}
+              short={fields.shortText}
+              long={fields.longText}
+            />
+          ))}
 
-        <section className="container">
           <CardsWrapper columns={false}>
             <CardReveal>
               <ActionAboutCard
@@ -110,7 +95,7 @@ export default function Home({ pageFields, globalSettings }) {
               />
             </CardReveal>
           </CardsWrapper>
-        </section>
+        </div>
       </main>
 
       <Footer {...computeFooterProps(globalSettings)} />
