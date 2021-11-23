@@ -38,6 +38,8 @@
 
 .Subtitle {
   @include min-width($bp-tiny) {
+    max-width: 12em;
+
     > span {
       white-space: pre;
       display: inline-block;
