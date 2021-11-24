@@ -5,6 +5,7 @@ import Link from "next/link";
 import { fetchCustomPage } from "services/contentful";
 import { fetchFromCache } from "services/cache";
 
+import { CloseButton } from "components/Button/CloseButton";
 import { CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
@@ -12,13 +13,12 @@ import Hero from "components/Hero/Hero";
 import Title from "components/Meta/Title";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
-
-import styles from "sass/pages/article.module.scss";
 import ProjectSlide from "components/ProjectPage/ProjectSlide";
 import ActionCardAbout, {
   computeActionCardAboutProps,
 } from "components/ActionCard/ActionCardAbout";
-import { CloseButton } from "components/Button/CloseButton";
+
+import styles from "sass/pages/article.module.scss";
 
 export default function About({ pageFields, globalSettings }) {
   const {
