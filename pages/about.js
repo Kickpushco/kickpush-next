@@ -42,7 +42,7 @@ export default function About({ pageFields, globalSettings }) {
         <Hero>
           <Heading level="h1">{heroTitle}</Heading>
           {!!articlesItems.length && (
-            <CardsWrapper columns={false}>
+            <CardsWrapper className={styles.HeroArticles} columns={false}>
               {articlesItems.map((article, articleIndex) => (
                 <CardReveal key={articleIndex}>
                   <Article {...computeArticleProps(article)} />

@@ -1,6 +1,8 @@
 @import "../../sass/global";
 
 .Wrapper {
+  --reveal-animation-state: paused;
+
   text-align: center;
   margin-top: var(--section-space);
   margin-bottom: var(--section-space);

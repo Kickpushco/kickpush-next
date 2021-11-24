@@ -17,14 +17,11 @@
 }
 
 .Heading {
-  &-h0,
-  &-h1 {
-    margin-bottom: calc(var(--section-space) / 2);
-  }
   &-h0 {
     font-size: calc((100vw - var(--gutter)) * 0.18);
     line-height: 1.1;
     color: $color-kickpush-dark-red;
+    margin-bottom: calc(var(--section-space) / 2);
 
     @include high-contrast {
       color: $color-kickpush-dark-red-high-contrast;

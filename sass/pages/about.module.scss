@@ -2,6 +2,10 @@
 
 @import "../../sass/global";
 
+.HeroArticles {
+  margin-top: var(--section-space);
+}
+
 .Content {
   &-inView {
     --reveal-animation-state: running;
