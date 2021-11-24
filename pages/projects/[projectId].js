@@ -30,8 +30,6 @@ import ProjectSlide from "components/ProjectPage/ProjectSlide";
 import ProjectSpacer from "components/ProjectPage/ProjectSpacer";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 
-import IconClose from "assets/icons/20-close.svg";
-
 import styles from "sass/pages/project.module.scss";
 import ProjectCard, {
   computeProjectCardProps,
@@ -44,7 +42,7 @@ const PROJECT_CLOSE_URL = "/projects";
 export default function Project({ pageFields, nextProject, globalSettings }) {
   const router = useRouter();
 
-  const { projectTransitioning } = useAppContext();
+  const { cardTransitioning } = useAppContext();
 
   const [footerTriggerRef, footerInView] = useInView({
     rootMargin: "100% 0% -50% 0%",
@@ -95,7 +93,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
         <div
           className={clsx(
             styles.Close,
-            (footerInView || projectTransitioning) && styles["Close-hidden"]
+            (footerInView || cardTransitioning) && styles["Close-hidden"]
           )}
         >
           <Link href={PROJECT_CLOSE_URL} passHref>
@@ -103,9 +101,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
               className={styles.CloseButton}
               aria-label="Back to projects"
               variant="dark"
-            >
-              <IconClose role="presentation" />
-            </CloseButton>
+            />
           </Link>
         </div>
 
@@ -155,7 +151,6 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           <div className={clsx(styles.Container, "container")}>
             <CardsWrapper columns={false}>
               <ProjectCard
-                className={styles.FooterCard}
                 size="large"
                 {...nextProjectProps}
                 onClick={handleScrollFooter}

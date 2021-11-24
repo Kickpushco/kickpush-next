@@ -8,7 +8,7 @@ export function AppContextProvider({ children }) {
   const [noMotion, setNoMotion] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [imageSupport, setImageSupport] = useState(null);
-  const [projectTransitioning, setProjectTransitioning] = useState(false);
+  const [cardTransitioning, setCardTransitioning] = useState(null);
 
   useEffect(() => {
     const mediaQueryList = matchMedia(`(prefers-reduced-motion: reduce)`);
@@ -34,16 +34,20 @@ export function AppContextProvider({ children }) {
     asyncTestImageSupport();
   }, []);
 
+  useEffect(() => {
+    console.log(cardTransitioning);
+  }, [cardTransitioning]);
+
   const value = useMemo(() => {
     return {
       noMotion,
       mobileOpen,
       setMobileOpen,
       imageSupport,
-      projectTransitioning,
-      setProjectTransitioning,
+      cardTransitioning,
+      setCardTransitioning,
     };
-  }, [noMotion, mobileOpen, imageSupport, projectTransitioning]);
+  }, [noMotion, mobileOpen, imageSupport, cardTransitioning]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

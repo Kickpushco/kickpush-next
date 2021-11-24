@@ -46,7 +46,7 @@ const NavLink = forwardRef(
 
 function Nav({ labels, selected, ...props }) {
   const { pathname } = useRouter();
-  const { projectTransitioning, mobileOpen, setMobileOpen } = useAppContext();
+  const { cardTransitioning, mobileOpen, setMobileOpen } = useAppContext();
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -94,7 +94,7 @@ function Nav({ labels, selected, ...props }) {
       className={clsx(
         styles.Nav,
         mobileOpen && styles["Nav-mobileOpen"],
-        projectTransitioning && styles["Nav-projectTransitioning"]
+        cardTransitioning && styles["Nav-cardTransitioning"]
       )}
       {...props}
     >

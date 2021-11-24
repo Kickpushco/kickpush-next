@@ -18,13 +18,13 @@ const APPLE_ICON_SIZES = [57, 60, 72, 76, 114, 120, 144, 152, 180, 192];
 const ANDROID_ICON_SIZE = 192;
 
 function BodyScrollObserver() {
-  const { mobileOpen, projectTransitioning } = useAppContext();
+  const { mobileOpen, cardTransitioning } = useAppContext();
 
   useEffect(() => {
-    const blockScroll = mobileOpen || projectTransitioning;
+    const blockScroll = mobileOpen || cardTransitioning;
 
     document.documentElement.style.overflow = blockScroll ? "hidden" : "auto";
-  }, [mobileOpen, projectTransitioning]);
+  }, [mobileOpen, cardTransitioning]);
 
   return null;
 }

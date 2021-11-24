@@ -20,7 +20,7 @@ import Title from "components/Meta/Title";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
-import styles from "../sass/pages/about.module.scss";
+import styles from "sass/pages/about.module.scss";
 
 export default function About({ pageFields, globalSettings }) {
   const [contentRef, contentInView] = useInView({
@@ -44,9 +44,7 @@ export default function About({ pageFields, globalSettings }) {
           {!!articlesItems.length && (
             <CardsWrapper className={styles.HeroArticles} columns={false}>
               {articlesItems.map((article, articleIndex) => (
-                <CardReveal key={articleIndex}>
-                  <Article {...computeArticleProps(article)} />
-                </CardReveal>
+                <Article key={articleIndex} {...computeArticleProps(article)} />
               ))}
             </CardsWrapper>
           )}
@@ -58,6 +56,7 @@ export default function About({ pageFields, globalSettings }) {
             "container",
             contentInView && styles["Content-inView"]
           )}
+          id="content"
         >
           {photosTitle && (
             <Heading className={styles.LargeTitle} level="h0" tag="h2">
@@ -95,11 +94,9 @@ export default function About({ pageFields, globalSettings }) {
           ))}
 
           <CardsWrapper columns={false}>
-            <CardReveal>
-              <ActionCardProjects
-                {...computeActionCardProjectsProps(globalSettings)}
-              />
-            </CardReveal>
+            <ActionCardProjects
+              {...computeActionCardProjectsProps(globalSettings)}
+            />
           </CardsWrapper>
         </div>
       </main>

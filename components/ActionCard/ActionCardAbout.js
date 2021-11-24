@@ -8,7 +8,7 @@ import Paragraph from "components/Paragraph/Paragraph";
 
 import styles from "./ActionCardAbout.module.scss";
 
-export function computeActionAboutCardProps(globalSettings) {
+export function computeActionCardAboutProps(globalSettings) {
   const photosProps = globalSettings.aboutCardPhotos.map((image) => {
     return computeImageProps(image);
   });
@@ -21,16 +21,19 @@ export function computeActionAboutCardProps(globalSettings) {
   };
 }
 
-function ActionAboutCard({
+function ActionCardAbout({
   className,
   heading,
   subtitle,
   actionCta = "Read more",
   photosProps,
+  hash,
   ...props
 }) {
+  const href = `/about${!hash ? `#content` : ""}`;
+
   return (
-    <Link href="/about" passHref>
+    <Link href={href} passHref>
       <ActionCard
         className={clsx(className, styles.Card)}
         size="large"
@@ -65,4 +68,4 @@ function ActionAboutCard({
   );
 }
 
-export default ActionAboutCard;
+export default ActionCardAbout;

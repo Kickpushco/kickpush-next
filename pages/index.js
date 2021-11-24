@@ -6,8 +6,8 @@ import { useInView } from "react-intersection-observer";
 import ActionCardProjects, {
   computeActionCardProjectsProps,
 } from "components/ActionCard/ActionCardProjects";
-import ActionAboutCard, {
-  computeActionAboutCardProps,
+import ActionCardAbout, {
+  computeActionCardAboutProps,
 } from "components/ActionCard/ActionCardAbout";
 import { CardReveal, CardsWrapper } from "components/Card/Card";
 import Nav, { computeNavProps } from "components/Nav/Nav";
@@ -24,7 +24,7 @@ import LabelData from "components/Meta/LabelData";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
-import styles from "../sass/pages/index.module.scss";
+import styles from "sass/pages/index.module.scss";
 
 export default function Home({ pageFields, globalSettings }) {
   const [contentRef, contentInView] = useInView({
@@ -73,11 +73,10 @@ export default function Home({ pageFields, globalSettings }) {
                 {...computeProjectCardProps(project, globalSettings)}
               />
             ))}
-            <CardReveal className={styles.AllProjects}>
-              <ActionCardProjects
-                {...computeActionCardProjectsProps(globalSettings)}
-              />
-            </CardReveal>
+            <ActionCardProjects
+              wrapperClassName={styles.ActionCardProjects}
+              {...computeActionCardProjectsProps(globalSettings)}
+            />
           </CardsWrapper>
 
           {pageFields.manifestoItems.map(({ sys, fields }) => (
@@ -90,8 +89,8 @@ export default function Home({ pageFields, globalSettings }) {
 
           <CardsWrapper columns={false}>
             <CardReveal>
-              <ActionAboutCard
-                {...computeActionAboutCardProps(globalSettings)}
+              <ActionCardAbout
+                {...computeActionCardAboutProps(globalSettings)}
               />
             </CardReveal>
           </CardsWrapper>

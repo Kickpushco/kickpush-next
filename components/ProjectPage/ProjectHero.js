@@ -9,14 +9,14 @@ import ProjectSlide from "./ProjectSlide";
 import styles from "./ProjectHero.module.scss";
 
 function ProjectHero({ className, title, copy, ...props }) {
-  const { projectTransitioning } = useAppContext();
+  const { cardTransitioning } = useAppContext();
 
   return (
     <ProjectSlide
       className={clsx(
         className,
         styles.Slide,
-        !projectTransitioning && styles["Slide-inView"]
+        !cardTransitioning && styles["Slide-inView"]
       )}
       {...props}
     >

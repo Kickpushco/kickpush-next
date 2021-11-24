@@ -12,9 +12,8 @@ import IconPlay from "assets/icons/18-play.svg";
 
 import styles from "./Article.module.scss";
 
-export function computeArticleProps({ fields }) {
-  const { title, type, link, location, backgroundColor, isVideo, date } =
-    fields;
+export function computeArticleProps({ fields, sys }) {
+  const { title, type, location, backgroundColor, isVideo, date } = fields;
 
   const textColor = computeTextColor(fields.textColor);
   const backgroundImageProps =
@@ -22,8 +21,9 @@ export function computeArticleProps({ fields }) {
 
   return {
     title,
+    id: sys.id,
     type,
-    link,
+    href: `/articles/temp`,
     location,
     backgroundColor,
     backgroundImageProps,
@@ -39,16 +39,18 @@ function Article({
   textColor,
   title,
   type,
-  link,
+  href,
   location = "",
   date = "",
   isVideo,
+  id,
   ...props
 }) {
   return (
     <ActionCard
+      animationId={`article-${id}`}
       className={clsx(className, styles.Card)}
-      href={link}
+      href={href}
       backgroundColor={backgroundColor}
       textColor={textColor}
       topChildren={
