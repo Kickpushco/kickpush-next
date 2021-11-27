@@ -2,22 +2,19 @@
 
 @import "../../sass/global";
 
-.HeroArticles {
-  margin-top: var(--section-space);
-}
-
-.Content {
+.Section {
   &-inView {
     --reveal-animation-state: running;
   }
 }
 .LargeTitle {
   @include reveal-animation("heading");
+
+  margin-top: var(--section-space);
 }
 .PhotosGrid {
   display: grid;
   gap: var(--gutter);
-  margin-bottom: var(--section-space);
 
   @include min-width($bp-tablet) {
     grid-template-columns: 1fr 1fr;

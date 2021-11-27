@@ -4,10 +4,9 @@ import { useInView } from "react-intersection-observer";
 import { fetchCustomPage } from "services/contentful";
 import { fetchFromCache } from "services/cache";
 
-import ActionCardProjects, {
-  computeActionCardProjectsProps,
-} from "components/ActionCard/ActionCardProjects";
-import Article, { computeArticleProps } from "components/Article/Article";
+import ArticleCard, {
+  computeArticleCardProps,
+} from "components/ArticleCard/ArticleCard";
 import Card, { CardReveal, CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
@@ -15,7 +14,6 @@ import Hero from "components/Hero/Hero";
 import Image, { computeImageProps } from "components/Image/Image";
 import Footer, { computeFooterProps } from "components/Footer/Footer";
 import Nav, { computeNavProps } from "components/Nav/Nav";
-import Manifesto from "components/Manifesto/Manifesto";
 import Title from "components/Meta/Title";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
@@ -23,12 +21,23 @@ import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 import styles from "sass/pages/about.module.scss";
 
 export default function About({ pageFields, globalSettings }) {
-  const [contentRef, contentInView] = useInView({
-    triggerOnce: true,
-  });
+  const [vrRef, vrInView] = useInView({ triggerOnce: true });
+  const [movingRef, movingInView] = useInView({ triggerOnce: true });
+  const [photosRef, photosInView] = useInView({ triggerOnce: true });
 
-  const { metaImage, heroTitle, photosTitle, photosGrid, articlesItems } =
-    pageFields;
+  const {
+    metaImage,
+    heroTitle,
+    heroArticle,
+    heroArticleDate,
+    heroArticleCta,
+    vrTitle,
+    vrArticle,
+    movingTitle,
+    movingArticle,
+    photosTitle,
+    photosGrid,
+  } = pageFields;
 
   return (
     <>
@@ -41,63 +50,87 @@ export default function About({ pageFields, globalSettings }) {
       <main>
         <Hero>
           <Heading level="h1">{heroTitle}</Heading>
-          {!!articlesItems.length && (
-            <CardsWrapper className={styles.HeroArticles} columns={false}>
-              {articlesItems.map((article, articleIndex) => (
-                <Article key={articleIndex} {...computeArticleProps(article)} />
-              ))}
+          {heroArticle && (
+            <CardsWrapper columns={false}>
+              <ArticleCard
+                {...computeArticleCardProps(heroArticle)}
+                displayDate={heroArticleDate}
+                actionCta={heroArticleCta}
+              />
             </CardsWrapper>
           )}
         </Hero>
 
-        <div
-          ref={contentRef}
-          className={clsx(
-            "container",
-            contentInView && styles["Content-inView"]
-          )}
-          id="content"
-        >
-          {photosTitle && (
-            <Heading className={styles.LargeTitle} level="h0" tag="h2">
-              {photosTitle}
-            </Heading>
-          )}
+        <div className="container">
+          <div
+            ref={vrRef}
+            className={clsx(vrInView && styles["Section-inView"])}
+          >
+            {vrTitle && (
+              <Heading className={styles.LargeTitle} level="h0" tag="h2">
+                {vrTitle}
+              </Heading>
+            )}
 
-          {!!photosGrid.length && (
-            <div className={styles.PhotosGrid}>
-              {photosGrid.map((photo, photoIndex) => (
-                <CardReveal className={styles.PhotosGridCell} key={photoIndex}>
-                  <Card className={styles.PhotosGridCard}>
-                    {photo.fields.title && (
-                      <Heading
-                        className={styles.PhotosGridYear}
-                        level="h6"
-                        tag="span"
-                      >
-                        {photo.fields.title}
-                      </Heading>
-                    )}
-                    <Image objectFit="cover" {...computeImageProps(photo)} />
-                  </Card>
-                </CardReveal>
-              ))}
-            </div>
-          )}
+            {vrArticle && (
+              <CardsWrapper columns={false}>
+                <ArticleCard {...computeArticleCardProps(vrArticle)} />
+              </CardsWrapper>
+            )}
+          </div>
 
-          {pageFields.manifestoItems.map(({ fields, sys }) => (
-            <Manifesto
-              key={sys.id}
-              short={fields.shortText}
-              long={fields.longText}
-            />
-          ))}
+          <div
+            ref={movingRef}
+            className={clsx(movingInView && styles["Section-inView"])}
+          >
+            {movingTitle && (
+              <Heading className={styles.LargeTitle} level="h0" tag="h2">
+                {movingTitle}
+              </Heading>
+            )}
 
-          <CardsWrapper columns={false}>
-            <ActionCardProjects
-              {...computeActionCardProjectsProps(globalSettings)}
-            />
-          </CardsWrapper>
+            {movingArticle && (
+              <CardsWrapper columns={false}>
+                <ArticleCard {...computeArticleCardProps(movingArticle)} />
+              </CardsWrapper>
+            )}
+          </div>
+
+          <div
+            ref={photosRef}
+            className={clsx(photosInView && styles["Section-inView"])}
+            id="photos"
+          >
+            {photosTitle && (
+              <Heading className={styles.LargeTitle} level="h0" tag="h2">
+                {photosTitle}
+              </Heading>
+            )}
+
+            {!!photosGrid.length && (
+              <div className={styles.PhotosGrid}>
+                {photosGrid.map((photo, photoIndex) => (
+                  <CardReveal
+                    className={styles.PhotosGridCell}
+                    key={photoIndex}
+                  >
+                    <Card className={styles.PhotosGridCard}>
+                      {photo.fields.title && (
+                        <Heading
+                          className={styles.PhotosGridYear}
+                          level="h6"
+                          tag="span"
+                        >
+                          {photo.fields.title}
+                        </Heading>
+                      )}
+                      <Image objectFit="cover" {...computeImageProps(photo)} />
+                    </Card>
+                  </CardReveal>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </main>
 
@@ -111,7 +144,8 @@ export default function About({ pageFields, globalSettings }) {
 export async function getStaticProps() {
   const props = await fetchFromCache(
     "page-about",
-    async () => await fetchCustomPage("customPagePeople")
+    async () => await fetchCustomPage("customPagePeople"),
+    true
   );
 
   return {

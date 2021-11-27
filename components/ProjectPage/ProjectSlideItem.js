@@ -22,26 +22,29 @@ export function computeProjectSlideItemProps({ fields }) {
   if (!desktopImage && !mobileImage) return null;
 
   const desktop = {
-    ...computeImageProps(desktopImage),
+    ...computeImageProps(desktopImage, 2000),
     objectFit: computeObjectFit(desktopImageSize || "Cover"),
     objectPosition: (desktopImagePosition || "Center Center").toLowerCase(),
   };
 
-  const mobile = {
-    ...computeImageProps(mobileImage || desktopImage, 2000),
-    objectFit: desktop.objectFit,
-    objectPosition: desktop.objectPosition,
-  };
+  const mobile = mobileImage
+    ? computeImageProps(mobileImage, 1000)
+    : computeImageProps(desktopImage, 1600);
+  mobile.objectFit = mobileImageFit
+    ? computeObjectFit(mobileImageFit)
+    : desktop.objectFit;
+  mobile.objectPosition = mobileImagePosition
+    ? mobileImagePosition.toLowerCase()
+    : desktop.objectPosition;
 
-  if (mobileImageFit) mobile.objectFit = computeObjectFit(mobileImageFit);
-  if (mobileImagePosition) mobile.objectPosition.toLowerCase();
+  const backgroundProps = {
+    desktop,
+    mobile,
+  };
 
   return {
     backgroundColor,
-    backgroundProps: {
-      desktop,
-      mobile,
-    },
+    backgroundProps,
   };
 }
 
@@ -49,6 +52,7 @@ function ProjectSlideItem({
   className,
   backgroundProps,
   style = {},
+  backgroundLoading,
   ...props
 }) {
   const [isMobile, setIsMobile] = useState(null);
@@ -95,7 +99,12 @@ function ProjectSlideItem({
       }}
       {...props}
     >
-      <Image className={styles.Background} {...backgroundPropsComputed} />
+      <Image
+        className={styles.Background}
+        {...backgroundPropsComputed}
+        variant="ghost"
+        loading={backgroundLoading}
+      />
     </ProjectSlide>
   );
 }

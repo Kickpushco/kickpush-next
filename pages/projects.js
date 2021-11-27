@@ -36,6 +36,7 @@ export default function Projects({ pageFields, globalSettings }) {
               <ProjectCard
                 key={project.sys.id}
                 {...computeProjectCardProps(project, globalSettings)}
+                id={project.fields.slug}
               />
             ))}
           </CardsWrapper>

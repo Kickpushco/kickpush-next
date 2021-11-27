@@ -85,7 +85,7 @@ function Image({
   const { imageSupport } = useAppContext();
   const { ref, inView } = useInView({
     triggerOnce: true,
-    rootMargin: "200px 0px",
+    rootMargin: "0px 0px 800px 0px",
     skip: !blurSrc,
   });
 
@@ -121,7 +121,6 @@ function Image({
     ...props,
     style: {
       objectPosition: objectFit && objectPosition,
-      ...(props.style || {}),
     },
   };
 
@@ -147,7 +146,7 @@ function Image({
         />
       </noscript>
 
-      <picture>
+      <picture data-loading={loading}>
         {!blurSrc && (
           <>
             {srcSet.avif && <source srcSet={srcSet.avif} type="image/avif" />}
@@ -164,8 +163,6 @@ function Image({
           <img src={loaded ? computedSrc : blurSrc} alt={alt} {...imageProps} />
         )}
       </picture>
-
-      {blurSrc && variant !== "ghost" && <span className={styles.Blur} />}
     </div>
   );
 }

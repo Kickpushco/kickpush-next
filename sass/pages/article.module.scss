@@ -49,14 +49,59 @@
     min-height: 100vh;
   }
 
-  &-light {
+  &-dark {
+    --hero-avatar-border: var(--background-color, #{$color-kickpush-white});
+
     background: $color-kickpush-white;
     color: $color-kickpush-black;
+  }
+
+  &-light {
+    --hero-avatar-border: var(--background-color, #{$color-kickpush-black});
+
+    background: $color-kickpush-black;
+    color: $color-kickpush-white;
   }
 }
 
 .Hero {
   text-align: left;
+}
+.HeroTitle {
+  margin-bottom: 0;
+}
+.HeroContent {
+  --hero-avatar-size: #{rem(72)};
+
+  align-items: center;
+  margin-top: rem(24); // TODO: Var
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: rem(24);
+
+  > :first-child:last-child {
+    grid-column: 1 / span 2;
+  }
+}
+.HeroAvatars {
+  display: flex;
+}
+.HeroAvatar {
+  background: var(--hero-avatar-border);
+  border: rem(5) solid var(--hero-avatar-border);
+  width: var(--hero-avatar-size);
+  height: var(--hero-avatar-size);
+  border-radius: calc(var(--hero-avatar-size) / 2);
+  position: relative;
+  margin: rem(-4);
+  overflow: hidden;
+
+  &:not(:first-child) {
+    margin-left: calc(var(--hero-avatar-size) / -2);
+  }
+}
+.HeroCopy {
+  @include reveal-animation("copy");
 }
 
 // TODO: Abstract this

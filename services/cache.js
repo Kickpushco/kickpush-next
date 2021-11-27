@@ -40,7 +40,7 @@ export async function fetchFromCache(cacheId, fetchData, bust = false) {
     cacheLog(`Cache created for "${cacheId}"`);
   } catch (error) {
     cacheLog(`Error: No cache created for "${cacheId}"`);
-    cacheLog(error);
+    cacheLog(JSON.stringify(error, null, 2));
   }
 
   return data;

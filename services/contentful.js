@@ -34,15 +34,16 @@ export async function fetchCustomPage(contentType, args = {}) {
   };
 }
 
-export async function fetchProjectIds() {
+export async function fetchContentTypeSlugs(contentType) {
   const query = {
-    content_type: "project",
+    content_type: contentType,
     include: 0,
   };
 
   const entries = await client.getEntries(query);
 
-  if (!entries.items) throw new Error(`Error fetching projects`);
+  if (!entries.items)
+    throw new Error(`Error fetching entries (${contentType})`);
 
   return entries.items.map((project) => project.fields.slug);
 }
@@ -63,6 +64,22 @@ export async function fetchProject(slug) {
     ...pageFields,
     ...projectPage.fields,
   };
+}
+
+export async function fetchArticle(slug) {
+  const query = {
+    limit: 1,
+    // include: 2,
+    content_type: "article",
+    "fields.slug": slug,
+  };
+
+  const entries = await client.getEntries(query);
+  if (!entries.items) throw new Error(`Error fetching Article for ${slug}`);
+
+  console.log(entries.items[0].fields);
+
+  return entries.items[0].fields;
 }
 
 const TEXT_COLOR_MAP = {

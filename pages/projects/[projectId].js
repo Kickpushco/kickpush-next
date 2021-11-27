@@ -10,9 +10,9 @@ import { useAppContext } from "context/state";
 
 import {
   computeTextColor,
+  fetchContentTypeSlugs,
   fetchCustomPage,
   fetchProject,
-  fetchProjectIds,
 } from "services/contentful";
 import { fetchFromCache } from "services/cache";
 
@@ -29,13 +29,13 @@ import ProjectSlideItem, {
 import ProjectSlide from "components/ProjectPage/ProjectSlide";
 import ProjectSpacer from "components/ProjectPage/ProjectSpacer";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
-
-import styles from "sass/pages/project.module.scss";
+import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 import ProjectCard, {
   computeProjectCardProps,
 } from "components/ProjectCard/ProjectCard";
 import { CardsWrapper } from "components/Card/Card";
-import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
+
+import styles from "sass/pages/project.module.scss";
 
 const PROJECT_CLOSE_URL = "/projects";
 
@@ -96,7 +96,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
             (footerInView || cardTransitioning) && styles["Close-hidden"]
           )}
         >
-          <Link href={PROJECT_CLOSE_URL} passHref>
+          <Link href={`${PROJECT_CLOSE_URL}#${slug}`} passHref>
             <CloseButton
               className={styles.CloseButton}
               aria-label="Back to projects"
@@ -121,7 +121,10 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
 
           {slides.map((slide, slideIndex) => (
             <Fragment key={slideIndex}>
-              <ProjectSlideItem {...computeProjectSlideItemProps(slide)} />
+              <ProjectSlideItem
+                backgroundLoading={slideIndex < 3 ? "priority" : undefined}
+                {...computeProjectSlideItemProps(slide)}
+              />
               <ProjectSpacer />
             </Fragment>
           ))}
@@ -200,8 +203,9 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const projects = await fetchFromCache(
-    "global-projects",
-    async () => await fetchProjectIds()
+    "global-project-slugs",
+    async () => await fetchContentTypeSlugs("project"),
+    true
   );
 
   const paths = projects.map((projectId) => ({
