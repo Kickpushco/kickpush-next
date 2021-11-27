@@ -31,8 +31,6 @@ import { joinStrings } from "utils/joinStrings";
 export default function Article({ pageFields, globalSettings }) {
   const { metaImage, authors = [], title, backgroundColor, link } = pageFields;
 
-  console.log(pageFields);
-
   const textColor = computeTextColor(pageFields.textColor);
 
   const intro = useMemo(() => {

@@ -69,15 +69,13 @@ export async function fetchProject(slug) {
 export async function fetchArticle(slug) {
   const query = {
     limit: 1,
-    // include: 2,
+    include: 2,
     content_type: "article",
     "fields.slug": slug,
   };
 
   const entries = await client.getEntries(query);
   if (!entries.items) throw new Error(`Error fetching Article for ${slug}`);
-
-  console.log(entries.items[0].fields);
 
   return entries.items[0].fields;
 }

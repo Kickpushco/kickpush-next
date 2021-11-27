@@ -34,10 +34,6 @@ export function AppContextProvider({ children }) {
     asyncTestImageSupport();
   }, []);
 
-  useEffect(() => {
-    console.log(cardTransitioning);
-  }, [cardTransitioning]);
-
   const value = useMemo(() => {
     return {
       noMotion,
