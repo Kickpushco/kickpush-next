@@ -29,8 +29,6 @@ export default function About({ pageFields, globalSettings }) {
     metaImage,
     heroTitle,
     heroArticle,
-    heroArticleDate,
-    heroArticleCta,
     vrTitle,
     vrArticle,
     movingTitle,
@@ -54,8 +52,8 @@ export default function About({ pageFields, globalSettings }) {
             <CardsWrapper columns={false}>
               <ArticleCard
                 {...computeArticleCardProps(heroArticle)}
-                displayDate={heroArticleDate}
-                actionCta={heroArticleCta}
+                displayDate={pageFields.heroArticleDate}
+                actionCta={pageFields.heroArticleCta}
               />
             </CardsWrapper>
           )}
@@ -74,7 +72,11 @@ export default function About({ pageFields, globalSettings }) {
 
             {vrArticle && (
               <CardsWrapper columns={false}>
-                <ArticleCard {...computeArticleCardProps(vrArticle)} />
+                <ArticleCard
+                  {...computeArticleCardProps(vrArticle)}
+                  displayDate={pageFields.vrArticleDate}
+                  actionCta={pageFields.vrArticleCta}
+                />
               </CardsWrapper>
             )}
           </div>
@@ -91,7 +93,11 @@ export default function About({ pageFields, globalSettings }) {
 
             {movingArticle && (
               <CardsWrapper columns={false}>
-                <ArticleCard {...computeArticleCardProps(movingArticle)} />
+                <ArticleCard
+                  {...computeArticleCardProps(movingArticle)}
+                  displayDate={pageFields.movingArticleDate}
+                  actionCta={pageFields.movingArticleCta}
+                />
               </CardsWrapper>
             )}
           </div>

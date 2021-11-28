@@ -2,6 +2,8 @@
 
 @import "../../sass/global";
 
+@value breakpointDesktop: #{em($bp-desktop)};
+
 .Main {
   margin-bottom: 0;
   display: flex;
@@ -11,32 +13,18 @@
 
 .Close {
   position: fixed;
-  pointer-events: none;
-  top: 0;
-  height: var(--nav-height);
-  right: calc(var(--gutter) - #{rem(12)});
-  z-index: 102;
-  display: flex;
+  top: rem(12);
+  right: rem(12);
+  z-index: 10;
 
   @include min-width($bp-hamburger-menu) {
     top: rem(24);
     right: rem(24);
-    height: auto;
-  }
-
-  @include min-width($bp-tablet) {
-    transition: 200ms ease-in-out;
-    transition-property: opacity, transform;
-
-    &-hidden {
-      opacity: 0;
-      transform: scale(0.8);
-    }
   }
 }
-.CloseButton {
-  margin: auto 0;
-  pointer-events: auto;
+
+.ArticleContainer {
+  max-width: rem(820);
 }
 
 .Layer {
@@ -45,12 +33,13 @@
   overflow: hidden;
   flex-grow: 1;
 
-  @include min-width($bp-tablet) {
+  @include min-width($bp-desktop) {
     min-height: 100vh;
   }
 
   &-dark {
     --hero-avatar-border: var(--background-color, #{$color-kickpush-white});
+    --focus-ring: #{$color-kickpush-black-focus-ring};
 
     background: $color-kickpush-white;
     color: $color-kickpush-black;
@@ -58,6 +47,7 @@
 
   &-light {
     --hero-avatar-border: var(--background-color, #{$color-kickpush-black});
+    --focus-ring: #{$color-kickpush-white-focus-ring};
 
     background: $color-kickpush-black;
     color: $color-kickpush-white;
@@ -71,24 +61,36 @@
   margin-bottom: 0;
 }
 .HeroContent {
-  --hero-avatar-size: #{rem(72)};
-
-  align-items: center;
   margin-top: rem(24); // TODO: Var
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: rem(24);
 
-  > :first-child:last-child {
-    grid-column: 1 / span 2;
+  @include min-width($bp-tiny) {
+    --hero-avatar-size: #{rem(48)};
+
+    align-items: center;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: calc(var(--gutter) / 2);
+
+    > :first-child:last-child {
+      grid-column: 1 / span 2;
+    }
+  }
+  @include min-width($bp-tablet) {
+    --hero-avatar-size: #{rem(64)};
+  }
+  @include min-width($bp-desktop) {
+    --hero-avatar-size: #{rem(72)};
   }
 }
 .HeroAvatars {
-  display: flex;
+  display: none;
+  @include min-width($bp-tiny) {
+    display: flex;
+  }
 }
 .HeroAvatar {
   background: var(--hero-avatar-border);
-  border: rem(5) solid var(--hero-avatar-border);
+  border: rem(3) solid var(--hero-avatar-border);
   width: var(--hero-avatar-size);
   height: var(--hero-avatar-size);
   border-radius: calc(var(--hero-avatar-size) / 2);
@@ -99,30 +101,142 @@
   &:not(:first-child) {
     margin-left: calc(var(--hero-avatar-size) / -2);
   }
+
+  @include min-width($bp-tablet) {
+    border-width: rem(5);
+  }
 }
 .HeroCopy {
   @include reveal-animation("copy");
 }
+.HeroIntro {
+  margin-bottom: 0;
+}
+.HeroPosted {
+  margin-bottom: 0;
+}
 
-// TODO: Abstract this
+.Body {
+  margin-bottom: var(--section-space);
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  a {
+    @include can-hover {
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+.Heading {
+  margin-top: 2em;
+}
+.Paragraph,
+.List {
+  font-weight: $font-weight-book;
+  margin-top: 2em;
+
+  .Heading + & {
+    margin-top: 1em;
+  }
+}
+.List .List {
+  margin-top: 0;
+}
+.ListItem {
+  margin: 0.5em 0;
+}
+.Blockquote {
+  padding-left: calc(var(--gutter) / 2);
+  border-left: rem(5) solid currentColor;
+
+  .Paragraph {
+    font-weight: $font-weight-medium;
+
+    &:not(:first-child) {
+      margin-top: 1em;
+    }
+  }
+}
+.Image {
+  margin-top: var(--gutter);
+}
+.ImageCaption {
+  text-align: center;
+  margin-top: 0.5em;
+  opacity: 0.7;
+}
+
 .Footer {
-  --card-shadow-color: #{rgba(black, 0.1)};
-
+  display: flex;
+  align-items: center;
+  color: $color-kickpush-dark-red;
   justify-content: center;
   position: relative;
   bottom: 0;
   z-index: 3;
   min-height: 0;
   overflow: visible;
-  padding-top: var(--gutter);
-  padding-bottom: var(--gutter);
+  padding: var(--gutter) 0;
 
-  @include min-width($bp-desktop) {
+  @include high-contrast {
+    color: $color-kickpush-dark-red-high-contrast;
+  }
+
+  @include min-width($bp-tablet) {
     padding-top: 0;
     padding-bottom: 0;
-    min-height: 100vh;
+    min-height: math.div(560, 1440) * 100vw;
+  }
+
+  @include min-width($bp-desktop) {
     z-index: 1;
     position: sticky;
     overflow: hidden;
+  }
+
+  svg {
+    border-radius: rem(4);
+    transition: transform 200ms ease-in-out;
+    width: calc(var(--gutter) * 2);
+    height: auto;
+    display: block;
+
+    @include min-width($bp-tablet) {
+      width: math.div(160, 1440) * 100vw;
+    }
+  }
+
+  path {
+    fill: currentColor;
+  }
+
+  @include can-hover {
+    &:hover {
+      svg {
+        transform: scale(0.85);
+      }
+    }
+  }
+
+  &:focus {
+    svg {
+      outline: var(--focus-ring) rem(2) solid;
+      outline-offset: math.div(20, 1440) * 100vw;
+    }
+  }
+  &:not(:focus-visible) {
+    svg {
+      outline: 0;
+    }
+  }
+  &:focus-visible {
+    svg {
+      outline: var(--focus-ring) rem(2) solid;
+    }
   }
 }

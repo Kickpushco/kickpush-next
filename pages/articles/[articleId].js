@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import clsx from "clsx";
 import Link from "next/link";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { BLOCKS, MARKS } from "@contentful/rich-text-types";
 
 import {
   computeTextColor,
@@ -10,8 +12,9 @@ import {
 } from "services/contentful";
 import { fetchFromCache } from "services/cache";
 
+import { joinStrings } from "utils/joinStrings";
+
 import { CloseButton } from "components/Button/CloseButton";
-import { CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
 import Hero from "components/Hero/Hero";
@@ -19,23 +22,34 @@ import Title from "components/Meta/Title";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 import Paragraph from "components/Paragraph/Paragraph";
-import ProjectSlide from "components/ProjectPage/ProjectSlide";
-import ActionCardAbout, {
-  computeActionCardAboutProps,
-} from "components/ActionCard/ActionCardAbout";
+import Image, { computeImageProps } from "components/Image/Image";
+
+import IconClose from "assets/icons/20-close.svg";
 
 import styles from "sass/pages/article.module.scss";
-import Image, { computeImageProps } from "components/Image/Image";
-import { joinStrings } from "utils/joinStrings";
+
+const CLOSE_URL = "/about";
+
+function ArticleHeading({ ...props }) {
+  return <Heading className={styles.Heading} {...props} />;
+}
 
 export default function Article({ pageFields, globalSettings }) {
-  const { metaImage, authors = [], title, backgroundColor, link } = pageFields;
+  const {
+    metaImage,
+    authors = [],
+    title,
+    date,
+    originalPublisherName,
+    backgroundColor,
+    link,
+    body,
+  } = pageFields;
 
   const textColor = computeTextColor(pageFields.textColor);
 
   const intro = useMemo(() => {
-    const { authors, date } = pageFields;
-    if (!authors && !date) return "";
+    if (!authors.length && !date) return null;
 
     let intro = "Written ";
     if (authors.length) {
@@ -52,7 +66,105 @@ export default function Article({ pageFields, globalSettings }) {
     }
 
     return intro;
-  }, [pageFields]);
+  }, [pageFields, pageFields, link]);
+
+  const publisherName = useMemo(() => {
+    if (!link) return null;
+    return originalPublisherName || new URL(link).host;
+  }, [link, originalPublisherName]);
+
+  const richText = useMemo(() => {
+    if (!body) return null;
+
+    const nestedMarks = {
+      [MARKS.BOLD]: (text) => <strong>{text}</strong>,
+      [MARKS.ITALIC]: (text) => <em>{text}</em>,
+    };
+    const nestedBlocks = {
+      [BLOCKS.HEADING_2]: (node, children) => (
+        <ArticleHeading level="h3" tag="h2">
+          {children}
+        </ArticleHeading>
+      ),
+      [BLOCKS.HEADING_3]: (node, children) => (
+        <ArticleHeading level="h4" tag="h3">
+          {children}
+        </ArticleHeading>
+      ),
+      [BLOCKS.HEADING_4]: (node, children) => (
+        <ArticleHeading level="h5" tag="h4">
+          {children}
+        </ArticleHeading>
+      ),
+      [BLOCKS.UL_LIST]: (node, children) => (
+        <Paragraph tag="ul" className={styles.List}>
+          {children}
+        </Paragraph>
+      ),
+      [BLOCKS.OL_LIST]: (node, children) => (
+        <Paragraph tag="ol" className={styles.List}>
+          {children}
+        </Paragraph>
+      ),
+      [BLOCKS.QUOTE]: (node, children) => (
+        <blockquote className={styles.Blockquote}>{children}</blockquote>
+      ),
+      [BLOCKS.EMBEDDED_ASSET]: (node) => {
+        const asset = node.data.target;
+        const { file, description } = asset.fields;
+        if (!file.contentType.startsWith("image/")) return null;
+
+        return (
+          <>
+            <Image
+              className={styles.Image}
+              {...computeImageProps(asset)}
+              variant="ghost"
+            />
+            {description && (
+              <Paragraph className={styles.ImageCaption} level="medium">
+                {description}
+              </Paragraph>
+            )}
+          </>
+        );
+      },
+    };
+
+    const options = {
+      renderMark: nestedMarks,
+      renderNode: {
+        ...nestedBlocks,
+        [BLOCKS.PARAGRAPH]: (node, children) => (
+          <Paragraph className={styles.Paragraph}>{children}</Paragraph>
+        ),
+        [BLOCKS.LIST_ITEM]: (node, children) => {
+          const normalisedListChildren = documentToReactComponents(node, {
+            renderMark: nestedMarks,
+            renderNode: {
+              ...nestedBlocks,
+              [BLOCKS.PARAGRAPH]: (node, children) => children,
+              [BLOCKS.LIST_ITEM]: (node, children) => (
+                <li className={styles.ListItem}>{children}</li>
+              ),
+            },
+          });
+          return normalisedListChildren;
+        },
+      },
+    };
+
+    return documentToReactComponents(body.fields.body, options);
+  }, [body]);
+
+  function handleScrollFooter() {
+    if (!matchMedia(`(min-width: ${styles.breakpointDesktop})`).matches) return;
+
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
+  }
 
   return (
     <>
@@ -62,7 +174,7 @@ export default function Article({ pageFields, globalSettings }) {
 
       <main className={styles.Main}>
         <div className={clsx(styles.Close)}>
-          <Link href="/about" passHref>
+          <Link href={CLOSE_URL} passHref>
             <CloseButton
               className={styles.CloseButton}
               aria-label="Back to about"
@@ -78,7 +190,11 @@ export default function Article({ pageFields, globalSettings }) {
             "--background-color": backgroundColor,
           }}
         >
-          <Hero className={styles.Hero}>
+          <Hero
+            className={styles.Hero}
+            containerClassName={styles.ArticleContainer}
+            noNav
+          >
             <Heading className={styles.HeroTitle} level="h1">
               {title}
             </Heading>
@@ -105,34 +221,38 @@ export default function Article({ pageFields, globalSettings }) {
                 )}
 
                 <div className={styles.HeroCopy}>
-                  {intro && <Paragraph>{intro}</Paragraph>}
-                  {link && (
-                    <p>
-                      Originally posted{" "}
+                  {intro && (
+                    <Paragraph className={styles.HeroIntro}>{intro}</Paragraph>
+                  )}
+                  {publisherName && (
+                    <Paragraph className={styles.HeroPosted} level="medium">
+                      Originally posted on{" "}
                       <a href={link} target="_blank" rel="noreferrer">
-                        here
+                        {publisherName}
                       </a>
-                    </p>
+                    </Paragraph>
                   )}
                 </div>
               </div>
             )}
           </Hero>
 
-          {/* CONTENT TO COME HERE */}
+          <div
+            className={clsx("container", styles.ArticleContainer, styles.Body)}
+          >
+            {richText}
+          </div>
         </div>
 
-        {/* <ProjectSlide className={styles.Footer} variant="light">
-          <div className={clsx(styles.Container, "container")}>
-            <CardsWrapper columns={false}>
-              <ActionCardAbout
-                {...computeActionCardAboutProps(globalSettings)}
-              />
-            </CardsWrapper>
-          </div>
-
-          <PrivacyPolicy className={styles.PrivacyPolicy} />
-        </ProjectSlide> */}
+        <Link href={CLOSE_URL}>
+          <a
+            aria-label="Back to about"
+            className={styles.Footer}
+            onFocus={handleScrollFooter}
+          >
+            <IconClose role="presentation" />
+          </a>
+        </Link>
       </main>
 
       <PrivacyPolicy />

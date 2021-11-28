@@ -24,7 +24,7 @@
 
   @include max-width($bp-unstack-cards) {
     &::before {
-      mask: linear-gradient(rgba(black, 0), rgba(black, 0.7) 33.3%, black);
+      mask: linear-gradient(rgba(black, 0), rgba(black, 0.8) 20%, black);
       content: "";
       position: absolute;
       top: calc(var(--card-padding) * -2);

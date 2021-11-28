@@ -3,6 +3,10 @@
 .Slide {
   min-height: 100vh;
 
+  @include max-width($bp-tablet) {
+    padding-top: calc(var(--section-space) / 2 + var(--nav-height));
+  }
+
   &-inView {
     --reveal-animation-state: running;
   }

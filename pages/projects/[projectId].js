@@ -90,20 +90,16 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
       <ThemeColor color={styles.kickpushBlack} />
 
       <main className={styles.Main}>
-        <div
-          className={clsx(
-            styles.Close,
-            (footerInView || cardTransitioning) && styles["Close-hidden"]
-          )}
-        >
-          <Link href={`${PROJECT_CLOSE_URL}#${slug}`} passHref>
-            <CloseButton
-              className={styles.CloseButton}
-              aria-label="Back to projects"
-              variant="dark"
-            />
-          </Link>
-        </div>
+        <Link href={`${PROJECT_CLOSE_URL}#${slug}`} passHref>
+          <CloseButton
+            className={clsx(
+              styles.Close,
+              (footerInView || cardTransitioning) && styles["Close-hidden"]
+            )}
+            aria-label="Back to projects"
+            variant="dark"
+          />
+        </Link>
 
         <div
           className={styles.Layer}

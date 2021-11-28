@@ -7,17 +7,13 @@
 
 .Close {
   position: fixed;
-  pointer-events: none;
-  top: 0;
-  height: var(--nav-height);
-  right: calc(var(--gutter) - #{rem(12)});
+  top: rem(12);
+  right: rem(12);
   z-index: 102;
-  display: flex;
 
   @include min-width($bp-hamburger-menu) {
     top: rem(24);
     right: rem(24);
-    height: auto;
   }
 
   @include min-width($bp-tablet) {
@@ -27,12 +23,9 @@
     &-hidden {
       opacity: 0;
       transform: scale(0.8);
+      pointer-events: none;
     }
   }
-}
-.CloseButton {
-  margin: auto 0;
-  pointer-events: auto;
 }
 
 .Main {

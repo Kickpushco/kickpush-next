@@ -53,7 +53,8 @@ function ArticleCard({
     >
       <Heading
         className={styles.Title}
-        level="h3"
+        level="h4"
+        tag="h3"
         style={{
           "--card-background": backgroundColor,
         }}

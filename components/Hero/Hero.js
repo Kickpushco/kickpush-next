@@ -4,10 +4,14 @@ import Paragraph from "components/Paragraph/Paragraph";
 
 import styles from "./Hero.module.scss";
 
-function Hero({ className, children }) {
+function Hero({ className, containerClassName, children, noNav }) {
   return (
-    <section className={clsx(className, styles.Hero)}>
-      <div className={clsx("container", styles.Container)}>{children}</div>
+    <section
+      className={clsx(className, styles.Hero, noNav && styles["Hero-noNav"])}
+    >
+      <div className={clsx("container", containerClassName, styles.Container)}>
+        {children}
+      </div>
     </section>
   );
 }

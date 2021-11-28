@@ -3,8 +3,12 @@
 .Hero {
   --reveal-animation-state: running;
 
-  margin: calc(var(--section-space) / 2) 0 var(--section-space);
+  margin: calc(var(--section-space) / 2) 0;
   width: 100%;
+
+  &-noNav {
+    margin-top: var(--section-space);
+  }
 
   @include min-width($bp-mobile) {
     text-align: center;

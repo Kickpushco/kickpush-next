@@ -1,13 +1,13 @@
 import { forwardRef, useCallback, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
+import { useAppContext } from "context/state";
+import { useRouter } from "next/router";
 
 import Action from "components/Action/Action";
 import Card, { CardReveal, CARD_DEFAULT_SIZE } from "components/Card/Card";
 import Image from "components/Image/Image";
 
 import styles from "./ActionCard.module.scss";
-import { useAppContext } from "context/state";
-import { useRouter } from "next/router";
 
 const ActionCard = forwardRef(
   (
