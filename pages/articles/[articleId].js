@@ -1,8 +1,11 @@
 import { useMemo } from "react";
 import clsx from "clsx";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, MARKS } from "@contentful/rich-text-types";
+
+import useEscKey from "hooks/useEscKey";
 
 import {
   computeTextColor,
@@ -28,14 +31,15 @@ import IconClose from "assets/icons/20-close.svg";
 
 import styles from "sass/pages/article.module.scss";
 
-const CLOSE_URL = "/about";
-
 function ArticleHeading({ ...props }) {
   return <Heading className={styles.Heading} {...props} />;
 }
 
 export default function Article({ pageFields, globalSettings }) {
+  const router = useRouter();
+
   const {
+    slug,
     metaImage,
     authors = [],
     title,
@@ -46,26 +50,30 @@ export default function Article({ pageFields, globalSettings }) {
     body,
   } = pageFields;
 
+  const articleCloseUrl = `/about#${slug}`;
+
   const textColor = computeTextColor(pageFields.textColor);
 
-  const intro = useMemo(() => {
-    if (!authors.length && !date) return null;
+  useEscKey(() => {
+    router.push(articleCloseUrl);
+  });
 
-    let intro = "Written ";
+  const intro = useMemo(() => {
+    const parts = [];
+
     if (authors.length) {
-      const authorsNames = joinStrings(authors.map((a) => a.fields.name));
-      intro += `by ${authorsNames} `;
+      parts.push(joinStrings(authors.map((a) => a.fields.name)));
     }
+
     if (date) {
       const formattedDate = new Intl.DateTimeFormat("en-US", {
         year: "numeric",
         month: "long",
-        day: "numeric",
       }).format(new Date(date));
-      intro += `on ${formattedDate}`;
+      parts.push(formattedDate);
     }
 
-    return intro;
+    return parts.join(", ");
   }, [pageFields, pageFields, link]);
 
   const publisherName = useMemo(() => {
@@ -174,7 +182,7 @@ export default function Article({ pageFields, globalSettings }) {
 
       <main className={styles.Main}>
         <div className={clsx(styles.Close)}>
-          <Link href={CLOSE_URL} passHref>
+          <Link href={articleCloseUrl} passHref>
             <CloseButton
               className={styles.CloseButton}
               aria-label="Back to about"
@@ -244,7 +252,7 @@ export default function Article({ pageFields, globalSettings }) {
           </div>
         </div>
 
-        <Link href={CLOSE_URL}>
+        <Link href={articleCloseUrl}>
           <a
             aria-label="Back to about"
             className={styles.Footer}

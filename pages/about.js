@@ -37,6 +37,11 @@ export default function About({ pageFields, globalSettings }) {
     photosGrid,
   } = pageFields;
 
+  const heroArticleProps = heroArticle && computeArticleCardProps(heroArticle);
+  const vrArticleProps = vrArticle && computeArticleCardProps(vrArticle);
+  const movingArticleProps =
+    movingArticle && computeArticleCardProps(movingArticle);
+
   return (
     <>
       <Title shortTitle={pageFields.shortName} longTitle={heroTitle} />
@@ -46,12 +51,12 @@ export default function About({ pageFields, globalSettings }) {
       <Nav {...computeNavProps(globalSettings)} selected="about" />
 
       <main>
-        <Hero>
+        <Hero id={heroArticleProps?.id}>
           <Heading level="h1">{heroTitle}</Heading>
-          {heroArticle && (
+          {heroArticleProps && (
             <CardsWrapper columns={false}>
               <ArticleCard
-                {...computeArticleCardProps(heroArticle)}
+                {...heroArticleProps}
                 displayDate={pageFields.heroArticleDate}
                 actionCta={pageFields.heroArticleCta}
               />
@@ -63,6 +68,7 @@ export default function About({ pageFields, globalSettings }) {
           <div
             ref={vrRef}
             className={clsx(vrInView && styles["Section-inView"])}
+            id={vrArticleProps?.id}
           >
             {vrTitle && (
               <Heading className={styles.LargeTitle} level="h0" tag="h2">
@@ -70,10 +76,10 @@ export default function About({ pageFields, globalSettings }) {
               </Heading>
             )}
 
-            {vrArticle && (
+            {vrArticleProps && (
               <CardsWrapper columns={false}>
                 <ArticleCard
-                  {...computeArticleCardProps(vrArticle)}
+                  {...vrArticleProps}
                   displayDate={pageFields.vrArticleDate}
                   actionCta={pageFields.vrArticleCta}
                 />
@@ -84,6 +90,7 @@ export default function About({ pageFields, globalSettings }) {
           <div
             ref={movingRef}
             className={clsx(movingInView && styles["Section-inView"])}
+            id={movingArticleProps?.id}
           >
             {movingTitle && (
               <Heading className={styles.LargeTitle} level="h0" tag="h2">
@@ -91,10 +98,10 @@ export default function About({ pageFields, globalSettings }) {
               </Heading>
             )}
 
-            {movingArticle && (
+            {movingArticleProps && (
               <CardsWrapper columns={false}>
                 <ArticleCard
-                  {...computeArticleCardProps(movingArticle)}
+                  {...movingArticleProps}
                   displayDate={pageFields.movingArticleDate}
                   actionCta={pageFields.movingArticleCta}
                 />

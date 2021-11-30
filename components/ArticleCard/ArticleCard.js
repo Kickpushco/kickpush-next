@@ -2,13 +2,13 @@ import clsx from "clsx";
 
 import { computeTextColor } from "services/contentful";
 
-import ActionCard from "components/ActionCard/ActionCard";
+import ActionCard, { ActionCardTitle } from "components/ActionCard/ActionCard";
 import Heading from "components/Heading/Heading";
 import { computeImageProps } from "components/Image/Image";
 
 import styles from "./ArticleCard.module.scss";
 
-export function computeArticleCardProps({ fields, sys }) {
+export function computeArticleCardProps({ fields }) {
   const { title, slug, backgroundColor, backgroundImage } = fields;
 
   const textColor = computeTextColor(fields.textColor);
@@ -17,7 +17,7 @@ export function computeArticleCardProps({ fields, sys }) {
 
   return {
     title,
-    id: sys.id,
+    id: slug,
     href: `/articles/${slug}`,
     backgroundColor,
     backgroundImageProps,
@@ -49,18 +49,14 @@ function ArticleCard({
         </Heading>
       }
       actionCta={actionCta}
+      style={{
+        "--card-background": backgroundColor,
+      }}
       {...props}
     >
-      <Heading
-        className={styles.Title}
-        level="h4"
-        tag="h3"
-        style={{
-          "--card-background": backgroundColor,
-        }}
-      >
+      <ActionCardTitle className={styles.Title}>
         <span>{title}</span>
-      </Heading>
+      </ActionCardTitle>
     </ActionCard>
   );
 }

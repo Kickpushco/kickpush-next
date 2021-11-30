@@ -16,11 +16,6 @@
 
   h1 {
     @include reveal-animation("heading");
-
-    @include min-max-width($bp-tiny, $bp-mobile) {
-      font-size: rem(52);
-      line-height: rem(56);
-    }
   }
 }
 

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { computeTextColor } from "services/contentful";
 
-import ActionCard from "components/ActionCard/ActionCard";
+import ActionCard, { ActionCardTitle } from "components/ActionCard/ActionCard";
 import Heading from "components/Heading/Heading";
 import Paragraph from "components/Paragraph/Paragraph";
 import { computeImageProps } from "components/Image/Image";
@@ -60,9 +60,9 @@ function ProjectCard({
         size={size}
         {...props}
       >
-        <Heading className={styles.Title} level="h4" tag="h3">
+        <ActionCardTitle className={styles.Title} size={size}>
           {title}
-        </Heading>
+        </ActionCardTitle>
       </ActionCard>
     </Link>
   );

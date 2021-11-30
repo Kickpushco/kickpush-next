@@ -6,8 +6,23 @@ import { useRouter } from "next/router";
 import Action from "components/Action/Action";
 import Card, { CardReveal, CARD_DEFAULT_SIZE } from "components/Card/Card";
 import Image from "components/Image/Image";
+import Heading from "components/Heading/Heading";
 
 import styles from "./ActionCard.module.scss";
+
+export function ActionCardTitle({
+  className,
+  size = CARD_DEFAULT_SIZE,
+  ...props
+}) {
+  return (
+    <Heading
+      className={clsx(className, styles.Title, styles[`Title-${size}`])}
+      level="h3"
+      {...props}
+    />
+  );
+}
 
 const ActionCard = forwardRef(
   (

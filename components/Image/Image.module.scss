@@ -5,6 +5,7 @@ $image-blur-duration: 100ms;
 .Image {
   display: block;
   position: relative;
+  overflow: hidden;
 
   img,
   picture {

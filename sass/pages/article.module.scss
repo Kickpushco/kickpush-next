@@ -9,6 +9,10 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  @include max-width($bp-mobile) {
+    --container-gutter: #{rem(24)};
+  }
 }
 
 .Close {
@@ -58,11 +62,9 @@
   text-align: left;
 }
 .HeroTitle {
-  margin-bottom: 0;
+  margin-bottom: 0.5em;
 }
 .HeroContent {
-  margin-top: rem(24); // TODO: Var
-
   @include min-width($bp-tiny) {
     --hero-avatar-size: #{rem(48)};
 

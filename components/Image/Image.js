@@ -18,6 +18,8 @@ export function computeImageContentType(image) {
       return "jpg";
     case "image/png":
       return "png";
+    case "image/gif":
+      return "gif";
     case "image/svg+xml":
       return "svg";
     default:
@@ -50,12 +52,14 @@ export function computeImageProps(image, overrideWidth) {
     };
   }
 
-  const legacy = computeImageUrl(url, 75);
+  const quality = contentType === "gif" ? 60 : 85;
+
+  const legacy = computeImageUrl(url, quality);
 
   const srcSet = {
     legacy,
-    avif: contentType === "jpg" && computeImageUrl(url, 85, "avif", width),
-    webp: contentType === "png" && computeImageUrl(url, 85, "webp", width),
+    avif: contentType === "jpg" && computeImageUrl(url, quality, "avif", width),
+    webp: contentType === "png" && computeImageUrl(url, quality, "webp", width),
   };
 
   // WebP is very well supported so a good candidate for the blurSrc without

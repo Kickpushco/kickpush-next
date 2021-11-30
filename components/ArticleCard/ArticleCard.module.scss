@@ -1,21 +1,7 @@
 @import "../../sass/global";
 
-.Card {
-  @include min-max-width($bp-unstack-cards, $bp-tablet) {
-    aspect-ratio: auto;
-  }
-}
-
-.Title,
-.Subtitle {
-  @include min-width($bp-unstack-cards) {
-    max-width: 50%;
-  }
-}
-
 .Title {
   margin-top: auto;
-  margin-bottom: -0.1em;
   position: relative;
 
   > span {
@@ -24,7 +10,11 @@
 
   @include max-width($bp-unstack-cards) {
     &::before {
-      mask: linear-gradient(rgba(black, 0), rgba(black, 0.8) 20%, black);
+      mask: linear-gradient(
+        rgba(black, 0),
+        rgba(black, 0.8) calc(var(--card-padding) * 2),
+        black
+      );
       content: "";
       position: absolute;
       top: calc(var(--card-padding) * -2);

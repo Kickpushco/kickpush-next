@@ -43,6 +43,7 @@ html {
   --nav-height: #{rem(56)};
   --nav-offset: 0rem;
   --focus-ring: #{darken($color-kickpush-dark-red, 10%)};
+  --container-gutter: var(--gutter);
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -131,6 +132,6 @@ button,
 
 .container {
   margin: 0 auto;
-  width: calc(100% - (var(--gutter) * 2));
+  width: calc(100% - (var(--container-gutter) * 2));
   max-width: rem(940);
 }

@@ -37,8 +37,6 @@ import { CardsWrapper } from "components/Card/Card";
 
 import styles from "sass/pages/project.module.scss";
 
-const PROJECT_CLOSE_URL = "/projects";
-
 export default function Project({ pageFields, nextProject, globalSettings }) {
   const router = useRouter();
 
@@ -58,6 +56,8 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     slides = [],
   } = pageFields;
 
+  const projectCloseUrl = `/projects#${slug}`;
+
   const backgroundColor = pageFields.cardColor;
   const textColor = computeTextColor(pageFields.cardTextColor);
 
@@ -68,7 +68,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
   );
 
   useEscKey(() => {
-    router.push(PROJECT_CLOSE_URL);
+    router.push(projectCloseUrl);
   });
 
   function handleScrollFooter() {
@@ -90,7 +90,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
       <ThemeColor color={styles.kickpushBlack} />
 
       <main className={styles.Main}>
-        <Link href={`${PROJECT_CLOSE_URL}#${slug}`} passHref>
+        <Link href={projectCloseUrl} passHref>
           <CloseButton
             className={clsx(
               styles.Close,
