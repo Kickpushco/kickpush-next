@@ -26,8 +26,8 @@
     line-height: rem(22);
 
     @include min-width($bp-mobile) {
-      font-size: rem(18);
-      line-height: rem(26);
+      font-size: rem(19);
+      line-height: rem(28);
     }
 
     @include min-width($bp-tablet) {
@@ -48,10 +48,5 @@
       font-size: rem(16);
       line-height: rem(22);
     }
-  }
-  &-label {
-    font-weight: $font-weight-bold;
-    font-size: rem(14);
-    line-height: rem(14);
   }
 }

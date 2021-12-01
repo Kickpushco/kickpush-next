@@ -6,15 +6,6 @@ $photos-width: 1069;
 $photos-height: 596;
 
 .Title {
-  @include min-width($bp-unstack-cards) {
-    width: 50%;
-  }
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-.Subtitle {
   margin-bottom: 0;
 }
 

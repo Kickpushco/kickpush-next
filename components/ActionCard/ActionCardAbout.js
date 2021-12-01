@@ -1,10 +1,9 @@
 import Link from "next/link";
 import clsx from "clsx";
 
-import ActionCard from "./ActionCard";
+import ActionCard, { ActionCardLabel, ActionCardTitle } from "./ActionCard";
 import Heading from "components/Heading/Heading";
 import Image, { computeImageProps } from "components/Image/Image";
-import Paragraph from "components/Paragraph/Paragraph";
 
 import styles from "./ActionCardAbout.module.scss";
 
@@ -40,14 +39,10 @@ function ActionCardAbout({
         actionCta={actionCta}
         topChildren={
           <>
-            <Heading className={styles.Title} level="h3" tag="p">
+            <ActionCardTitle className={styles.Title}>
               {heading}
-            </Heading>
-            {subtitle && (
-              <Paragraph level="label" className={styles.Subtitle}>
-                {subtitle}
-              </Paragraph>
-            )}
+            </ActionCardTitle>
+            {subtitle && <ActionCardLabel>{subtitle}</ActionCardLabel>}
           </>
         }
         {...props}

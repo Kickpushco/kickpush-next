@@ -26,7 +26,7 @@
     font-size: calc((100vw - var(--gutter)) * 0.18);
     line-height: 1.1;
     color: $color-kickpush-dark-red;
-    margin-top: var(--section-space);
+    margin-top: calc(var(--section-space) * 0.75);
 
     @include high-contrast {
       color: $color-kickpush-dark-red-high-contrast;

@@ -3,9 +3,11 @@ import Link from "next/link";
 
 import { computeTextColor } from "services/contentful";
 
-import ActionCard, { ActionCardTitle } from "components/ActionCard/ActionCard";
+import ActionCard, {
+  ActionCardLabel,
+  ActionCardTitle,
+} from "components/ActionCard/ActionCard";
 import Heading from "components/Heading/Heading";
-import Paragraph from "components/Paragraph/Paragraph";
 import { computeImageProps } from "components/Image/Image";
 
 import styles from "./ProjectCard.module.scss";
@@ -50,9 +52,9 @@ function ProjectCard({
               {clientName}
             </Heading>
             {year && (
-              <Paragraph className={styles.Year} level="label" tag="span">
+              <ActionCardLabel className={styles.Year} tag="span">
                 {year}
-              </Paragraph>
+              </ActionCardLabel>
             )}
           </p>
         }

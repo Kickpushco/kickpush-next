@@ -215,12 +215,17 @@
 
   path {
     fill: currentColor;
+    transition: fill 200ms ease-in-out;
   }
 
   @include can-hover {
     &:hover {
       svg {
         transform: scale(0.85);
+      }
+
+      path {
+        fill: $color-kickpush-white;
       }
     }
   }

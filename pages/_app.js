@@ -12,6 +12,7 @@ const PRELOAD_FONTS = [
   "kickpush-headings",
   "lineto-circular-bold",
   "lineto-circular-medium",
+  "lineto-circular-book",
 ];
 const FAVICON_SIZES = [16, 32, 96];
 const APPLE_ICON_SIZES = [57, 60, 72, 76, 114, 120, 144, 152, 180, 192];

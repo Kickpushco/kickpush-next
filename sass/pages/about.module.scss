@@ -9,8 +9,6 @@
 }
 .LargeTitle {
   @include reveal-animation("heading");
-
-  margin-top: var(--section-space);
 }
 .PhotosGrid {
   display: grid;

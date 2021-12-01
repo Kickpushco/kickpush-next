@@ -24,6 +24,17 @@ export function ActionCardTitle({
   );
 }
 
+export function ActionCardLabel({ className, ...props }) {
+  return (
+    <Heading
+      className={clsx(className, styles.Label)}
+      level="h6"
+      tag="p"
+      {...props}
+    />
+  );
+}
+
 const ActionCard = forwardRef(
   (
     {

@@ -1,10 +1,8 @@
 import Link from "next/link";
 import clsx from "clsx";
 
-import ActionCard from "./ActionCard";
-import Heading from "components/Heading/Heading";
+import ActionCard, { ActionCardLabel, ActionCardTitle } from "./ActionCard";
 import Image from "components/Image/Image";
-import Paragraph from "components/Paragraph/Paragraph";
 
 import workRow1Png from "assets/images/work-row-1.png";
 import workRow1Webp from "assets/images/work-row-1.webp";
@@ -51,10 +49,8 @@ function ActionCardProjects({
         actionCta={actionCta}
         topChildren={
           <>
-            <Heading level="h3" tag="p">
-              {heading}
-            </Heading>
-            {subtitle && <Paragraph level="label">{subtitle}</Paragraph>}
+            <ActionCardTitle>{heading}</ActionCardTitle>
+            {subtitle && <ActionCardLabel>{subtitle}</ActionCardLabel>}
           </>
         }
         {...props}
