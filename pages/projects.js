@@ -4,8 +4,7 @@ import { fetchFromCache } from "services/cache";
 import { CardsWrapper } from "components/Card/Card";
 import Nav, { computeNavProps } from "components/Nav/Nav";
 import Footer, { computeFooterProps } from "components/Footer/Footer";
-import Hero from "components/Hero/Hero";
-import Heading from "components/Heading/Heading";
+import Hero, { HeroTitle } from "components/Hero/Hero";
 import ProjectCard, {
   computeProjectCardProps,
 } from "components/ProjectCard/ProjectCard";
@@ -27,7 +26,7 @@ export default function Projects({ pageFields, globalSettings }) {
 
       <main>
         <Hero>
-          <Heading level="h1">{heroTitle}</Heading>
+          <HeroTitle>{heroTitle}</HeroTitle>
         </Hero>
 
         <div className="container">

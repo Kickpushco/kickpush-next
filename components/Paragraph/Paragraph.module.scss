@@ -25,6 +25,11 @@
     font-size: rem(16);
     line-height: rem(22);
 
+    @include min-width($bp-tiny) {
+      font-size: rem(18);
+      line-height: rem(25);
+    }
+
     @include min-width($bp-mobile) {
       font-size: rem(19);
       line-height: rem(28);

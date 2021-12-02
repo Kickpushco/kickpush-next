@@ -128,7 +128,17 @@
     }
   }
   &-h6 {
-    font-size: rem(16);
-    line-height: rem(22);
+    font-size: rem(13);
+    line-height: rem(19);
+
+    @include min-width($bp-mobile) {
+      font-size: rem(14);
+      line-height: rem(20);
+    }
+
+    @include min-width($bp-tablet) {
+      font-size: rem(16);
+      line-height: rem(22);
+    }
   }
 }

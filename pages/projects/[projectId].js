@@ -118,7 +118,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
           {slides.map((slide, slideIndex) => (
             <Fragment key={slideIndex}>
               <ProjectSlideItem
-                backgroundLoading={slideIndex < 3 ? "priority" : undefined}
+                backgroundLoading={slideIndex < 4 ? "priority" : undefined}
                 {...computeProjectSlideItemProps(slide)}
               />
               <ProjectSpacer />

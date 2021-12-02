@@ -10,7 +10,7 @@ import ArticleCard, {
 import Card, { CardReveal, CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
-import Hero from "components/Hero/Hero";
+import Hero, { HeroTitle } from "components/Hero/Hero";
 import Image, { computeImageProps } from "components/Image/Image";
 import Footer, { computeFooterProps } from "components/Footer/Footer";
 import Nav, { computeNavProps } from "components/Nav/Nav";
@@ -52,9 +52,9 @@ export default function About({ pageFields, globalSettings }) {
 
       <main>
         <Hero id={heroArticleProps?.id}>
-          <Heading level="h1">{heroTitle}</Heading>
+          <HeroTitle>{heroTitle}</HeroTitle>
           {heroArticleProps && (
-            <CardsWrapper columns={false}>
+            <CardsWrapper className={styles.HeroCardWrapper} columns={false}>
               <ArticleCard
                 {...heroArticleProps}
                 displayDate={pageFields.heroArticleDate}

@@ -26,13 +26,10 @@ function ActionCardAbout({
   subtitle,
   actionCta = "Read more",
   photosProps,
-  hash,
   ...props
 }) {
-  const href = `/about${!hash ? `#content` : ""}`;
-
   return (
-    <Link href={href} passHref>
+    <Link href="/about" passHref>
       <ActionCard
         className={clsx(className, styles.Card)}
         size="large"

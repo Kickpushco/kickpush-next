@@ -1,5 +1,6 @@
 import clsx from "clsx";
 
+import Heading from "components/Heading/Heading";
 import Paragraph from "components/Paragraph/Paragraph";
 
 import styles from "./Hero.module.scss";
@@ -17,11 +18,27 @@ function Hero({ className, containerClassName, children, noNav, ...props }) {
   );
 }
 
-export function HeroCopy({ className, children }) {
+export function HeroTitle({ className, isLarge = true, ...props }) {
   return (
-    <Paragraph className={clsx(className, styles.Copy)} level="huge">
-      {children}
-    </Paragraph>
+    <Heading
+      className={clsx(
+        className,
+        styles.Title,
+        isLarge && styles["Title-large"]
+      )}
+      level="h1"
+      {...props}
+    />
+  );
+}
+
+export function HeroCopy({ className, ...props }) {
+  return (
+    <Paragraph
+      className={clsx(className, styles.Copy)}
+      level="huge"
+      {...props}
+    />
   );
 }
 

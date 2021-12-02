@@ -1,8 +1,9 @@
 @import "../../sass/global";
 
-.HeroTitle {
-  margin-bottom: 0;
+.Hero {
+  margin-bottom: var(--section-space);
 }
+
 .HeroCopy {
   @include min-width($bp-tiny) {
     font-size: rem(24);

@@ -19,6 +19,24 @@
   }
 }
 
+.Title {
+  @include reveal-animation("heading");
+
+  margin-bottom: 0;
+
+  &-large {
+    @include min-max-width($bp-tiny, $bp-mobile) {
+      font-size: rem(56);
+      line-height: rem(60);
+    }
+
+    @include min-max-width($bp-mobile, $bp-tablet) {
+      font-size: rem(64);
+      line-height: rem(68);
+    }
+  }
+}
+
 .Copy {
   @include reveal-animation("copy");
 

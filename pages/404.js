@@ -4,8 +4,7 @@ import { fetchCustomPage } from "services/contentful";
 import { fetchFromCache } from "services/cache";
 
 import Nav, { computeNavProps } from "components/Nav/Nav";
-import Hero from "components/Hero/Hero";
-import Heading from "components/Heading/Heading";
+import Hero, { HeroTitle } from "components/Hero/Hero";
 import Title from "components/Meta/Title";
 import Description from "components/Meta/Description";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
@@ -26,7 +25,7 @@ export default function PageNotFound({ pageFields, globalSettings }) {
       <Nav {...computeNavProps(globalSettings)} />
 
       <Hero className={styles.Hero}>
-        <Heading level="h1">{heroTitle}</Heading>
+        <HeroTitle>{heroTitle}</HeroTitle>
       </Hero>
     </>
   );

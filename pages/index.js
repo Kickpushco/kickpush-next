@@ -12,7 +12,7 @@ import ActionCardAbout, {
 import { CardReveal, CardsWrapper } from "components/Card/Card";
 import Nav, { computeNavProps } from "components/Nav/Nav";
 import Footer, { computeFooterProps } from "components/Footer/Footer";
-import Hero, { HeroCopy } from "components/Hero/Hero";
+import Hero, { HeroCopy, HeroTitle } from "components/Hero/Hero";
 import Heading from "components/Heading/Heading";
 import Manifesto from "components/Manifesto/Manifesto";
 import ProjectCard, {
@@ -44,10 +44,8 @@ export default function Home({ pageFields, globalSettings }) {
       <Nav {...computeNavProps(globalSettings)} />
 
       <main>
-        <Hero>
-          <Heading className={styles.HeroTitle} level="h1">
-            {heroTitle}
-          </Heading>
+        <Hero className={styles.Hero}>
+          <HeroTitle>{heroTitle}</HeroTitle>
           {heroCopy && (
             <HeroCopy className={styles.HeroCopy}>{heroCopy}</HeroCopy>
           )}

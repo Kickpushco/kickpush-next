@@ -2,8 +2,7 @@ import clsx from "clsx";
 
 import { useAppContext } from "context/state";
 
-import Heading from "components/Heading/Heading";
-import { HeroCopy } from "components/Hero/Hero";
+import { HeroCopy, HeroTitle } from "components/Hero/Hero";
 import ProjectSlide from "./ProjectSlide";
 
 import styles from "./ProjectHero.module.scss";
@@ -21,9 +20,7 @@ function ProjectHero({ className, title, copy, ...props }) {
       {...props}
     >
       <div className={clsx("container", styles.Content)}>
-        <Heading className={styles.Title} level="h1">
-          {title}
-        </Heading>
+        <HeroTitle isLarge={false}>{title}</HeroTitle>
         {copy && <HeroCopy>{copy}</HeroCopy>}
       </div>
     </ProjectSlide>

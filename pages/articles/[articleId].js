@@ -20,7 +20,7 @@ import { joinStrings } from "utils/joinStrings";
 import { CloseButton } from "components/Button/CloseButton";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
-import Hero from "components/Hero/Hero";
+import Hero, { HeroTitle } from "components/Hero/Hero";
 import Title from "components/Meta/Title";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
@@ -203,9 +203,9 @@ export default function Article({ pageFields, globalSettings }) {
             containerClassName={styles.ArticleContainer}
             noNav
           >
-            <Heading className={styles.HeroTitle} level="h1">
+            <HeroTitle className={styles.HeroTitle} isLarge={false}>
               {title}
-            </Heading>
+            </HeroTitle>
             {(intro || link) && (
               <div className={styles.HeroContent}>
                 {!!authors.length && (

@@ -10,6 +10,11 @@
 .LargeTitle {
   @include reveal-animation("heading");
 }
+
+.HeroCardWrapper {
+  margin-top: calc(var(--section-space) / 2);
+}
+
 .PhotosGrid {
   display: grid;
   gap: var(--gutter);
