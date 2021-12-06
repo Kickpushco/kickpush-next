@@ -11,11 +11,11 @@
 .Action {
   opacity: 0;
   transform: translateX(#{rem(-8)});
-  padding-right: 0.25em;
+  padding-right: $action-icon-margin;
 
   svg {
     height: auto;
-    width: 0.75em;
+    width: $action-icon-size;
     transition: transform $duration-card-action ease-in;
     transition-property: transform, opacity;
   }

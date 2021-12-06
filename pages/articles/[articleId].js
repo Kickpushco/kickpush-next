@@ -27,7 +27,7 @@ import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 import Paragraph from "components/Paragraph/Paragraph";
 import Image, { computeImageProps } from "components/Image/Image";
 
-import IconClose from "assets/icons/20-close.svg";
+import IconActionArrow from "assets/icons/21-action-arrow.svg";
 
 import styles from "sass/pages/article.module.scss";
 
@@ -258,7 +258,10 @@ export default function Article({ pageFields, globalSettings }) {
             className={styles.Footer}
             onFocus={handleScrollFooter}
           >
-            <IconClose role="presentation" />
+            <Heading className={styles.FooterFauxLink} tag="span" level="h0">
+              <IconActionArrow role="presentation" />
+              Back
+            </Heading>
           </a>
         </Link>
       </main>

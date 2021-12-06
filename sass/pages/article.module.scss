@@ -184,6 +184,7 @@
   min-height: 0;
   overflow: visible;
   padding: var(--gutter) 0;
+  text-decoration: none;
 
   @include high-contrast {
     color: $color-kickpush-dark-red-high-contrast;
@@ -201,48 +202,53 @@
     overflow: hidden;
   }
 
-  svg {
+  .FooterFauxLink {
     border-radius: rem(4);
+    padding: $action-icon-margin / 2 0;
+    display: flex;
+    margin: 0;
+  }
+
+  svg {
     transition: transform 200ms ease-in-out;
-    width: calc(var(--gutter) * 2);
+    width: $action-icon-size;
     height: auto;
     display: block;
+    margin-right: $action-icon-margin;
+    transform: scale(-1, 1);
 
-    @include min-width($bp-tablet) {
-      width: math.div(160, 1440) * 100vw;
+    @include no-motion {
+      transform: scale(-1, 1) !important;
     }
   }
 
   path {
     fill: currentColor;
-    transition: fill 200ms ease-in-out;
   }
 
   @include can-hover {
     &:hover {
       svg {
-        transform: scale(0.85);
-      }
-
-      path {
-        fill: $color-kickpush-white;
+        transform: scale(-1, 1) translateX($action-icon-margin / 2);
       }
     }
   }
 
   &:focus {
-    svg {
+    outline: 0;
+
+    .FooterFauxLink {
       outline: var(--focus-ring) rem(2) solid;
       outline-offset: math.div(20, 1440) * 100vw;
     }
   }
   &:not(:focus-visible) {
-    svg {
+    .FooterFauxLink {
       outline: 0;
     }
   }
   &:focus-visible {
-    svg {
+    .FooterFauxLink {
       outline: var(--focus-ring) rem(2) solid;
     }
   }
