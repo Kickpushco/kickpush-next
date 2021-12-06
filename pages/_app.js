@@ -3,8 +3,6 @@ import Head from "next/head";
 
 import { AppContextProvider, useAppContext } from "context/state";
 
-import ThemeColor from "components/Meta/ThemeColor";
-
 import "sass/pages/_app.scss";
 import styles from "sass/pages/_app.module.scss";
 
@@ -76,8 +74,8 @@ function App({ Component, pageProps }) {
 
         {/* TODO: Config */}
         <meta name="twitter:site" content="@kickpush" />
+        <meta key="themeColor" name="theme-color" content={styles.themeColor} />
       </Head>
-      <ThemeColor color={styles.kickpushRed} />
 
       <Component {...pageProps} />
     </AppContextProvider>
