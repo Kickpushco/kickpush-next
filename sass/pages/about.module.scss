@@ -3,6 +3,8 @@
 @import "../../sass/global";
 
 .Section {
+  --card-reveal-delay: 250ms;
+
   &-inView {
     --reveal-animation-state: running;
   }

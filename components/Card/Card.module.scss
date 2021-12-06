@@ -61,6 +61,7 @@
     opacity: 1;
     transition: opacity math.div($duration-card-enter, 2) ease-out,
       transform $duration-card-enter $ease-out-back;
+    transition-delay: var(--card-reveal-delay, 0ms);
   }
 
   @include no-motion {

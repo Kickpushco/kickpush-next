@@ -67,7 +67,10 @@ export default function About({ pageFields, globalSettings }) {
         <div className="container">
           <div
             ref={vrRef}
-            className={clsx(vrInView && styles["Section-inView"])}
+            className={clsx(
+              styles.Section,
+              vrInView && styles["Section-inView"]
+            )}
             id={vrArticleProps?.id}
           >
             {vrTitle && (
@@ -89,7 +92,10 @@ export default function About({ pageFields, globalSettings }) {
 
           <div
             ref={movingRef}
-            className={clsx(movingInView && styles["Section-inView"])}
+            className={clsx(
+              styles.Section,
+              movingInView && styles["Section-inView"]
+            )}
             id={movingArticleProps?.id}
           >
             {movingTitle && (
