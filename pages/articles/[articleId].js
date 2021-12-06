@@ -40,7 +40,6 @@ export default function Article({ pageFields, globalSettings }) {
 
   const {
     slug,
-    metaImage,
     authors = [],
     title,
     date,
@@ -49,6 +48,7 @@ export default function Article({ pageFields, globalSettings }) {
     link,
     body,
   } = pageFields;
+  const { metaImage, metaDescription } = body?.fields || {};
 
   const articleCloseUrl = `/about#${slug}`;
 
@@ -177,7 +177,7 @@ export default function Article({ pageFields, globalSettings }) {
   return (
     <>
       <Title shortTitle={title} />
-      <Description description={pageFields.metaDescription} />
+      <Description description={metaDescription} />
       <MetaImage {...computeMetaImageProps(metaImage, globalSettings)} />
 
       <main className={styles.Main}>
