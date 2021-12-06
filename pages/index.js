@@ -65,7 +65,7 @@ export default function Home({ pageFields, globalSettings }) {
           )}
 
           <CardsWrapper className={styles.ProjectsList}>
-            {projectsList.fields.projects.map((project) => (
+            {(projectsList.fields.projects || []).map((project) => (
               <ProjectCard
                 key={project.sys.id}
                 {...computeProjectCardProps(project, globalSettings)}
