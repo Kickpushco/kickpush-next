@@ -6,7 +6,7 @@ function Paragraph({
   className,
   children,
   tag = "p",
-  level = "big",
+  level = "large",
   ...props
 }) {
   const ParagraphTag = tag;

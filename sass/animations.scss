@@ -1,5 +1,5 @@
-@mixin hero-animation($animation-name) {
-  @keyframes hero-h1-reveal {
+@mixin reveal-animation($animation-name) {
+  @keyframes hero-heading-reveal {
     0% {
       opacity: 0;
       transform: scale(0.975);
@@ -19,13 +19,17 @@
     }
   }
 
-  @if ($animation-name == "h1") {
-    animation: hero-h1-reveal 1s ease-out;
+  @if ($animation-name == "heading") {
+    animation: hero-heading-reveal 1s ease-out;
+
+    @include no-motion {
+      animation-name: hero-copy-reveal;
+    }
   }
 
   @if ($animation-name == "copy") {
     animation: hero-copy-reveal 500ms 500ms ease-out both;
   }
 
-  animation-play-state: var(--hero-animation-state, running);
+  animation-play-state: var(--reveal-animation-state, paused);
 }

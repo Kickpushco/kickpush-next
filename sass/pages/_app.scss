@@ -10,6 +10,15 @@
   src: url(/fonts/kickpush-headings.woff2);
   font-weight: 600;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: $font-family-body;
+  src: url(/fonts/lineto-circular-book.woff2);
+  font-weight: $font-weight-book;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -17,6 +26,7 @@
   src: url(/fonts/lineto-circular-medium.woff2);
   font-weight: $font-weight-medium;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -24,14 +34,16 @@
   src: url(/fonts/lineto-circular-bold.woff2);
   font-weight: $font-weight-bold;
   font-style: normal;
+  font-display: swap;
 }
 
 html {
   --gutter: #{rem(24)};
   --section-space: #{rem(120)};
-  --nav-height: #{rem(52)};
+  --nav-height: #{rem(56)};
   --nav-offset: 0rem;
   --focus-ring: #{darken($color-kickpush-dark-red, 10%)};
+  --container-gutter: var(--gutter);
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -45,7 +57,7 @@ html {
 
   @include min-width($bp-tiny) {
     --gutter: #{rem(40)};
-    --nav-height: #{rem(60)};
+    --nav-height: #{rem(64)};
   }
 
   @include min-width($bp-mobile) {
@@ -90,6 +102,10 @@ main {
   }
 }
 
+strong {
+  font-weight: $font-weight-bold;
+}
+
 a {
   color: currentColor;
 }
@@ -113,12 +129,13 @@ button:focus-visible {
 
 a,
 input,
-button {
+button,
+[id] {
   scroll-margin-top: var(--nav-height);
 }
 
 .container {
   margin: 0 auto;
-  width: calc(100% - (var(--gutter) * 2));
+  width: calc(100% - (var(--container-gutter) * 2));
   max-width: rem(940);
 }

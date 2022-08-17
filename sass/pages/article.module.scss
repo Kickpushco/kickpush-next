@@ -1,0 +1,255 @@
+@use "sass:math";
+
+@import "../../sass/global";
+
+@value breakpointDesktop: #{em($bp-desktop)};
+
+.Main {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  @include max-width($bp-mobile) {
+    --container-gutter: #{rem(24)};
+  }
+}
+
+.Close {
+  position: fixed;
+  top: rem(12);
+  right: rem(12);
+  z-index: 10;
+
+  @include min-width($bp-hamburger-menu) {
+    top: rem(24);
+    right: rem(24);
+  }
+}
+
+.ArticleContainer {
+  max-width: rem(820);
+}
+
+.Layer {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  flex-grow: 1;
+
+  @include min-width($bp-desktop) {
+    min-height: 100vh;
+  }
+
+  &-dark {
+    --hero-avatar-border: var(--background-color, #{$color-kickpush-white});
+    --focus-ring: #{$color-kickpush-black-focus-ring};
+
+    background: $color-kickpush-white;
+    color: $color-kickpush-black;
+  }
+
+  &-light {
+    --hero-avatar-border: var(--background-color, #{$color-kickpush-black});
+    --focus-ring: #{$color-kickpush-white-focus-ring};
+
+    background: $color-kickpush-black;
+    color: $color-kickpush-white;
+  }
+}
+
+.Hero {
+  text-align: left;
+}
+.HeroTitle {
+  margin-bottom: 0.5em;
+}
+.HeroContent {
+  @include min-width($bp-tiny) {
+    --hero-avatar-size: #{rem(48)};
+
+    align-items: center;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: calc(var(--gutter) / 2);
+
+    > :first-child:last-child {
+      grid-column: 1 / span 2;
+    }
+  }
+  @include min-width($bp-tablet) {
+    --hero-avatar-size: #{rem(64)};
+  }
+  @include min-width($bp-desktop) {
+    --hero-avatar-size: #{rem(72)};
+  }
+}
+.HeroAvatars {
+  display: none;
+  @include min-width($bp-tiny) {
+    display: flex;
+  }
+}
+.HeroAvatar {
+  background: var(--hero-avatar-border);
+  border: rem(3) solid var(--hero-avatar-border);
+  width: var(--hero-avatar-size);
+  height: var(--hero-avatar-size);
+  border-radius: calc(var(--hero-avatar-size) / 2);
+  position: relative;
+  margin: rem(-4);
+  overflow: hidden;
+
+  &:not(:first-child) {
+    margin-left: calc(var(--hero-avatar-size) / -2);
+  }
+
+  @include min-width($bp-tablet) {
+    border-width: rem(5);
+  }
+}
+.HeroCopy {
+  @include reveal-animation("copy");
+}
+.HeroIntro {
+  margin-bottom: 0;
+}
+.HeroPosted {
+  margin-bottom: 0;
+}
+
+.Body {
+  margin-bottom: var(--section-space);
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  a {
+    @include can-hover {
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+.Heading {
+  margin-top: 2em;
+}
+.Paragraph,
+.List {
+  font-weight: $font-weight-book;
+  margin-top: 2em;
+
+  .Heading + & {
+    margin-top: 1em;
+  }
+}
+.List .List {
+  margin-top: 0;
+}
+.ListItem {
+  margin: 0.5em 0;
+}
+.Blockquote {
+  padding-left: calc(var(--gutter) / 2);
+  border-left: rem(5) solid currentColor;
+
+  .Paragraph {
+    font-weight: $font-weight-medium;
+
+    &:not(:first-child) {
+      margin-top: 1em;
+    }
+  }
+}
+.Image {
+  margin-top: var(--gutter);
+}
+.ImageCaption {
+  text-align: center;
+  margin-top: 0.5em;
+  opacity: 0.7;
+}
+
+.Footer {
+  display: flex;
+  align-items: center;
+  color: $color-kickpush-dark-red;
+  justify-content: center;
+  position: relative;
+  bottom: 0;
+  z-index: 3;
+  min-height: 0;
+  overflow: visible;
+  padding: var(--gutter) 0;
+  text-decoration: none;
+
+  @include high-contrast {
+    color: $color-kickpush-dark-red-high-contrast;
+  }
+
+  @include min-width($bp-tablet) {
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: math.div(560, 1440) * 100vw;
+  }
+
+  @include min-width($bp-desktop) {
+    z-index: 1;
+    position: sticky;
+    overflow: hidden;
+  }
+
+  .FooterFauxLink {
+    border-radius: rem(4);
+    padding: $action-icon-margin / 2 0;
+    display: flex;
+    margin: 0;
+  }
+
+  svg {
+    transition: transform 200ms ease-in-out;
+    width: $action-icon-size;
+    height: auto;
+    display: block;
+    margin-right: $action-icon-margin;
+    transform: scale(-1, 1);
+
+    @include no-motion {
+      transform: scale(-1, 1) !important;
+    }
+  }
+
+  path {
+    fill: currentColor;
+  }
+
+  @include can-hover {
+    &:hover {
+      svg {
+        transform: scale(-1, 1) translateX($action-icon-margin / 2);
+      }
+    }
+  }
+
+  &:focus {
+    outline: 0;
+
+    .FooterFauxLink {
+      outline: var(--focus-ring) rem(2) solid;
+      outline-offset: math.div(20, 1440) * 100vw;
+    }
+  }
+  &:not(:focus-visible) {
+    .FooterFauxLink {
+      outline: 0;
+    }
+  }
+  &:focus-visible {
+    .FooterFauxLink {
+      outline: var(--focus-ring) rem(2) solid;
+    }
+  }
+}

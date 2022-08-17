@@ -21,6 +21,10 @@ $rows-oversize: 100%;
     );
   }
 
+  @include max-width($bp-nuclear) {
+    margin-bottom: -50%;
+  }
+
   .Row {
     display: block;
     height: auto;
@@ -30,6 +34,10 @@ $rows-oversize: 100%;
     &:last-child {
       margin-top: math.div(16, 940) * 100%;
       margin-left: math.div(105 + 8, 940) * 100%;
+    }
+
+    @include no-motion {
+      transform: none !important;
     }
   }
 

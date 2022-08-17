@@ -39,7 +39,7 @@ export default function Contact({ pageFields, globalSettings }) {
 
 export async function getStaticProps() {
   const props = await fetchFromCache(
-    "customPageContact",
+    "page-contact",
     async () => await fetchCustomPage("customPageContact")
   );
 

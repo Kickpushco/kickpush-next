@@ -1,39 +1,22 @@
 import Link from "next/link";
 import clsx from "clsx";
 
-import ActionCard from "./ActionCard";
-import Heading from "components/Heading/Heading";
-import Image from "components/Image/Image";
-import Paragraph from "components/Paragraph/Paragraph";
-
-import workRow1Png from "assets/images/work-row-1.png";
-import workRow1Webp from "assets/images/work-row-1.webp";
-import workRow2Png from "assets/images/work-row-2.png";
-import workRow2Webp from "assets/images/work-row-2.webp";
+import ActionCard, { ActionCardLabel, ActionCardTitle } from "./ActionCard";
+import Image, { computeImageProps } from "components/Image/Image";
 
 import styles from "./ActionCardProjects.module.scss";
 
 export function computeActionCardProjectsProps(globalSettings) {
+  const rows = globalSettings.projectsCardImageRows.map((a) => {
+    return computeImageProps(a);
+  });
+
   return {
     heading: globalSettings.projectsCardTitle,
     subtitle: globalSettings.projectsCardSubtitle,
     actionCta: globalSettings.projectsCardAction,
+    rows,
   };
-}
-
-function Row({ png, webp }) {
-  return (
-    <Image
-      className={styles.Row}
-      variant="ghost"
-      srcSet={{
-        legacy: png.src,
-        webp: webp.src,
-      }}
-      width={png.width}
-      height={png.height}
-    />
-  );
 }
 
 function ActionCardProjects({
@@ -41,6 +24,7 @@ function ActionCardProjects({
   heading,
   subtitle,
   actionCta = "See all projects",
+  rows = [],
   ...props
 }) {
   return (
@@ -51,17 +35,21 @@ function ActionCardProjects({
         actionCta={actionCta}
         topChildren={
           <>
-            <Heading level="h3" tag="p">
-              {heading}
-            </Heading>
-            {subtitle && <Paragraph level="label">{subtitle}</Paragraph>}
+            <ActionCardTitle>{heading}</ActionCardTitle>
+            {subtitle && <ActionCardLabel>{subtitle}</ActionCardLabel>}
           </>
         }
         {...props}
       >
         <div className={styles.Rows}>
-          <Row png={workRow1Png} webp={workRow1Webp} />
-          <Row png={workRow2Png} webp={workRow2Webp} />
+          {rows.map((rowProps, rowIndex) => (
+            <Image
+              key={rowIndex}
+              className={styles.Row}
+              variant="ghost"
+              {...rowProps}
+            />
+          ))}
         </div>
       </ActionCard>
     </Link>

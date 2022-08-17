@@ -18,5 +18,8 @@
     "react-intersection-observer": "^8.32.2",
     "sass": "^1.39.0"
   },
-  "prettier": {}
+  "prettier": {},
+  "devDependencies": {
+    "@contentful/rich-text-react-renderer": "^15.6.2"
+  }
 }

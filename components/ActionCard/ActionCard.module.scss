@@ -2,6 +2,24 @@
 
 @import "../../sass/global";
 
+@value wrapperIndex: 98;
+
+.Wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &-transitioning {
+    transition: transform $duration-project-show-card ease-out !important;
+  }
+
+  &-hidden {
+    opacity: 0;
+    transition: opacity $duration-project-hide-other ease-out !important;
+  }
+}
+
 .Card {
   --card-scale: #{math.div(420, 440)};
 
@@ -11,6 +29,28 @@
   transition: $duration-card-action ease-in-out;
   transition-property: box-shadow, transform;
   cursor: default;
+
+  &-transitioning {
+    box-shadow: transparent 0 0 0;
+    border-radius: 0;
+    transition: transform $duration-project-show-card $ease-in-back,
+      border-radius 0ms $duration-project-show-card ease-out,
+      box-shadow $duration-project-hide-other ease-out;
+
+    > * {
+      opacity: 0;
+      transition: transform $duration-project-show-card $ease-in-back,
+        opacity $duration-project-hide-other ease-out !important;
+    }
+
+    > :last-child {
+      transform: var(--card-content-scale);
+    }
+
+    > :first-child {
+      transform: var(--card-background-scale);
+    }
+  }
 
   @include can-hover {
     &-enabled {
@@ -35,6 +75,10 @@
       --card-scale: #{math.div(920, 940)};
     }
   }
+
+  @include no-motion {
+    --card-scale: 1;
+  }
 }
 
 .Content {
@@ -57,13 +101,17 @@
   z-index: 1;
   transition: transform $duration-card-image-out ease-in-out;
 
+  @include max-width($bp-nuclear) {
+    display: none;
+  }
+
   .Card-large & {
-    --project-card-hover-scale: 1.025;
+    --card-background-hover-scale: 1.025;
 
     @include min-width($bp-unstack-cards) {
       border-bottom-left-radius: 0;
       border-top-left-radius: 0;
-      width: 60%;
+      width: 55%;
       left: auto;
       right: 0;
     }
@@ -72,8 +120,57 @@
   @include can-hover {
     .Card-enabled:hover &,
     .Card-enabled:focus & {
-      transform: scale(var(--project-card-hover-scale, 1.05));
+      transform: scale(var(--card-background-hover-scale, 1.05));
       transition: transform $duration-card-image-in ease-out;
     }
   }
+
+  @include no-motion {
+    --card-background-hover-scale: 1 !important;
+  }
+}
+
+.Title {
+  margin-bottom: -0.1em;
+  font-size: rem(24);
+  line-height: rem(30);
+
+  @include min-width($bp-tiny) {
+    font-size: rem(26);
+    line-height: rem(32);
+  }
+
+  &-large {
+    @include min-width($bp-unstack-cards) {
+      font-size: rem(28);
+      line-height: rem(36);
+      width: calc(
+        (100% + (var(--card-padding) * 2)) * 0.45 - var(--card-padding)
+      );
+    }
+    @include min-width($bp-tablet) {
+      font-size: rem(34);
+      line-height: rem(46);
+    }
+    @include min-width($bp-desktop) {
+      font-size: rem(40);
+      line-height: rem(48);
+    }
+  }
+
+  &-small {
+    @include min-width($bp-tablet) {
+      font-size: rem(28);
+      line-height: rem(36);
+    }
+    @include min-width($bp-desktop) {
+      font-size: rem(32);
+      line-height: rem(42);
+    }
+  }
+}
+
+.Label {
+  margin-top: 0.25em;
+  margin-bottom: 0;
 }

@@ -1,0 +1,27 @@
+@import "../../sass/global";
+
+.Title {
+  margin-top: auto;
+  position: relative;
+
+  > span {
+    position: relative;
+  }
+
+  @include max-width($bp-unstack-cards) {
+    &::before {
+      mask: linear-gradient(
+        rgba(black, 0),
+        rgba(black, 0.8) calc(var(--card-padding) * 2),
+        black
+      );
+      content: "";
+      position: absolute;
+      top: calc(var(--card-padding) * -2);
+      left: calc(var(--card-padding) * -1);
+      right: calc(var(--card-padding) * -1);
+      bottom: calc(var(--card-padding) * -1);
+      background: var(--card-background, #{$color-kickpush-red});
+    }
+  }
+}

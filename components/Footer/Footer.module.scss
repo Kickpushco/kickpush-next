@@ -1,25 +1,23 @@
 @import "../../sass/global";
 
 .Footer {
-  --hero-animation-state: paused;
-
   padding-bottom: var(--section-space);
   position: relative;
 
   &-inView {
-    --hero-animation-state: running;
+    --reveal-animation-state: running;
   }
 }
 
 .Heading {
-  @include hero-animation("h1");
+  @include reveal-animation("heading");
 
   max-width: 11em;
   margin-bottom: var(--gutter);
 }
 
 .Email {
-  @include hero-animation("copy");
+  @include reveal-animation("copy");
 
   position: relative;
   width: fit-content;

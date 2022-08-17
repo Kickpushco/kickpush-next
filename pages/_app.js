@@ -3,8 +3,6 @@ import Head from "next/head";
 
 import { AppContextProvider, useAppContext } from "context/state";
 
-import ThemeColor from "components/Meta/ThemeColor";
-
 import "sass/pages/_app.scss";
 import styles from "sass/pages/_app.module.scss";
 
@@ -12,19 +10,20 @@ const PRELOAD_FONTS = [
   "kickpush-headings",
   "lineto-circular-bold",
   "lineto-circular-medium",
+  "lineto-circular-book",
 ];
 const FAVICON_SIZES = [16, 32, 96];
 const APPLE_ICON_SIZES = [57, 60, 72, 76, 114, 120, 144, 152, 180, 192];
 const ANDROID_ICON_SIZE = 192;
 
 function BodyScrollObserver() {
-  const { mobileOpen, projectTransitioning } = useAppContext();
+  const { mobileOpen, cardTransitioning } = useAppContext();
 
   useEffect(() => {
-    const blockScroll = mobileOpen || projectTransitioning;
+    const blockScroll = mobileOpen || cardTransitioning;
 
     document.documentElement.style.overflow = blockScroll ? "hidden" : "auto";
-  }, [mobileOpen, projectTransitioning]);
+  }, [mobileOpen, cardTransitioning]);
 
   return null;
 }
@@ -65,6 +64,8 @@ function App({ Component, pageProps }) {
             rel="preload"
             href={`/fonts/${font}.woff2`}
             as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
           />
         ))}
 
@@ -73,8 +74,8 @@ function App({ Component, pageProps }) {
 
         {/* TODO: Config */}
         <meta name="twitter:site" content="@kickpush" />
+        <meta key="themeColor" name="theme-color" content={styles.themeColor} />
       </Head>
-      <ThemeColor color={styles.kickpushRed} />
 
       <Component {...pageProps} />
     </AppContextProvider>

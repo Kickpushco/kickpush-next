@@ -1,12 +1,14 @@
 @import "../../sass/global";
 
 .Slide {
-  --hero-animation-state: paused;
-
   min-height: 100vh;
 
+  @include max-width($bp-tablet) {
+    padding-top: calc(var(--section-space) / 2 + var(--nav-height));
+  }
+
   &-inView {
-    --hero-animation-state: running;
+    --reveal-animation-state: running;
   }
 }
 
@@ -17,12 +19,4 @@
   > :last-child {
     margin-bottom: 0;
   }
-}
-
-.Title {
-  @include hero-animation("h1");
-}
-
-.Copy {
-  @include hero-animation("copy");
 }

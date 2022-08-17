@@ -1,5 +1,6 @@
 {
   "name": "Kickpush",
+  "theme_color": "#212121",
   "icons": [
     {
       "src": "/logo-36.png",

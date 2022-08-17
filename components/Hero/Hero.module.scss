@@ -1,25 +1,44 @@
 @import "../../sass/global";
 
 .Hero {
-  margin: calc(var(--section-space) / 2) 0 var(--section-space);
+  --reveal-animation-state: running;
+
+  margin: calc(var(--section-space) / 2) 0;
   width: 100%;
+
+  &-noNav {
+    margin-top: var(--section-space);
+  }
 
   @include min-width($bp-mobile) {
     text-align: center;
   }
 
   h1 {
-    @include hero-animation("h1");
+    @include reveal-animation("heading");
+  }
+}
 
-    @include min-max-width(320, $bp-mobile) {
+.Title {
+  @include reveal-animation("heading");
+
+  margin-bottom: 0;
+
+  &-large {
+    @include min-max-width($bp-tiny, $bp-mobile) {
       font-size: rem(56);
       line-height: rem(60);
+    }
+
+    @include min-max-width($bp-mobile, $bp-tablet) {
+      font-size: rem(64);
+      line-height: rem(68);
     }
   }
 }
 
 .Copy {
-  @include hero-animation("copy");
+  @include reveal-animation("copy");
 
   margin-top: 1em;
 }

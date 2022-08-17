@@ -17,7 +17,7 @@
     scroll-margin-top: 0;
   }
 
-  &-projectTransitioning {
+  &-cardTransitioning {
     transform: translateY(calc(-100% - #{var(--nav-offset)}));
   }
 }
@@ -56,6 +56,20 @@
 
 $nav-menu-duration: 200ms;
 
+.Menu {
+  @keyframes menu-visibility {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @include max-width($bp-hamburger-menu) {
+    animation: menu-visibility 200ms $nav-menu-duration ease-in-out both;
+  }
+}
+
 .Links {
   list-style: none;
   display: flex;
@@ -63,11 +77,13 @@ $nav-menu-duration: 200ms;
   gap: var(--gutter);
 
   @include max-width($bp-hamburger-menu) {
+    --menu-scale: 1.1;
+
     background: $color-kickpush-red;
     flex-direction: column;
     justify-content: center;
     opacity: 0;
-    transform: scale(1.1);
+    transform: scale(var(--menu-scale));
     gap: rem(24);
     transition-property: opacity, transform;
     position: fixed;
@@ -88,6 +104,10 @@ $nav-menu-duration: 200ms;
         transform $nav-menu-duration ease-out, visiblity 0ms;
       visibility: visible;
     }
+  }
+
+  @include no-motion {
+    --menu-scale: 1;
   }
 }
 .Link {
@@ -126,6 +146,10 @@ $nav-menu-duration: 200ms;
     transform: scale(0, 1);
     transform-origin: center right;
     transition: transform 200ms ease-in-out;
+
+    @include high-contrast {
+      background-color: $color-kickpush-dark-red-high-contrast;
+    }
   }
 
   &[aria-current],
@@ -146,7 +170,7 @@ $nav-menu-duration: 200ms;
   &-closed {
     --button-icon-size: #{rem(16)};
 
-    padding-top: rem(2); // Optically balances the hamburger
+    padding-top: rem(1); // Optically balances the hamburger
 
     &::before {
       opacity: 0;

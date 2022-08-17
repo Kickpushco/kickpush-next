@@ -9,13 +9,13 @@ function cacheLog(str) {
 
 export async function fetchFromCache(cacheId, fetchData, bust = false) {
   if (process.env.NODE_ENV === "production") {
-    cacheLog("Skipping cache for production.");
+    cacheLog(`Skipping cache for "${cacheId}" in production.`);
     return await fetchData();
   }
 
   const cachePath = path.join(CACHE_PATH, `${cacheId}.json`);
 
-  if (bust) cacheLog(`Cache ignored (if present) for ${cacheId}`);
+  if (bust) cacheLog(`Cache ignored (if present) for "${cacheId}"`);
 
   if (!bust) {
     let cachedData;
@@ -40,7 +40,7 @@ export async function fetchFromCache(cacheId, fetchData, bust = false) {
     cacheLog(`Cache created for "${cacheId}"`);
   } catch (error) {
     cacheLog(`Error: No cache created for "${cacheId}"`);
-    cacheLog(error);
+    cacheLog(JSON.stringify(error, null, 2));
   }
 
   return data;

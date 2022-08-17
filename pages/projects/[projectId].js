@@ -10,16 +10,15 @@ import { useAppContext } from "context/state";
 
 import {
   computeTextColor,
+  fetchContentTypeSlugs,
   fetchCustomPage,
   fetchProject,
-  fetchProjectIds,
 } from "services/contentful";
 import { fetchFromCache } from "services/cache";
 
 import { CloseButton } from "components/Button/CloseButton";
 import Description from "components/Meta/Description";
 import LabelData from "components/Meta/LabelData";
-import ThemeColor from "components/Meta/ThemeColor";
 import Footer, { computeFooterProps } from "components/Footer/Footer";
 import Title from "components/Meta/Title";
 import ProjectHero from "components/ProjectPage/ProjectHero";
@@ -29,22 +28,18 @@ import ProjectSlideItem, {
 import ProjectSlide from "components/ProjectPage/ProjectSlide";
 import ProjectSpacer from "components/ProjectPage/ProjectSpacer";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
-
-import IconClose from "assets/icons/20-close.svg";
-
-import styles from "sass/pages/project.module.scss";
+import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 import ProjectCard, {
   computeProjectCardProps,
 } from "components/ProjectCard/ProjectCard";
 import { CardsWrapper } from "components/Card/Card";
-import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
-const PROJECT_CLOSE_URL = "/projects";
+import styles from "sass/pages/project.module.scss";
 
 export default function Project({ pageFields, nextProject, globalSettings }) {
   const router = useRouter();
 
-  const { projectTransitioning } = useAppContext();
+  const { cardTransitioning } = useAppContext();
 
   const [footerTriggerRef, footerInView] = useInView({
     rootMargin: "100% 0% -50% 0%",
@@ -60,6 +55,8 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
     slides = [],
   } = pageFields;
 
+  const projectCloseUrl = `/projects#${slug}`;
+
   const backgroundColor = pageFields.cardColor;
   const textColor = computeTextColor(pageFields.cardTextColor);
 
@@ -70,7 +67,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
   );
 
   useEscKey(() => {
-    router.push(PROJECT_CLOSE_URL);
+    router.push(projectCloseUrl);
   });
 
   function handleScrollFooter() {
@@ -89,21 +86,18 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
       <MetaImage {...computeMetaImageProps(metaImage, globalSettings)} />
       <LabelData number="1" label="Client" data={clientName} />
       <LabelData number="2" label="Designed in" data={year} />
-      <ThemeColor color={styles.kickpushBlack} />
 
       <main className={styles.Main}>
-        <div
-          className={clsx(
-            styles.Close,
-            (footerInView || projectTransitioning) && styles["Close-hidden"]
-          )}
-        >
-          <Link href={PROJECT_CLOSE_URL} passHref>
-            <CloseButton aria-label="Back to projects" variant="dark">
-              <IconClose role="presentation" />
-            </CloseButton>
-          </Link>
-        </div>
+        <Link href={projectCloseUrl} passHref>
+          <CloseButton
+            className={clsx(
+              styles.Close,
+              (footerInView || cardTransitioning) && styles["Close-hidden"]
+            )}
+            aria-label="Back to projects"
+            variant="dark"
+          />
+        </Link>
 
         <div
           className={styles.Layer}
@@ -121,7 +115,10 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
 
           {slides.map((slide, slideIndex) => (
             <Fragment key={slideIndex}>
-              <ProjectSlideItem {...computeProjectSlideItemProps(slide)} />
+              <ProjectSlideItem
+                backgroundLoading={slideIndex < 4 ? "priority" : undefined}
+                {...computeProjectSlideItemProps(slide)}
+              />
               <ProjectSpacer />
             </Fragment>
           ))}
@@ -150,12 +147,11 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
         >
           <div className={clsx(styles.Container, "container")}>
             <CardsWrapper columns={false}>
-              {/* TODO: Fix scroll to on focus */}
               <ProjectCard
-                className={styles.FooterCard}
                 size="large"
                 {...nextProjectProps}
                 onClick={handleScrollFooter}
+                onFocus={handleScrollFooter}
               />
             </CardsWrapper>
           </div>
@@ -176,7 +172,7 @@ export async function getStaticProps({ params }) {
     // true
   );
   const { pageFields, globalSettings } = await fetchFromCache(
-    "customPageProject",
+    "page-project",
     async () => await fetchCustomPage("customPageProject", { include: 2 })
   );
 
@@ -201,8 +197,9 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const projects = await fetchFromCache(
-    "projectIds",
-    async () => await fetchProjectIds()
+    "global-project-slugs",
+    async () => await fetchContentTypeSlugs("project"),
+    true
   );
 
   const paths = projects.map((projectId) => ({

@@ -1,14 +1,13 @@
 import Link from "next/link";
 import clsx from "clsx";
 
-import ActionCard from "./ActionCard";
+import ActionCard, { ActionCardLabel, ActionCardTitle } from "./ActionCard";
 import Heading from "components/Heading/Heading";
 import Image, { computeImageProps } from "components/Image/Image";
-import Paragraph from "components/Paragraph/Paragraph";
 
 import styles from "./ActionCardAbout.module.scss";
 
-export function computeActionAboutCardProps(globalSettings) {
+export function computeActionCardAboutProps(globalSettings) {
   const photosProps = globalSettings.aboutCardPhotos.map((image) => {
     return computeImageProps(image);
   });
@@ -21,7 +20,7 @@ export function computeActionAboutCardProps(globalSettings) {
   };
 }
 
-function ActionAboutCard({
+function ActionCardAbout({
   className,
   heading,
   subtitle,
@@ -30,21 +29,17 @@ function ActionAboutCard({
   ...props
 }) {
   return (
-    <Link href="/projects" passHref>
+    <Link href="/about" passHref>
       <ActionCard
         className={clsx(className, styles.Card)}
         size="large"
         actionCta={actionCta}
         topChildren={
           <>
-            <Heading className={styles.Title} level="h3" tag="p">
+            <ActionCardTitle className={styles.Title}>
               {heading}
-            </Heading>
-            {subtitle && (
-              <Paragraph level="label" className={styles.Subtitle}>
-                {subtitle}
-              </Paragraph>
-            )}
+            </ActionCardTitle>
+            {subtitle && <ActionCardLabel>{subtitle}</ActionCardLabel>}
           </>
         }
         {...props}
@@ -65,4 +60,4 @@ function ActionAboutCard({
   );
 }
 
-export default ActionAboutCard;
+export default ActionCardAbout;

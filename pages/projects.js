@@ -4,8 +4,7 @@ import { fetchFromCache } from "services/cache";
 import { CardsWrapper } from "components/Card/Card";
 import Nav, { computeNavProps } from "components/Nav/Nav";
 import Footer, { computeFooterProps } from "components/Footer/Footer";
-import Hero, { HeroCopy } from "components/Hero/Hero";
-import Heading from "components/Heading/Heading";
+import Hero, { HeroTitle } from "components/Hero/Hero";
 import ProjectCard, {
   computeProjectCardProps,
 } from "components/ProjectCard/ProjectCard";
@@ -15,18 +14,11 @@ import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
 export default function Projects({ pageFields, globalSettings }) {
-  const {
-    shortName,
-    metaDescription,
-    metaImage,
-    heroTitle,
-    heroCopy,
-    projectsList,
-  } = pageFields;
+  const { metaDescription, metaImage, heroTitle, projectsList } = pageFields;
 
   return (
     <>
-      <Title shortTitle={shortName} longTitle={heroTitle} />
+      <Title shortTitle={pageFields.shortName} longTitle={heroTitle} />
       <Description description={metaDescription} />
       <MetaImage {...computeMetaImageProps(metaImage, globalSettings)} />
 
@@ -34,20 +26,20 @@ export default function Projects({ pageFields, globalSettings }) {
 
       <main>
         <Hero>
-          <Heading level="h1">{heroTitle}</Heading>
-          {heroCopy && <HeroCopy>{heroCopy}</HeroCopy>}
+          <HeroTitle>{heroTitle}</HeroTitle>
         </Hero>
 
-        <section className="container">
+        <div className="container">
           <CardsWrapper>
             {projectsList.fields.projects.map((project) => (
               <ProjectCard
                 key={project.sys.id}
                 {...computeProjectCardProps(project, globalSettings)}
+                id={project.fields.slug}
               />
             ))}
           </CardsWrapper>
-        </section>
+        </div>
       </main>
 
       <Footer {...computeFooterProps(globalSettings)} />
@@ -59,7 +51,7 @@ export default function Projects({ pageFields, globalSettings }) {
 
 export async function getStaticProps() {
   const props = await fetchFromCache(
-    "customPageProjects",
+    "page-projects",
     async () => await fetchCustomPage("customPageProjects", { include: 2 })
   );
 
