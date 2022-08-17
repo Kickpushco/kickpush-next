@@ -9,7 +9,7 @@ import Title from "components/Meta/Title";
 import Description from "components/Meta/Description";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 
-import styles from "sass/pages/404.module.scss";
+import styles from "../sass/pages/404.module.scss";
 
 export default function PageNotFound({ pageFields, globalSettings }) {
   const { shortName, metaDescription, metaImage, heroTitle } = pageFields;

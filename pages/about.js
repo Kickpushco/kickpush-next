@@ -18,7 +18,7 @@ import Title from "components/Meta/Title";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
-import styles from "sass/pages/about.module.scss";
+import styles from "../sass/pages/about.module.scss";
 
 export default function About({ pageFields, globalSettings }) {
   const [vrRef, vrInView] = useInView({ triggerOnce: true });

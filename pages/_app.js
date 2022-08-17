@@ -3,8 +3,8 @@ import Head from "next/head";
 
 import { AppContextProvider, useAppContext } from "context/state";
 
-import "sass/pages/_app.scss";
-import styles from "sass/pages/_app.module.scss";
+import "../sass/pages/_app.scss";
+import styles from "../sass/pages/_app.module.scss";
 
 const PRELOAD_FONTS = [
   "kickpush-headings",
