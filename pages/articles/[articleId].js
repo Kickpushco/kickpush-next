@@ -29,7 +29,7 @@ import Image, { computeImageProps } from "components/Image/Image";
 
 import IconActionArrow from "assets/icons/21-action-arrow.svg";
 
-import styles from "sass/pages/article.module.scss";
+import styles from "../../sass/pages/article.module.scss";
 
 function ArticleHeading({ ...props }) {
   return <Heading className={styles.Heading} {...props} />;

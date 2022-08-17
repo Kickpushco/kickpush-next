@@ -34,7 +34,7 @@ import ProjectCard, {
 } from "components/ProjectCard/ProjectCard";
 import { CardsWrapper } from "components/Card/Card";
 
-import styles from "sass/pages/project.module.scss";
+import styles from "../../sass/pages/project.module.scss";
 
 export default function Project({ pageFields, nextProject, globalSettings }) {
   const router = useRouter();

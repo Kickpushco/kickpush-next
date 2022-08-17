@@ -9,7 +9,7 @@ import Description from "components/Meta/Description";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
-import styles from "sass/pages/contact.module.scss";
+import styles from "../sass/pages/contact.module.scss";
 
 export default function Contact({ pageFields, globalSettings }) {
   const { metaDescription, metaImage } = pageFields;

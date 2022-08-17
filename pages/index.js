@@ -24,7 +24,7 @@ import LabelData from "components/Meta/LabelData";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 
-import styles from "sass/pages/index.module.scss";
+import styles from "../sass/pages/index.module.scss";
 
 export default function Home({ pageFields, globalSettings }) {
   const [contentRef, contentInView] = useInView({
