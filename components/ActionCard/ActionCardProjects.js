@@ -2,14 +2,14 @@ import Link from "next/link";
 import clsx from "clsx";
 
 import ActionCard, { ActionCardLabel, ActionCardTitle } from "./ActionCard";
-import Image, { computeImageProps } from "components/Image/Image";
+import Image, { computeImageProps, isValidImage } from "components/Image/Image";
 
 import styles from "./ActionCardProjects.module.scss";
 
 export function computeActionCardProjectsProps(globalSettings) {
-  const rows = globalSettings.projectsCardImageRows.map((a) => {
-    return computeImageProps(a);
-  });
+  const rows = globalSettings.projectsCardImageRows
+    .filter((image) => isValidImage(image))
+    .map((image) => computeImageProps(image));
 
   return {
     heading: globalSettings.projectsCardTitle,

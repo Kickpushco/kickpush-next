@@ -25,7 +25,7 @@ import Title from "components/Meta/Title";
 import MetaImage, { computeMetaImageProps } from "components/Meta/MetaImage";
 import PrivacyPolicy from "components/PrivacyPolicy/PrivacyPolicy";
 import Paragraph from "components/Paragraph/Paragraph";
-import Image, { computeImageProps } from "components/Image/Image";
+import Image, { computeImageProps, isValidImage } from "components/Image/Image";
 
 import IconActionArrow from "assets/icons/21-action-arrow.svg";
 
@@ -119,6 +119,8 @@ export default function Article({ pageFields, globalSettings }) {
       ),
       [BLOCKS.EMBEDDED_ASSET]: (node) => {
         const asset = node.data.target;
+        if (!isValidImage(asset)) return null;
+
         const { file, description } = asset.fields;
         if (!file.contentType.startsWith("image/")) return null;
 

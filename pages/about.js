@@ -11,7 +11,7 @@ import Card, { CardReveal, CardsWrapper } from "components/Card/Card";
 import Description from "components/Meta/Description";
 import Heading from "components/Heading/Heading";
 import Hero, { HeroTitle } from "components/Hero/Hero";
-import Image, { computeImageProps } from "components/Image/Image";
+import Image, { computeImageProps, isValidImage } from "components/Image/Image";
 import Footer, { computeFooterProps } from "components/Footer/Footer";
 import Nav, { computeNavProps } from "components/Nav/Nav";
 import Title from "components/Meta/Title";
@@ -34,8 +34,11 @@ export default function About({ pageFields, globalSettings }) {
     movingTitle,
     movingArticle,
     photosTitle,
-    photosGrid,
   } = pageFields;
+
+  const photosGrid = pageFields.photosGrid.filter((photo) =>
+    isValidImage(photo)
+  );
 
   const heroArticleProps = heroArticle && computeArticleCardProps(heroArticle);
   const vrArticleProps = vrArticle && computeArticleCardProps(vrArticle);

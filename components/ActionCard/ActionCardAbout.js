@@ -3,14 +3,14 @@ import clsx from "clsx";
 
 import ActionCard, { ActionCardLabel, ActionCardTitle } from "./ActionCard";
 import Heading from "components/Heading/Heading";
-import Image, { computeImageProps } from "components/Image/Image";
+import Image, { computeImageProps, isValidImage } from "components/Image/Image";
 
 import styles from "./ActionCardAbout.module.scss";
 
 export function computeActionCardAboutProps(globalSettings) {
-  const photosProps = globalSettings.aboutCardPhotos.map((image) => {
-    return computeImageProps(image);
-  });
+  const photosProps = globalSettings.aboutCardPhotos
+    .filter((image) => isValidImage(image))
+    .map((image) => computeImageProps(image));
 
   return {
     heading: globalSettings.aboutCardTitle,

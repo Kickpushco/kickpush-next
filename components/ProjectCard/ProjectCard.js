@@ -8,14 +8,14 @@ import ActionCard, {
   ActionCardTitle,
 } from "components/ActionCard/ActionCard";
 import Heading from "components/Heading/Heading";
-import { computeImageProps } from "components/Image/Image";
+import { computeImageProps, isValidImage } from "components/Image/Image";
 
 import styles from "./ProjectCard.module.scss";
 
 export function computeProjectCardProps({ fields }, globalSettings) {
   const textColor = computeTextColor(fields.cardTextColor);
   const backgroundImageProps =
-    fields.cardImage && computeImageProps(fields.cardImage);
+    isValidImage(fields.cardImage) && computeImageProps(fields.cardImage);
 
   return {
     slug: fields.slug,
