@@ -4,7 +4,7 @@ import { computeTextColor } from "services/contentful";
 
 import ActionCard, { ActionCardTitle } from "components/ActionCard/ActionCard";
 import Heading from "components/Heading/Heading";
-import { computeImageProps } from "components/Image/Image";
+import { computeImageProps, isValidImage } from "components/Image/Image";
 
 import styles from "./ArticleCard.module.scss";
 
@@ -13,7 +13,7 @@ export function computeArticleCardProps({ fields }) {
 
   const textColor = computeTextColor(fields.textColor);
   const backgroundImageProps =
-    backgroundImage && computeImageProps(backgroundImage);
+    isValidImage(backgroundImage) && computeImageProps(backgroundImage);
 
   return {
     title,

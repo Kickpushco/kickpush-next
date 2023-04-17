@@ -29,7 +29,9 @@ export function computeImageContentType(image) {
   }
 }
 
-export function computeImageProps(image, overrideWidth) {
+export const isValidImage = (image) => !!image?.fields?.file;
+
+export function computeImageProps(image, overrideWidth, debug = "") {
   const { url } = image.fields.file;
 
   let { height, width } = image.fields.file.details.image;

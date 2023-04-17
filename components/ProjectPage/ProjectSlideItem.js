@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 import { computeObjectFit } from "services/contentful";
 
-import Image, { computeImageProps } from "components/Image/Image";
+import Image, { computeImageProps, isValidImage } from "components/Image/Image";
 import ProjectSlide from "./ProjectSlide";
 
 import styles from "./ProjectSlideItem.module.scss";
@@ -19,7 +19,7 @@ export function computeProjectSlideItemProps({ fields }) {
     mobileImagePosition,
   } = fields;
 
-  if (!desktopImage && !mobileImage) return null;
+  if (!isValidImage(desktopImage)) return null;
 
   const desktop = {
     ...computeImageProps(desktopImage, 2000),
@@ -27,7 +27,7 @@ export function computeProjectSlideItemProps({ fields }) {
     objectPosition: (desktopImagePosition || "Center Center").toLowerCase(),
   };
 
-  const mobile = mobileImage
+  const mobile = isValidImage(mobileImage)
     ? computeImageProps(mobileImage, 1000)
     : computeImageProps(desktopImage, 1600);
   mobile.objectFit = mobileImageFit
