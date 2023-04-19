@@ -7,11 +7,17 @@
   flex-direction: column;
   padding: calc(var(--section-space) / 2) 0;
   position: relative;
-  min-height: math.div(635, 375) * 100vw;
+  min-height: math.div(
+      $mobile-project-slide-height,
+      $mobile-project-slide-width
+    ) * 100vw;
   overflow: hidden;
 
   @include min-width($bp-project-mobile-slide) {
-    min-height: math.div(800, 1440) * 100vw;
+    min-height: math.div(
+        $desktop-project-slide-height,
+        $desktop-project-slide-width
+      ) * 100vw;
   }
 
   &-light {
