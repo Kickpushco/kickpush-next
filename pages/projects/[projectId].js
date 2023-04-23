@@ -172,12 +172,9 @@ export async function getStaticProps({ params }) {
     // true
   );
 
-  if (projectFields.comingSoon) {
+  if (projectFields) {
     return {
-      redirect: {
-        destination: "/projects",
-        permanent: false,
-      },
+      notFound: true,
     };
   }
 
