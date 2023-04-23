@@ -20,6 +20,14 @@
   &-cardTransitioning {
     transform: translateY(calc(-100% - #{var(--nav-offset)}));
   }
+
+  &-404 {
+    background: none;
+
+    .Link::before {
+      background: rgba(black, 0.2);
+    }
+  }
 }
 
 .Container {

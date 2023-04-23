@@ -9,6 +9,7 @@ import { CloseButton } from "components/Button/CloseButton";
 import Heading from "components/Heading/Heading";
 
 import Logo from "assets/images/logo.svg";
+import Logo404 from "assets/images/logo-404.svg";
 import IconHamburger from "assets/icons/16-hamburger.svg";
 
 import useFocusTrap from "hooks/useFocusTrap";
@@ -44,7 +45,7 @@ const NavLink = forwardRef(
   }
 );
 
-function Nav({ labels, selected, ...props }) {
+function Nav({ labels, selected, is404, ...props }) {
   const { pathname } = useRouter();
   const { cardTransitioning, mobileOpen, setMobileOpen } = useAppContext();
 
@@ -94,14 +95,19 @@ function Nav({ labels, selected, ...props }) {
       className={clsx(
         styles.Nav,
         mobileOpen && styles["Nav-mobileOpen"],
-        cardTransitioning && styles["Nav-cardTransitioning"]
+        cardTransitioning && styles["Nav-cardTransitioning"],
+        is404 && styles["Nav-404"]
       )}
       {...props}
     >
       <div className={clsx(styles.Container, "container")}>
         <Link href="/">
           <a className={styles.Logo}>
-            <Logo aria-label="Kickpush" />
+            {!is404 ? (
+              <Logo aria-label="Kickpush" />
+            ) : (
+              <Logo404 aria-label="Pick kush" />
+            )}
           </a>
         </Link>
 

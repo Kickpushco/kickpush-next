@@ -16,7 +16,7 @@ export async function fetchCustomPage(contentType, args = {}) {
 
   const entries = await client.getEntries(query);
   if (!entries.items)
-    throw new Error(`Error fetching Entry for ${slug} (${contentType})`);
+    throw new Error(`Error fetching Entry for custom page (${contentType})`);
 
   const {
     globalSettings: { fields: globalSettings },
@@ -29,6 +29,7 @@ export async function fetchCustomPage(contentType, args = {}) {
     );
 
   return {
+    contentType,
     pageFields,
     globalSettings,
   };
