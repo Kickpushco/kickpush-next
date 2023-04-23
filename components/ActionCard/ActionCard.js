@@ -51,6 +51,7 @@ const ActionCard = forwardRef(
       onClickEnd,
       animationId,
       href,
+      comingSoon = false,
       ...props
     },
     ref
@@ -172,7 +173,7 @@ const ActionCard = forwardRef(
             className,
             styles.Card,
             styles[`Card-${size}`],
-            !disabled && styles["Card-enabled"],
+            !disabled && !comingSoon && styles["Card-enabled"],
             thisCardTransitioning && styles["Card-transitioning"]
           )}
           size={size}
@@ -195,15 +196,33 @@ const ActionCard = forwardRef(
               {...backgroundImageProps}
               className={clsx(
                 styles.Background,
-                backgroundImageProps.className
+                backgroundImageProps.className,
+                comingSoon && styles["Background-comingSoon"]
               )}
             />
           )}
 
           <div className={styles.Content}>
-            <Action ctaText={actionCta} disabled={disabled}>
-              {topChildren}
-            </Action>
+            {comingSoon ? (
+              <div className={clsx(comingSoon && styles.ComingSoon)}>
+                <Action ctaText={actionCta} disabled={disabled}>
+                  {topChildren}
+                </Action>
+                {comingSoon && (
+                  <Heading
+                    className={styles.ComingSoonLabel}
+                    level="h6"
+                    tag="p"
+                  >
+                    Coming soon
+                  </Heading>
+                )}
+              </div>
+            ) : (
+              <Action ctaText={actionCta} disabled={disabled}>
+                {topChildren}
+              </Action>
+            )}
 
             {children}
           </div>

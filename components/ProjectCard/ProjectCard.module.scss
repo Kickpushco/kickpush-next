@@ -4,6 +4,15 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  &-comingSoon {
+    background: $color-kickpush-red;
+    color: $color-kickpush-dark-red;
+
+    @include high-contrast {
+      color: $color-kickpush-dark-red-high-contrast;
+    }
+  }
 }
 
 .Byline {

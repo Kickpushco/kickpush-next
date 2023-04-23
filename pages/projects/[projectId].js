@@ -171,17 +171,33 @@ export async function getStaticProps({ params }) {
     async () => await fetchProject(projectId)
     // true
   );
+
+  if (projectFields.comingSoon) {
+    return {
+      redirect: {
+        destination: "/projects",
+        permanent: false,
+      },
+    };
+  }
+
   const { pageFields, globalSettings } = await fetchFromCache(
     "page-project",
     async () => await fetchCustomPage("customPageProject", { include: 2 })
+    // true
   );
 
   const { projects } = pageFields.projectsList.fields;
 
-  const currentProjectIndex = projects.findIndex((project) => {
+  const visibleProjects = projects.filter(
+    (project) => project.fields.comingSoon !== true
+  );
+
+  const currentProjectIndex = visibleProjects.findIndex((project) => {
     return project.fields.slug === params.projectId;
   });
-  const nextProject = projects[currentProjectIndex + 1] || projects[0];
+  const nextProject =
+    visibleProjects[currentProjectIndex + 1] || visibleProjects[0];
 
   return {
     props: {
