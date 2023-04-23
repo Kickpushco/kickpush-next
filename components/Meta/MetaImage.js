@@ -1,14 +1,22 @@
 import Head from "next/head";
+import { isValidImage } from "components/Image/Image";
 
 export function computeMetaImageProps(image, globalSettings) {
-  if (!image && !globalSettings) return {};
+  let _image;
 
-  const { fields } = image || globalSettings.metaDefaultImage;
-  const card = !image ? "summary_image" : undefined;
+  if (isValidImage(image)) {
+    _image = image;
+  } else if (isValidImage(globalSettings?.metaDefaultImage)) {
+    _image = globalSettings.metaDefaultImage;
+  }
+
+  const url = _image?.fields?.file?.url;
+
+  if (!url) return {};
 
   return {
-    url: `https:${fields.file.url}`,
-    card,
+    url: `https:${url}`,
+    card: isValidImage(image) ? "summary_image" : undefined,
   };
 }
 
