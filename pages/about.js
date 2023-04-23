@@ -77,7 +77,7 @@ export default function About({ pageFields, globalSettings }) {
             id={vrArticleProps?.id}
           >
             {vrTitle && (
-              <Heading className={styles.LargeTitle} level="h0" tag="h2">
+              <Heading className={styles.LargeTitle} level="h1" tag="h2">
                 {vrTitle}
               </Heading>
             )}
@@ -102,7 +102,7 @@ export default function About({ pageFields, globalSettings }) {
             id={movingArticleProps?.id}
           >
             {movingTitle && (
-              <Heading className={styles.LargeTitle} level="h0" tag="h2">
+              <Heading className={styles.LargeTitle} level="h1" tag="h2">
                 {movingTitle}
               </Heading>
             )}
@@ -124,7 +124,7 @@ export default function About({ pageFields, globalSettings }) {
             id="photos"
           >
             {photosTitle && (
-              <Heading className={styles.LargeTitle} level="h0" tag="h2">
+              <Heading className={styles.LargeTitle} level="h1" tag="h2">
                 {photosTitle}
               </Heading>
             )}

@@ -21,8 +21,15 @@ export default function PageNotFound({ pageFields, globalSettings }) {
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
+      {/* There's no better way to handle global styles than this, and as it is
+          only for this page, it feels safe to do. */}
+      <style global jsx>{`
+        html {
+          background: #7520ff;
+        }
+      `}</style>
 
-      <Nav {...computeNavProps(globalSettings)} />
+      <Nav {...computeNavProps(globalSettings)} is404 />
 
       <Hero className={styles.Hero}>
         <HeroTitle>{heroTitle}</HeroTitle>

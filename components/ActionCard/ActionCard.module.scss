@@ -128,6 +128,29 @@
   @include no-motion {
     --card-background-hover-scale: 1 !important;
   }
+
+  &-comingSoon {
+    mix-blend-mode: luminosity;
+    opacity: 0.8;
+  }
+}
+
+.ComingSoon {
+  display: grid;
+  gap: rem(16);
+  grid-template-columns: 1fr auto;
+  align-items: flex-start;
+}
+
+.ComingSoonLabel {
+  background: $color-kickpush-dark-red;
+  color: $color-kickpush-white;
+  padding: rem(10) rem(16);
+  border-radius: $border-radius-medium;
+
+  @include high-contrast {
+    background: $color-kickpush-dark-red-high-contrast;
+  }
 }
 
 .Title {

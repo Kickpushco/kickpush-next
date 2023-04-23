@@ -5,6 +5,8 @@
   margin-bottom: 0.25em;
   font-family: $font-stack-heading;
   font-weight: $font-weight-heading;
+  // Experimental CSS functionality to make lines read better
+  text-wrap: balance;
 
   @include min-width($bp-tablet) {
     white-space: pre-wrap;

@@ -4,13 +4,19 @@
 
 .Section {
   --card-reveal-delay: 250ms;
+  margin-bottom: calc(var(--section-space) / 2);
 
   &-inView {
     --reveal-animation-state: running;
   }
 }
+
 .LargeTitle {
   @include reveal-animation("heading");
+
+  @include min-width($bp-mobile) {
+    text-align: center;
+  }
 }
 
 .HeroCardWrapper {
