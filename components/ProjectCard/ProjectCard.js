@@ -11,13 +11,17 @@ import Heading from "components/Heading/Heading";
 import { computeImageProps, isValidImage } from "components/Image/Image";
 
 import styles from "./ProjectCard.module.scss";
-import Card from "components/Card/Card";
 
 export function computeProjectCardProps({ fields }, globalSettings) {
-  const textColor = computeTextColor(fields.cardTextColor);
-  const backgroundImageProps =
-    isValidImage(fields.cardImage) && computeImageProps(fields.cardImage);
-  const comingSoon = !!fields.comingSoon;
+  const { comingSoon = false, cardImage, comingSoonCardImage } = fields;
+
+  let backgroundImageProps = null;
+
+  if (comingSoon && isValidImage(comingSoonCardImage)) {
+    backgroundImageProps = computeImageProps(comingSoonCardImage);
+  } else if (isValidImage(cardImage)) {
+    backgroundImageProps = computeImageProps(cardImage);
+  }
 
   return {
     slug: fields.slug,
@@ -27,7 +31,7 @@ export function computeProjectCardProps({ fields }, globalSettings) {
     title: fields.cardTitle,
     backgroundColor: !comingSoon ? fields.cardColor : undefined,
     backgroundImageProps,
-    textColor: !comingSoon ? textColor : undefined,
+    textColor: !comingSoon ? computeTextColor(fields.cardTextColor) : undefined,
     actionCta: globalSettings.projectCardAction,
   };
 }
