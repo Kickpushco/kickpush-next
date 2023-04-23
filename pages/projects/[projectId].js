@@ -172,7 +172,7 @@ export async function getStaticProps({ params }) {
     // true
   );
 
-  if (projectFields) {
+  if (projectFields.comingSoon) {
     return {
       notFound: true,
     };
