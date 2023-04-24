@@ -203,7 +203,7 @@
   }
 
   .FooterFauxLink {
-    border-radius: rem(4);
+    border-radius: $border-radius-small;
     padding: $action-icon-margin / 2 0;
     display: flex;
     margin: 0;
