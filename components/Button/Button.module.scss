@@ -91,7 +91,7 @@
 
   &-medium {
     --button-size: 54;
-    --button-border-radius: #{rem(10)};
+    --button-border-radius: #{$border-radius-medium};
 
     font-size: rem(16);
 

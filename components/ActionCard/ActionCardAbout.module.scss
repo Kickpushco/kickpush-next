@@ -16,14 +16,14 @@ $photos-height: 596;
   position: relative;
   transform: rotate(-15deg);
   width: 210%;
-  margin-top: -5%;
+  margin-top: calc(-5% - var(--card-padding));
   margin-left: -20%;
   align-self: flex-end;
 
   @include min-width($bp-unstack-cards) {
-    width: calc(117% + (#{var(--card-padding)} * 2));
-    margin-left: 4%;
-    margin-top: -10%;
+    width: calc(120% + (#{var(--card-padding)} * 2));
+    margin-left: 1%;
+    margin-top: calc(-15% - var(--card-padding));
   }
 
   @include max-width($bp-nuclear) {
@@ -51,25 +51,30 @@ $photos-height: 596;
   }
 
   &:nth-of-type(1) {
-    --photo-top: 0;
+    --photo-top: 80;
   }
 
   &:nth-of-type(2) {
-    --photo-top: 210;
-    --photo-left: 220;
+    --photo-top: 180;
+    --photo-left: 290;
     --photo-transform: 1.05;
 
     z-index: 2;
+
+    @include max-width($bp-unstack-cards) {
+      --photo-top: 220;
+      --photo-left: 220;
+    }
   }
 
   &:nth-of-type(3) {
-    --photo-top: 40;
+    --photo-top: 0;
     --photo-left: 451;
   }
 
   &:nth-of-type(4) {
     --photo-left: 580;
-    --photo-top: 345;
+    --photo-top: 305;
     --photo-transform: 1.075;
 
     z-index: 2;
