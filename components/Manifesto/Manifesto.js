@@ -5,7 +5,7 @@ import Heading from "components/Heading/Heading";
 
 import styles from "./Manifesto.module.scss";
 
-function Manifesto({ className, short, long }) {
+function Manifesto({ className, long }) {
   const [manifestoRef, manifestoInView] = useInView({
     triggerOnce: true,
   });
@@ -19,11 +19,7 @@ function Manifesto({ className, short, long }) {
       )}
       ref={manifestoRef}
     >
-      {/* TODO: Add shortAs */}
-      <Heading className={styles.Short} level="h4" tag="h3">
-        {short}
-      </Heading>
-      <Heading className={styles.Long} level="h2" tag="p">
+      <Heading className={styles.Long} level="h1" tag="p">
         {long}
       </Heading>
     </div>

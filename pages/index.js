@@ -31,8 +31,14 @@ export default function Home({ pageFields, globalSettings }) {
     triggerOnce: true,
   });
 
-  const { metaImage, heroTitle, projectsTitle, heroCopy, projectsList } =
-    pageFields;
+  const {
+    metaImage,
+    heroTitle,
+    projectsTitle,
+    heroCopy,
+    projectsList,
+    storyTitle,
+  } = pageFields;
 
   return (
     <>
@@ -55,6 +61,7 @@ export default function Home({ pageFields, globalSettings }) {
           ref={contentRef}
           className={clsx(
             "container",
+            styles.Content,
             contentInView && styles["Content-inView"]
           )}
         >
@@ -77,13 +84,11 @@ export default function Home({ pageFields, globalSettings }) {
             />
           </CardsWrapper>
 
-          {pageFields.manifestoItems.map(({ sys, fields }) => (
-            <Manifesto
-              key={sys.id}
-              short={fields.shortText}
-              long={fields.longText}
-            />
-          ))}
+          {storyTitle && (
+            <Heading className={styles.LargeTitle} level="h0" tag="h2">
+              {storyTitle}
+            </Heading>
+          )}
 
           <CardsWrapper columns={false}>
             <CardReveal>
@@ -92,6 +97,10 @@ export default function Home({ pageFields, globalSettings }) {
               />
             </CardReveal>
           </CardsWrapper>
+
+          {pageFields.manifestoItems.map(({ sys, fields }) => (
+            <Manifesto key={sys.id} long={fields.longText} />
+          ))}
         </div>
       </main>
 
@@ -105,7 +114,8 @@ export default function Home({ pageFields, globalSettings }) {
 export async function getStaticProps() {
   const props = await fetchFromCache(
     "page-home",
-    async () => await fetchCustomPage("customPageHome", { include: 2 })
+    async () => await fetchCustomPage("customPageHome", { include: 2 }),
+    true
   );
 
   return {

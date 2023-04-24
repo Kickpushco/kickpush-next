@@ -15,6 +15,10 @@
   &-inView {
     --reveal-animation-state: running;
   }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
 }
 
 .LargeTitle {
