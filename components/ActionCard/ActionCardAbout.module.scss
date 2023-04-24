@@ -10,6 +10,8 @@ $photos-height: 596;
 }
 
 .Photos {
+  --card-shadow-color: #{rgba(black, 0.2)};
+
   aspect-ratio: #{$photos-width} / #{$photos-height};
   position: relative;
   transform: rotate(-15deg);
@@ -79,9 +81,9 @@ $photos-height: 596;
 }
 
 .Photo {
+  @include card-shadow();
   aspect-ratio: 403 / 263;
   background: $color-kickpush-dark-red;
-  box-shadow: rgba($color-kickpush-dark-red, 0.4) 0 rem(20) rem(30) 0;
   border-radius: $border-radius-small;
   width: math.div(403, $photos-width) * 100%;
   top: calc(var(--photo-top) / #{$photos-height} * 100%);

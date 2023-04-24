@@ -52,8 +52,10 @@
 }
 
 @mixin card-shadow($card-shadow-state: "idle") {
-  // Darkened to compensate for smaller shadows (required to avoid overlaps)
-  $card-default-shadow: darken($color-kickpush-dark-red, 15%);
+  // The card shadows are slightly smaller than the designs to avoid overlaps
+  // because of how HTML is layered, so the colours are adjusted from the
+  // designs to compensate.
+  $card-default-shadow: darken($color-kickpush-dark-red, 2%);
   $card-shadow-color: var(--card-shadow-color, #{$card-default-shadow});
 
   $multiplier-1: 0.25;
