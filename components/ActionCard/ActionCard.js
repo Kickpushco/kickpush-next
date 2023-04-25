@@ -204,19 +204,9 @@ const ActionCard = forwardRef(
 
           <div className={styles.Content}>
             {comingSoon ? (
-              <div className={clsx(comingSoon && styles.ComingSoon)}>
-                <Action ctaText={actionCta} disabled={disabled}>
-                  {topChildren}
-                </Action>
-                {comingSoon && (
-                  <Heading
-                    className={styles.ComingSoonLabel}
-                    level="h6"
-                    tag="p"
-                  >
-                    Coming soon
-                  </Heading>
-                )}
+              <div className={styles.ComingSoon}>
+                {topChildren}
+                {<p className={styles.ComingSoonLabel}>Coming Soon</p>}
               </div>
             ) : (
               <Action ctaText={actionCta} disabled={disabled}>
