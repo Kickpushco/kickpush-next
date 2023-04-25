@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kickpush | Coming Soon</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="/favicon-16.png" rel="icon" sizes="16x16" type="image/png" />
+    <link href="/favicon-32.png" rel="icon" sizes="32x32" type="image/png" />
+    <link href="/favicon-96.png" rel="icon" sizes="96x96" type="image/png" />
+    <link href="/logo-57.png" rel="apple-touch-icon" sizes="57x57" />
+    <link href="/logo-60.png" rel="apple-touch-icon" sizes="60x60" />
+    <link href="/logo-72.png" rel="apple-touch-icon" sizes="72x72" />
+    <link href="/logo-76.png" rel="apple-touch-icon" sizes="76x76" />
+    <link href="/logo-114.png" rel="apple-touch-icon" sizes="114x114" />
+    <link href="/logo-120.png" rel="apple-touch-icon" sizes="120x120" />
+    <link href="/logo-144.png" rel="apple-touch-icon" sizes="144x144" />
+    <link href="/logo-152.png" rel="apple-touch-icon" sizes="152x152" />
+    <link href="/logo-180.png" rel="apple-touch-icon" sizes="180x180" />
+    <link href="/logo-192.png" rel="apple-touch-icon" sizes="192x192" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/logo-192.png" />
+    <link
+      rel="preload"
+      href="/fonts/kickpush-headings.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <meta name="msapplication-TileColor" />
+    <meta name="msapplication-TileImage" content="/logo-144.png" />
+    <meta name="twitter:site" content="@kickpush" />
+    <meta name="theme-color" content="#212121" />
+
+    <meta name="title" content="Coming Soon" />
+    <meta property="og:title" content="Coming Soon" />
+    <meta property="twitter:title" content="Coming Soon" />
+
+    <meta
+      name="description"
+      content="Product design studio specialising in UI, UX &amp; Branding for mobile and web"
+    />
+    <meta
+      property="og:description"
+      content="Product design studio specialising in UI, UX &amp; Branding for mobile and web"
+    />
+    <meta
+      property="twitter:description"
+      content="Product design studio specialising in UI, UX &amp; Branding for mobile and web"
+    />
+    <meta property="twitter:label1" content="Email" />
+    <meta property="twitter:data1" content="hello@kickpush.co" />
+    <!-- TODO: Update this with the prod value -->
+    <meta
+      name="twitter:image"
+      content="https://images.ctfassets.net/z5iyholy6np0/7mcOuhMr1HGzc3ScV13Aox/11cc10cc1be8087e2b643c208c1ddb42/Home.jpg"
+    />
+    <meta
+      name="og:image"
+      content="https://images.ctfassets.net/z5iyholy6np0/7mcOuhMr1HGzc3ScV13Aox/11cc10cc1be8087e2b643c208c1ddb42/Home.jpg"
+    />
+    <meta name="twitter:card" content="summary_image" />
+    <meta name="next-head-count" content="36" />
+
+    <style>
+      @font-face {
+        font-family: "kickpush-headings";
+        src: url(/fonts/kickpush-headings.woff2);
+        font-weight: 600;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      html {
+        background: #ee5050;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        font-family: "kickpush-headings", sans-serif;
+        color: #cf3d3d;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      h1 {
+        font-size: 12vw;
+        font-size: clamp(2.5rem, 12vw, 10rem);
+        font-weight: 600;
+        text-align: center;
+      }
+      h1[data-state="loading"] {
+        opacity: 0;
+      }
+      h1[data-state="now"] {
+        font-size: 6vw;
+        font-size: clamp(2.5rem, 6vw, 10rem);
+      }
+
+      .time {
+        display: inline-flex;
+        white-space: nowrap;
+      }
+      .time span span {
+        width: 1ch;
+        display: inline-block;
+      }
+
+      .separator {
+        width: 0.5ch;
+        transform: translateY(-5%);
+      }
+
+      @media (prefers-contrast: more) {
+        html {
+          color: #711c1c;
+        }
+      }
+    </style>
+    <noscript>
+      <style>
+        h1[data-state] {
+          opacity: 1;
+          font-size: 6vw;
+          font-size: clamp(2.5rem, 6vw, 10rem);
+        }
+
+        h1 .time {
+          display: none;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <h1 aria-label="Coming Soon" id="h1" data-state="loading">
+      <span id="days">Coming Soon</span>
+      <span class="time">
+        <span id="hours"></span>
+        <span class="separator">:</span>
+        <span id="minutes"></span>
+        <span class="separator">:</span>
+        <span id="seconds"></span>
+      </span>
+    </h1>
+
+    <script>
+      const FINISH_TIME = new Date("2023-04-26T00:00:00.000Z");
+
+      const SECONDS = 1000;
+      const MINUTES = SECONDS * 60;
+      const HOURS = MINUTES * 60;
+      const DAYS = HOURS * 24;
+
+      function getTimeHtml(number) {
+        const strings = number < 10 ? [0, number] : `${number}`.split("");
+        return `<span>${strings[0]}</span><span>${strings[1]}</span>`;
+      }
+
+      let days;
+      let hours;
+      let minutes;
+
+      const h1El = document.getElementById("h1");
+      const daysEl = document.getElementById("days");
+      const hoursEl = document.getElementById("hours");
+      const minutesEl = document.getElementById("minutes");
+      const secondsEl = document.getElementById("seconds");
+
+      function updateClock(first = false) {
+        const now = new Date();
+        const totalTimeLeft = FINISH_TIME - now;
+
+        if (totalTimeLeft < 0) {
+          clearInterval(interval);
+          h1El.dataset.state = "now";
+          h1El.innerHTML = "Any Minute Now…";
+          return;
+        }
+
+        if (first) {
+          h1El.dataset.state = "counting";
+        }
+
+        const daysLeft = Math.floor(totalTimeLeft / DAYS);
+        const hoursLeft = Math.floor((totalTimeLeft % DAYS) / HOURS);
+        const minutesLeft = Math.floor((totalTimeLeft % HOURS) / MINUTES);
+        const secondsLeft = Math.floor((totalTimeLeft % MINUTES) / SECONDS);
+
+        if (days !== daysLeft) {
+          days = daysLeft;
+          if (daysLeft) {
+            daysEl.innerHTML = `${daysLeft}D `;
+          } else {
+            daysEl.remove();
+          }
+        }
+
+        if (hours !== hoursLeft) {
+          hours = hoursLeft;
+          hoursEl.innerHTML = getTimeHtml(hoursLeft);
+        }
+        if (minutes !== minutesLeft) {
+          minutes = minutesLeft;
+          minutesEl.innerHTML = getTimeHtml(minutesLeft);
+        }
+        secondsEl.innerHTML = getTimeHtml(secondsLeft);
+      }
+
+      const interval = setInterval(updateClock, 1000);
+
+      updateClock(true);
+    </script>
+  </body>
+</html>
