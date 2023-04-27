@@ -144,12 +144,15 @@
     </noscript>
   </head>
   <body>
-    <h1 aria-label="Coming Soon" id="h1" data-state="loading">
+    <h1 id="h1" data-state="loading">
       <span id="days"
         >Coming on
-        <time id="datetime" datetime="2023-05-01">1 May 2023</time></span
+        <!-- Midday in Mexico (CST) is 6 hours behind -->
+        <time id="datetime" datetime="2023-05-01T12:00:00-06:00"
+          >1 May 2023</time
+        ></span
       >
-      <span class="time">
+      <span class="time" aria-hidden="true">
         <span id="hours"></span>
         <span class="separator">:</span>
         <span id="minutes"></span>
@@ -163,8 +166,7 @@
         .getElementById("datetime")
         .getAttribute("datetime");
 
-      // Midday in Mexico (CST) is 6 hours behind
-      const finishDateTime = new Date(`${finishDate}T12:00:00-06:00`);
+      const finishDateTime = new Date(finishDate);
 
       const SECONDS = 1000;
       const MINUTES = SECONDS * 60;
@@ -198,6 +200,8 @@
 
         if (first) {
           h1El.dataset.state = "counting";
+          h1El.ariaLabel = daysEl.innerText;
+          daysEl.ariaHidden = "true";
         }
 
         let daysLeft = Math.floor(totalTimeLeft / DAYS);
