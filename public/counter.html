@@ -73,6 +73,10 @@
         font-display: swap;
       }
 
+      * {
+        margin: 0;
+      }
+
       html {
         background: #ee5050;
         display: flex;
@@ -91,6 +95,7 @@
         font-size: clamp(2.5rem, 12vw, 10rem);
         font-weight: 600;
         text-align: center;
+        padding: 0.5em;
       }
       h1[data-state="loading"] {
         opacity: 0;
@@ -131,12 +136,19 @@
         h1 .time {
           display: none;
         }
+
+        time {
+          display: inline-block;
+        }
       </style>
     </noscript>
   </head>
   <body>
     <h1 aria-label="Coming Soon" id="h1" data-state="loading">
-      <span id="days">Coming Soon</span>
+      <span id="days"
+        >Coming on
+        <time id="datetime" datetime="2023-05-01">1 May 2023</time></span
+      >
       <span class="time">
         <span id="hours"></span>
         <span class="separator">:</span>
@@ -147,7 +159,12 @@
     </h1>
 
     <script>
-      const FINISH_TIME = new Date("2023-04-26T00:00:00.000Z");
+      const finishDate = document
+        .getElementById("datetime")
+        .getAttribute("datetime");
+
+      // Midday in Mexico (CST) is 6 hours behind
+      const finishDateTime = new Date(`${finishDate}T12:00:00-06:00`);
 
       const SECONDS = 1000;
       const MINUTES = SECONDS * 60;
@@ -170,8 +187,7 @@
       const secondsEl = document.getElementById("seconds");
 
       function updateClock(first = false) {
-        const now = new Date();
-        const totalTimeLeft = FINISH_TIME - now;
+        const totalTimeLeft = finishDateTime - new Date();
 
         if (totalTimeLeft < 0) {
           clearInterval(interval);
@@ -184,10 +200,16 @@
           h1El.dataset.state = "counting";
         }
 
-        const daysLeft = Math.floor(totalTimeLeft / DAYS);
-        const hoursLeft = Math.floor((totalTimeLeft % DAYS) / HOURS);
+        let daysLeft = Math.floor(totalTimeLeft / DAYS);
+        let hoursLeft = Math.floor((totalTimeLeft % DAYS) / HOURS);
         const minutesLeft = Math.floor((totalTimeLeft % HOURS) / MINUTES);
         const secondsLeft = Math.floor((totalTimeLeft % MINUTES) / SECONDS);
+
+        // If there are fewer than 2 days left, only show hours (i.e. 47:59:59)
+        if (daysLeft === 1) {
+          hoursLeft += daysLeft * 24;
+          daysLeft = 0;
+        }
 
         if (days !== daysLeft) {
           days = daysLeft;
