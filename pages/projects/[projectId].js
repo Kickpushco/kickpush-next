@@ -19,6 +19,7 @@ import { fetchFromCache } from "services/cache";
 import { CloseButton } from "components/Button/CloseButton";
 import Description from "components/Meta/Description";
 import LabelData from "components/Meta/LabelData";
+import ThemeColor from "components/Meta/ThemeColor";
 import Footer, { computeFooterProps } from "components/Footer/Footer";
 import Title from "components/Meta/Title";
 import ProjectHero from "components/ProjectPage/ProjectHero";
@@ -86,6 +87,7 @@ export default function Project({ pageFields, nextProject, globalSettings }) {
       <MetaImage {...computeMetaImageProps(metaImage, globalSettings)} />
       <LabelData number="1" label="Client" data={clientName} />
       <LabelData number="2" label="Designed in" data={year} />
+      <ThemeColor color={backgroundColor} />
 
       <main className={styles.Main}>
         <Link href={projectCloseUrl} passHref>
