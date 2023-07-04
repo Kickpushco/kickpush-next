@@ -1,3 +1,3 @@
 # Redirects for the /soon campaign
-# /fonts/*  /fonts/:splat 200!
-# /*        /soon/index.html       200!
+/fonts/*  /fonts/:splat 200!
+/*        /soon/index.html       200!
