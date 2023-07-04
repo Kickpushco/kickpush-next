@@ -102,77 +102,46 @@
       }
 
       h1 {
-        font-size: 5vw;
-        font-size: clamp(1.25rem, 5.5vw, 2.25rem);
+        font-size: 6vw;
+        font-size: clamp(2rem, 8vw, 4rem);
         line-height: 1.2;
       }
 
+      .date {
+        display: none;
+      }
+
       .time {
-        display: flex;
+        display: none;
         white-space: nowrap;
+      }
+
+      .time span span {
+        width: 1ch;
+        display: inline-block;
+        text-align: center;
       }
 
       .separator {
         width: 0.5ch;
         display: inline-block;
         transform: translateY(-5%);
-        text-align: center;
-      }
-
-      .location {
-        color: #cf3d3d;
       }
 
       h1[data-state="loading"] {
         opacity: 0;
       }
 
-      h1[data-state="now"] .time,
-      h1[data-state="counting"] .date,
-      h1[data-state="soon"] .separator {
-        display: none;
-      }
-
-      h1[data-state="soon"] {
-        text-align: left;
-      }
-
-      [data-state="soon"] .date {
-        font-family: "kickpush-headings", sans-serif;
-        font-weight: 600;
-        font-size: 12vw;
-        font-size: clamp(2.5rem, 12vw, 5rem);
-        margin-bottom: 0.33em;
+      h1[data-state="soon"] .date {
         display: block;
       }
 
-      [data-state="soon"] .time span:not(:last-child) {
-        margin-right: 0.5em;
-      }
-
       [data-state="counting"] .time {
+        display: flex;
         font-family: "kickpush-headings", sans-serif;
         font-weight: 600;
         font-size: 12vw;
         font-size: clamp(0.5rem, 17vw, 11rem);
-      }
-
-      [data-state="counting"] .time span span {
-        width: 1ch;
-        display: inline-block;
-        text-align: center;
-      }
-
-      @media (prefers-contrast: more) {
-        .location {
-          color: #711c1c;
-        }
-      }
-
-      @media screen and (max-width: 360px) {
-        [data-state="soon"] .time {
-          flex-direction: column;
-        }
       }
     </style>
     <noscript>
@@ -185,29 +154,19 @@
   </head>
   <body>
     <h1 id="h1" data-state="loading">
-      <!-- EST is 5 hours behind -->
-      <time id="datetime" datetime="2023-07-10T12:00:00-05:00">
-        <span class="date">10 July 2023</span>
-        <span
-          class="time"
-          aria-label="8AM San Francisco, 11AM New York City, 3PM London"
-        >
-          <span id="hours">8&#8239;AM <span class="location">SF</span></span>
-          <span class="separator" aria-hidden="true">:</span>
-          <span id="minutes"
-            >11&#8239;AM <span class="location">NYC</span></span
-          >
-          <span class="separator" aria-hidden="true">:</span>
-          <span id="seconds">3&#8239;PM <span class="location">LDN</span></span>
-        </span>
-      </time>
+      <span class="date">An update is coming&nbsp;soon</span>
+      <span class="time" aria-hidden="true">
+        <span id="hours"></span>
+        <span class="separator">:</span>
+        <span id="minutes"></span>
+        <span class="separator">:</span>
+        <span id="seconds"></span>
+      </span>
     </h1>
 
     <script>
-      const dateEl = document.getElementById("datetime");
-      const finishDate = dateEl.getAttribute("datetime");
-
-      const finishDateTime = new Date(finishDate);
+      // EST is 5 hours behind
+      const FINISH_DATE_TIME = new Date("2023-07-10T12:00:00-05:00");
 
       const SECONDS = 1000;
       const MINUTES = SECONDS * 60;
@@ -228,7 +187,7 @@
       const secondsEl = document.getElementById("seconds");
 
       function updateClock(first = false) {
-        const totalTimeLeft = finishDateTime - new Date();
+        const totalTimeLeft = FINISH_DATE_TIME - new Date();
 
         // Set the "Any minute now" text if the timer hits zero to prevent it
         // from going below 0.
