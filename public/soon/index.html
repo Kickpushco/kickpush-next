@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kickpush | Coming Soon</title>
+    <title>Kickpush | Coming 10 July 2023</title>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -73,6 +73,14 @@
         font-display: swap;
       }
 
+      @font-face {
+        font-family: "circular";
+        src: url(/fonts/lineto-circular-medium.woff2);
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+
       * {
         margin: 0;
       }
@@ -84,44 +92,86 @@
         height: 100%;
         justify-content: center;
         align-items: center;
-        font-family: "kickpush-headings", sans-serif;
-        color: #cf3d3d;
+        text-align: center;
+        font-family: "circular", sans-serif;
+        font-weight: 500;
+        color: #ffffff;
+        padding: 0 2rem;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
 
       h1 {
-        font-size: 12vw;
-        font-size: clamp(2.5rem, 12vw, 10rem);
-        font-weight: 600;
-        text-align: center;
-        padding: 0.5em;
-      }
-      h1[data-state="loading"] {
-        opacity: 0;
-      }
-      h1[data-state="now"] {
-        font-size: 6vw;
-        font-size: clamp(2.5rem, 6vw, 10rem);
+        font-size: 5vw;
+        font-size: clamp(1.25rem, 5.5vw, 2.25rem);
+        line-height: 1.2;
       }
 
       .time {
-        display: inline-flex;
+        display: flex;
         white-space: nowrap;
-      }
-      .time span span {
-        width: 1ch;
-        display: inline-block;
       }
 
       .separator {
         width: 0.5ch;
+        display: inline-block;
         transform: translateY(-5%);
+        text-align: center;
+      }
+
+      .location {
+        color: #cf3d3d;
+      }
+
+      h1[data-state="loading"] {
+        opacity: 0;
+      }
+
+      h1[data-state="now"] .time,
+      h1[data-state="counting"] .date,
+      h1[data-state="soon"] .separator {
+        display: none;
+      }
+
+      h1[data-state="soon"] {
+        text-align: left;
+      }
+
+      [data-state="soon"] .date {
+        font-family: "kickpush-headings", sans-serif;
+        font-weight: 600;
+        font-size: 12vw;
+        font-size: clamp(2.5rem, 12vw, 5rem);
+        margin-bottom: 0.33em;
+        display: block;
+      }
+
+      [data-state="soon"] .time span:not(:last-child) {
+        margin-right: 0.5em;
+      }
+
+      [data-state="counting"] .time {
+        font-family: "kickpush-headings", sans-serif;
+        font-weight: 600;
+        font-size: 12vw;
+        font-size: clamp(0.5rem, 17vw, 11rem);
+      }
+
+      [data-state="counting"] .time span span {
+        width: 1ch;
+        display: inline-block;
+        text-align: center;
       }
 
       @media (prefers-contrast: more) {
-        html {
+        .location {
           color: #711c1c;
+        }
+      }
+
+      @media screen and (max-width: 360px) {
+        [data-state="soon"] .time {
+          flex-direction: column;
         }
       }
     </style>
@@ -129,42 +179,33 @@
       <style>
         h1[data-state] {
           opacity: 1;
-          font-size: 6vw;
-          font-size: clamp(2.5rem, 6vw, 10rem);
-        }
-
-        h1 .time {
-          display: none;
-        }
-
-        time {
-          display: inline-block;
         }
       </style>
     </noscript>
   </head>
   <body>
     <h1 id="h1" data-state="loading">
-      <span id="days"
-        >Coming on
-        <!-- Midday in Mexico (CST) is 6 hours behind -->
-        <time id="datetime" datetime="2023-05-01T12:00:00-06:00"
-          >1 May 2023</time
-        ></span
-      >
-      <span class="time" aria-hidden="true">
-        <span id="hours"></span>
-        <span class="separator">:</span>
-        <span id="minutes"></span>
-        <span class="separator">:</span>
-        <span id="seconds"></span>
-      </span>
+      <!-- EST is 5 hours behind -->
+      <time id="datetime" datetime="2023-07-10T12:00:00-05:00">
+        <span class="date">10 July 2023</span>
+        <span
+          class="time"
+          aria-label="8AM San Francisco, 11AM New York City, 3PM London"
+        >
+          <span id="hours">8&#8239;AM <span class="location">SF</span></span>
+          <span class="separator" aria-hidden="true">:</span>
+          <span id="minutes"
+            >11&#8239;AM <span class="location">NYC</span></span
+          >
+          <span class="separator" aria-hidden="true">:</span>
+          <span id="seconds">3&#8239;PM <span class="location">LDN</span></span>
+        </span>
+      </time>
     </h1>
 
     <script>
-      const finishDate = document
-        .getElementById("datetime")
-        .getAttribute("datetime");
+      const dateEl = document.getElementById("datetime");
+      const finishDate = dateEl.getAttribute("datetime");
 
       const finishDateTime = new Date(finishDate);
 
@@ -178,12 +219,10 @@
         return `<span>${strings[0]}</span><span>${strings[1]}</span>`;
       }
 
-      let days;
       let hours;
       let minutes;
 
       const h1El = document.getElementById("h1");
-      const daysEl = document.getElementById("days");
       const hoursEl = document.getElementById("hours");
       const minutesEl = document.getElementById("minutes");
       const secondsEl = document.getElementById("seconds");
@@ -191,47 +230,40 @@
       function updateClock(first = false) {
         const totalTimeLeft = finishDateTime - new Date();
 
+        // Set the "Any minute now" text if the timer hits zero to prevent it
+        // from going below 0.
         if (totalTimeLeft < 0) {
           clearInterval(interval);
+          h1El.innerHTML = "Any minute now…";
           h1El.dataset.state = "now";
-          h1El.innerHTML = "Any Minute Now…";
+          return;
+        }
+
+        // Start the counter if there is less than 72 hours left
+        if (totalTimeLeft > 3 * DAYS) {
+          clearInterval(interval);
+          h1El.dataset.state = "soon";
           return;
         }
 
         if (first) {
           h1El.dataset.state = "counting";
-          h1El.ariaLabel = daysEl.innerText;
-          daysEl.ariaHidden = "true";
         }
 
-        let daysLeft = Math.floor(totalTimeLeft / DAYS);
-        let hoursLeft = Math.floor((totalTimeLeft % DAYS) / HOURS);
+        const hoursLeft = Math.floor(totalTimeLeft / HOURS);
         const minutesLeft = Math.floor((totalTimeLeft % HOURS) / MINUTES);
         const secondsLeft = Math.floor((totalTimeLeft % MINUTES) / SECONDS);
-
-        // If there are fewer than 2 days left, only show hours (i.e. 47:59:59)
-        if (daysLeft === 1) {
-          hoursLeft += daysLeft * 24;
-          daysLeft = 0;
-        }
-
-        if (days !== daysLeft) {
-          days = daysLeft;
-          if (daysLeft) {
-            daysEl.innerHTML = `${daysLeft}D `;
-          } else {
-            daysEl.remove();
-          }
-        }
 
         if (hours !== hoursLeft) {
           hours = hoursLeft;
           hoursEl.innerHTML = getTimeHtml(hoursLeft);
         }
+
         if (minutes !== minutesLeft) {
           minutes = minutesLeft;
           minutesEl.innerHTML = getTimeHtml(minutesLeft);
         }
+
         secondsEl.innerHTML = getTimeHtml(secondsLeft);
       }
 

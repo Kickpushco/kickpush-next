@@ -24,7 +24,8 @@ export default function PageNotFound({ pageFields, globalSettings }) {
       {/* There's no better way to handle global styles than this, and as it is
           only for this page, it feels safe to do. */}
       <style global jsx>{`
-        html {
+        html,
+        body {
           background: #7520ff;
         }
       `}</style>

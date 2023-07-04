@@ -26,4 +26,12 @@ module.exports = {
     loader: "imgix",
     path: "/",
   },
+  rewrites: async () => {
+    return [
+      {
+        source: "/soon",
+        destination: "/soon/index.html",
+      },
+    ];
+  },
 };

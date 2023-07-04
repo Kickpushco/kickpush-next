@@ -48,7 +48,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background: $color-kickpush-red;
+  background: $color-kickpush-black;
   color: $color-kickpush-white;
   font-family: $font-stack-body;
   font-weight: $font-weight-medium;
@@ -91,7 +91,10 @@ body,
   display: flex;
   flex-direction: column;
   flex: 1;
-  // min-height: 100%;
+}
+
+body {
+  background: $color-kickpush-red;
 }
 
 main {
