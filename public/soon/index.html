@@ -158,6 +158,8 @@
       // 9am Mexico City CDMX
       const FINISH_DATE_TIME = new Date("2023-07-10T09:00:00-06:00");
 
+      const LS_KEY = "kp_countdown_2";
+
       const SECONDS = 1000;
       const MINUTES = SECONDS * 60;
       const HOURS = MINUTES * 60;
@@ -185,6 +187,17 @@
           clearInterval(interval);
           h1El.innerHTML = "Any minute now…";
           h1El.dataset.state = "now";
+
+          // Only refresh 10 times, and increase the timeout each time starting
+          // at 1s, then 2.5s, going up as 500ms plus the times checked squared
+          const timesChecked = parseInt(localStorage.getItem(LS_KEY) || 1, 10);
+          const timeout = timesChecked * timesChecked * 500 + 500;
+          if (timesChecked < 8) {
+            localStorage.setItem(LS_KEY, `${timesChecked + 1}`);
+          }
+          setTimeout(() => {
+            window.location.href = "/";
+          }, timeout);
           return;
         }
 
